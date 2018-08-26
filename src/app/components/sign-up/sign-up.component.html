@@ -1,0 +1,40 @@
+<section>
+
+    <h1 class="display-3">Sign up</h1>
+
+    {{ debugModel }}
+
+    <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="email">Email address</label>
+            <input [(ngModel)]="model.email" name="email" type="email" class="form-control" aria-describedby="email" 
+                placeholder="Enter email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input [(ngModel)]="model.password" name="password" type="password" class="form-control" 
+                placeholder="Password" id="password" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password confirmation</label>
+            <input [(ngModel)]="model.password_confirmation" name="password_confirmation" type="password" 
+                class="form-control" placeholder="Password confirmation" id="password-confirmation" required>
+        </div>
+
+        <div class="form-group">
+            <label for="login">Login</label>
+            <input [(ngModel)]="model.login" name="login" type="text" class="form-control" aria-describedby="login" 
+                placeholder="Enter login" id="login">
+        </div>
+
+        <div class="form-group">
+            <label for="display-name">Display name</label>
+            <input [(ngModel)]="model.display_name" name="display_name" type="text" class="form-control" 
+                aria-describedby="Display name" placeholder="Enter display name" id="display-name">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</section>
