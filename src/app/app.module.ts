@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { ErrorNotFoundComponent } from './components/error-not-found/error-not-found.component';
-import { SignInComponent } from './sign-in/sign-in.component';
+import { SignInComponent } from './components/sign-in/sign-in.component';
 
 
 @NgModule({

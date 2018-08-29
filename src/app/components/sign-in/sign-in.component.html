@@ -1,3 +1,33 @@
-<p>
-  sign-in works!
-</p>
+<section class="row mt-sm-3">
+    <div class="col-sm d-flex justify-content-center">
+        <h1 class="display-3"> Choose sign in method</h1>
+    </div>
+</section>
+
+<section class="row align-items-center mt-sm-3"> 
+    <section id="in-app-sign-in" class="col-sm d-flex justify-content-center">
+        <form>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input name="email" type="email" class="form-control" aria-describedby="email" 
+                    placeholder="Enter email" required>
+            </div>
+        
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input name="password" type="password" class="form-control" 
+                    placeholder="Password" id="password" required>
+            </div>
+        
+            <button type="submit" class="btn btn-primary">Sign in</button>
+        </form>
+    </section>
+
+    <section class="col-sm d-flex justify-content-center">
+        <h1 class="display-3"> or </h1>
+    </section>
+
+    <section id="facebook-login" class="col-sm d-flex justify-content-center">
+        <button type="submit" class="btn btn-primary">Sign in with Facebook</button>
+    </section>
+</section>

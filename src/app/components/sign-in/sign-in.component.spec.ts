@@ -19,7 +19,27 @@ describe('SignInComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should contain <form> element', () => {
+    const formElem: HTMLFormElement = fixture.nativeElement.querySelector('form');
+    
+    expect(formElem).toBeTruthy();
   });
+
+  it('should contain email input', () => {
+    const emailInput: HTMLInputElement = fixture.nativeElement.querySelector('input[type="email"]');
+
+    expect(emailInput).toBeTruthy();
+  });
+
+  it('should containe password input', () => {
+    const passwordInput: HTMLInputElement = fixture.nativeElement.querySelector('input[type="passowrd"]');
+
+    expect(passwordInput).toBeTruthy();
+  });
+
+  it(`should contain button with 'Facebook' text `, () => {
+    const buttonElem: HTMLButtonElement = fixture.nativeElement.querySelector('#facebook-login button');
+
+    expect(buttonElem.innerText).toContain('Facebook');
+  })
 });
