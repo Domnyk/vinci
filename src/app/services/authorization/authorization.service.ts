@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, from } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
 
 import { User } from '../../models/user';
-import { FbUser } from '../../models/fb-user';
 
 import { FacebookService } from '../facebook/facebook.service';
 
@@ -13,7 +13,10 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class AuthorizationService {
-  constructor(private http: HttpClient, private facebookService: FacebookService) { }
+  constructor(
+    private http: HttpClient, 
+    private facebookService: FacebookService
+  ) { }
 
   get isUserSignedIn(): boolean {
     return !!localStorage.getItem('currentUser');
@@ -24,39 +27,47 @@ export class AuthorizationService {
   }
   
   signIn(user: User): Observable<any> {
-    const payload = {
-      auth_method: "in_app",
-      user: user
-    }  
- 
-    return this.http.post(environment.api.signInAddress, payload);
+    return this.makeAuthenticationReq(AuthMethod.IN_APP, user);
   }
 
   signInWithFb(): Observable<any> {
     if(this.facebookService.isUserSignedIn) {
-      return from(this.facebookService.getUserEmail()
-        .catch(() => Promise.reject('Error in promise from facebookService.getUserEmail'))
-        .then(this.authenticateUserInApi)
-        .catch(() => Promise.reject('Error in promise from this.authenticateUserInApi')));
+      return this.facebookService.getUserEmail()
+        .pipe(
+          flatMap(resp => of({ email: resp['email'] , accessToken: FB.getAuthResponse().accessToken })),
+          flatMap(resp => this.makeAuthenticationReq(AuthMethod.FACEBOOK, resp)))
     }
   
-    return from(this.facebookService.signInUser()
-      .catch(() => Promise.reject('Error in promise from facebookService.getUserEmail'))
-      .then(this.authenticateUserInApi)
-      .catch(() => Promise.reject('Error in promise from this.authenticateUserInApi')));
+    return this.facebookService.signInUser()
+      .pipe(
+        flatMap(() => this.facebookService.getUserEmail()),
+        flatMap(resp => of({ email: resp.authResponse, accessToken: FB.getAuthResponse().accessToken })),
+        flatMap(resp => this.makeAuthenticationReq(AuthMethod.FACEBOOK, resp))
+      );
   }
 
-  private authenticateUserInApi(resp): Observable<Object> {
-    const accessToken = FB.getAuthResponse().accessToken,
-      payload = {
-      auth_method: "facebook",
-      user: {
-        email: resp.email,
-        access_token: accessToken
-      }
-    }
-    
-    console.log('Right before POST');
+  private makeAuthenticationReq(authMethod: AuthMethod, userData: Object): Observable<Object> {
+    const payload = this.calculatePayload(authMethod, userData);
     return this.http.post(environment.api.signInAddress, payload)
   }
+
+  private calculatePayload(authMethod: AuthMethod, userData: Object): Object {
+    const payload = {
+      auth_method: authMethod,
+      user: {}
+    }
+
+    if(authMethod === AuthMethod.IN_APP) {
+      payload.user = { email: userData['email'], password: userData['password'] }
+    } else { 
+      payload.user = { email: userData['email'], access_token: userData['accessToken'] }
+    }
+
+    return payload;
+  }
+}
+
+enum AuthMethod {
+  IN_APP = 'in_app',
+  FACEBOOK = 'facebook'
 }
