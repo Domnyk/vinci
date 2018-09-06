@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { FacebookService } from '../../services/facebook/facebook.service';
 import { AuthorizationService } from '../../services/authorization/authorization.service';
+
+import { Store } from '@ngxs/store';
+import { SignInUser } from '../../actions/user.actions';
 
 import { User } from '../../models/user';
 import { FbUser } from '../../models/fb-user';
@@ -22,11 +24,12 @@ export class SignInComponent implements OnInit {
   fbUser: FbUser = new FbUser(null, null);
 
   constructor(
-    private facebookService: FacebookService, 
     private authorizationService: AuthorizationService,
-    private router: Router) {}
+    private router: Router,
+    private store: Store) { }
 
   ngOnInit() {
+    this.store.dispatch(new SignInUser({ name: 'Steve Wozniak', password: 'Haxor password'}))
   }
 
   onFBSignInClick(): void {
