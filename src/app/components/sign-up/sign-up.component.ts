@@ -11,7 +11,7 @@ import { User } from '../../models/user';
 })
 export class SignUpComponent implements OnInit {
 
-  model = new User();
+  model = new User(null, null, null);
 
   constructor(private signUpService: SignUpService) { }
 
