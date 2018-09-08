@@ -6,9 +6,9 @@ import { Observable, of, bindCallback } from 'rxjs';
 })
 export class FacebookService {
   private signInStatus: string = null;
-
-
+  
   constructor() {
+    this.initFb();
     this.fetchSignInStatus();
   }
 
@@ -22,12 +22,6 @@ export class FacebookService {
 
   fetchUserEmail(cb: Function): any {
     FB.api('/me', {fields: 'email'}, cb);
-  }
-
-  private fetchSignInStatus(): void {
-    FB.getLoginStatus(resp => {
-      this.signInStatus = resp.status
-    });
   }
 
   signInUser(): Observable<fb.StatusResponse> {
@@ -52,5 +46,20 @@ export class FacebookService {
     }
   
     return Observable.create(subscribe);
+  }
+
+  private initFb() {
+    FB.init({
+      appId            : '315422445647491',
+      xfbml            : true,
+      version          : 'v3.1',
+      status           : true
+    });
+  }
+
+  private fetchSignInStatus(): void {
+    FB.getLoginStatus(resp => {
+      this.signInStatus = resp.status;
+    });
   }
 }

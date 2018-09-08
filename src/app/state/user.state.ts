@@ -1,34 +1,40 @@
 import { State, Action, StateContext, Selector } from '@ngxs/store';
-import { SignInUser } from '../actions/user.actions';
+import { tap } from 'rxjs/operators';
+
+import { SignInWithFb } from '../actions/sign-in.actions';
+
+import { AuthorizationService } from '../services/authorization/authorization.service';
+import { FbUser } from '../models/fb-user';
 
 export class UserStateModel {
-  user: {}
+  token: any
 }
 
 @State<UserStateModel>({
-  name: 'userDataFromSignInForm',
+  name: 'userCredentials',
   defaults: {
-    user: {
-      name: 'John Cena',
-      password: 'Very secret password'
-    }
+    token: null
   }
 })
 
 export class UserState {
+  constructor (private authorizationService: AuthorizationService) { }
+  
   @Selector()
-  static getUser(state: UserStateModel) {
-    return state.user;
+  static getToken(state: UserStateModel) {
+    return state.token;
   }
 
-  @Action(SignInUser)
-  add({getState, patchState}: StateContext<UserStateModel>, { payload }: SignInUser) {
-    const state = getState();
-    patchState({
-      user: {
-        name: payload.name,
-        password: payload.password
-      }
-    })
+  @Action(SignInWithFb)
+  signInWithFb({getState, patchState}: StateContext<UserStateModel>) {
+    return this.authorizationService.signInWithFb()
+      .pipe(
+        tap(result => this.signInWithFbPatchState(patchState, result)
+      ));
   }
+
+  private signInWithFbPatchState(patchState: Function, result: any) {
+    console.log(result);
+    patchState({ token: result['jwt'] });
+  } 
 }

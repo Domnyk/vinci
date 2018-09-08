@@ -5,7 +5,7 @@ import { FacebookService } from './facebook.service';
 describe('FacebookService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [FbService]
+      providers: [FacebookService]
     });
   });
 

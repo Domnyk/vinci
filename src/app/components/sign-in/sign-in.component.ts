@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AuthorizationService } from '../../services/authorization/authorization.service';
 
 import { Store } from '@ngxs/store';
-import { SignInUser } from '../../actions/user.actions';
+import { SignInWithFb } from '../../actions/sign-in.actions';
 
 import { User } from '../../models/user';
 import { FbUser } from '../../models/fb-user';
@@ -28,16 +28,17 @@ export class SignInComponent implements OnInit {
     private router: Router,
     private store: Store) { }
 
-  ngOnInit() {
-    this.store.dispatch(new SignInUser({ name: 'Steve Wozniak', password: 'Haxor password'}))
-  }
+  ngOnInit() {}
 
   onFBSignInClick(): void {
-    this.authorizationService.signInWithFb()
+    this.store.dispatch(new SignInWithFb());
+
+
+    /* this.authorizationService.signInWithFb()
       .subscribe(
         resp => console.log('Sign in ok: ', resp),
         err => console.log('Error occured: ', err)
-      );
+      ); */
   }
 
   onSubmit(): void {
