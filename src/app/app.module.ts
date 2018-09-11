@@ -17,6 +17,7 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { ErrorNotFoundComponent } from './components/error-not-found/error-not-found.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
+import { MapComponent } from './components/map/map.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
     SignUpComponent,
     WelcomeComponent,
     ErrorNotFoundComponent,
-    SignInComponent
+    SignInComponent,
+    MapComponent
   ],
   imports: [
     RouterModule.forRoot(
