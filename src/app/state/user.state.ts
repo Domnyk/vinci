@@ -1,5 +1,5 @@
 import { State, Action, StateContext, Selector } from '@ngxs/store';
-import { tap } from 'rxjs/operators';
+import { tap, take } from 'rxjs/operators';
 
 import { SignInWithFb } from '../actions/sign-in.actions';
 
@@ -29,12 +29,12 @@ export class UserState {
   signInWithFb({getState, patchState}: StateContext<UserStateModel>) {
     return this.authorizationService.signInWithFb()
       .pipe(
+        take(1),
         tap(result => this.signInWithFbPatchState(patchState, result)
       ));
   }
 
   private signInWithFbPatchState(patchState: Function, result: any) {
-    console.log(result);
     patchState({ token: result['jwt'] });
   } 
 }
