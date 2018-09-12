@@ -6,7 +6,7 @@ import { Observable, of, bindCallback } from 'rxjs';
 })
 export class FacebookService {
   private signInStatus: string = null;
-  
+
   constructor() {
     this.initFb();
     this.fetchSignInStatus();
@@ -27,7 +27,7 @@ export class FacebookService {
   signInUser(): Observable<fb.StatusResponse> {
     function subscribe(observer) {
       FB.login(resp => {
-        if(resp.status === 'connected') {
+        if (resp.status === 'connected') {
           observer.next(resp);
         } else {
           observer.error(resp);
@@ -35,7 +35,7 @@ export class FacebookService {
       });
     }
 
-    return Observable.create(subscribe)
+    return Observable.create(subscribe);
   }
 
   getUserEmail(): Observable<fb.StatusResponse> {
@@ -44,7 +44,7 @@ export class FacebookService {
         observer.next(resp);
       });
     }
-  
+
     return Observable.create(subscribe);
   }
 

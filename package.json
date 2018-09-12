@@ -23,6 +23,7 @@
     "@ngxs/devtools-plugin": "^3.2.0",
     "@ngxs/logger-plugin": "^3.2.0",
     "@ngxs/store": "^3.2.0",
+    "@types/googlemaps": "^3.30.13",
     "core-js": "^2.5.4",
     "rxjs": "^6.0.0",
     "zone.js": "~0.8.26"

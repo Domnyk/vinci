@@ -32,13 +32,6 @@ export class SignInComponent implements OnInit {
 
   onFBSignInClick(): void {
     this.store.dispatch(new SignInWithFb());
-
-
-    /* this.authorizationService.signInWithFb()
-      .subscribe(
-        resp => console.log('Sign in ok: ', resp),
-        err => console.log('Error occured: ', err)
-      ); */
   }
 
   onSubmit(): void {

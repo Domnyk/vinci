@@ -46,7 +46,7 @@ export class AuthorizationService {
       );
   }
 
-  private makeAuthenticationReq(authMethod: AuthMethod, userData: Object): Observable<Object> {
+  private makeAuthenticationReq(authMethod: AuthMethod, userData: Object) : Observable<Object> {
     const payload = this.calculatePayload(authMethod, userData);
     return this.http.post(environment.api.signInAddress, payload)
   }

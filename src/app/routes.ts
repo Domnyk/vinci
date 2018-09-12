@@ -9,7 +9,7 @@ import { MapComponent } from './components/map/map.component';
 export const routes: Routes = [
   { path: 'sign_up', component: SignUpComponent },
   { path: 'sign_in', component: SignInComponent },
-  { path: 'map', component: MapComponent }
+  { path: 'map', component: MapComponent },
   { path: '', component: WelcomeComponent },
   { path: '**', component: ErrorNotFoundComponent },
 ];
