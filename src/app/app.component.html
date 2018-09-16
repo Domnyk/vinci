@@ -1,27 +1,9 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">{{ title }}</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-        aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+<app-navbar [title]="title"></app-navbar>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a routerLink="/sign_in" class="nav-link">Sign in</a>
-            </li>
-            <li class="nav-item active">
-                <a routerLink="/sign_up" class="nav-link">Sign up</a>
-            </li>
-            <li class="nav-item active">
-                <a routerLink="/map" class="nav-link">Map</a>
-            </li>
-        </ul>
-    </div>
-</nav>
-
-<div class="alert alert-info" role="alert">
-    A simple message
+<div class="row">
+  <div class="col alert alert-info" role="alert">
+      A simple message
+  </div>
 </div>
 
 <router-outlet></router-outlet>

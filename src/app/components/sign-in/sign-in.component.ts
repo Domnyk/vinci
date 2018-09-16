@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthorizationService } from '../../services/authorization/authorization.service';
+import { AuthenticationService } from '../../services/authentication/authentication.service';
 
 import { Store } from '@ngxs/store';
-import { SignInWithFb } from '../../actions/sign-in.actions';
+import { SignInWithFb, SignInWithPassword } from '../../actions/sign-in.actions';
 
 import { User } from '../../models/user';
 import { FbUser } from '../../models/fb-user';
@@ -24,19 +24,19 @@ export class SignInComponent implements OnInit {
   fbUser: FbUser = new FbUser(null, null);
 
   constructor(
-    private authorizationService: AuthorizationService,
+    private authorizationService: AuthenticationService,
     private router: Router,
     private store: Store) { }
 
   ngOnInit() {}
 
   onFBSignInClick(): void {
-    this.store.dispatch(new SignInWithFb());
+    this.store.dispatch(new SignInWithFb())
+      .subscribe(() => this.router.navigate(['/admin_dashboard']));
   }
 
   onSubmit(): void {
-    this.authorizationService.signIn(this.user)
-      .subscribe(resp => console.log(resp));
+    this.store.dispatch(new SignInWithPassword());
   }
 
 }

@@ -1,0 +1,26 @@
+<div class="row">
+  <nav class="col navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" routerLink="/">{{ title }}</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a routerLink="/sign_in" class="nav-link">Sign in</a>
+        </li>
+        <li class="nav-item active">
+          <a routerLink="/sign_up" class="nav-link">Sign up</a>
+        </li>
+        <li class="nav-item active">
+          <a routerLink="/map" class="nav-link">Map</a>
+        </li>
+        <li *ngIf="isAdmin" class="nav-item active">
+          <a routerLink="/admin_dashboard" class="nav-link">Manage your facilities</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>

@@ -1,40 +1,35 @@
-import { State, Action, StateContext, Selector } from '@ngxs/store';
+import { State, Action, StateContext } from '@ngxs/store';
 import { tap, take } from 'rxjs/operators';
 
 import { SignInWithFb } from '../actions/sign-in.actions';
 
-import { AuthorizationService } from '../services/authorization/authorization.service';
-import { FbUser } from '../models/fb-user';
+import { AuthenticationService } from '../services/authentication/authentication.service';
+import { SignInApiResponse } from '../models/api-response';
+import { CurrentUser } from '../models/current-user';
+import { Router } from '@angular/router';
 
-export class UserStateModel {
-  token: any
-}
 
-@State<UserStateModel>({
-  name: 'userCredentials',
+
+
+@State<CurrentUser>({
+  name: 'currentUser',
   defaults: {
+    email: null,
+    accessType: null,
     token: null
   }
 })
 
-export class UserState {
-  constructor (private authorizationService: AuthorizationService) { }
-  
-  @Selector()
-  static getToken(state: UserStateModel) {
-    return state.token;
-  }
+
+export class CurrentUserState {
+  constructor (private authorizationService: AuthenticationService, private router: Router) { }
 
   @Action(SignInWithFb)
-  signInWithFb({getState, patchState}: StateContext<UserStateModel>) {
+  signInWithFb({ patchState }: StateContext<CurrentUser>) {
     return this.authorizationService.signInWithFb()
       .pipe(
         take(1),
-        tap(result => this.signInWithFbPatchState(patchState, result)
-      ));
+        tap(({ token, email, access_type }: SignInApiResponse) => patchState({ email, token, accessType: access_type })),
+      );
   }
-
-  private signInWithFbPatchState(patchState: Function, result: any) {
-    patchState({ token: result['jwt'] });
-  } 
 }
