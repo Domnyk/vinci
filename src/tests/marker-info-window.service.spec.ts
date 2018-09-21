@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
-import { MarkerInfoWindowService } from './marker-info-window.service';
-import { SportObject } from '../../models/sport-object';
+import { MarkerInfoWindowService } from '../app/services/marker-info-window.service';
+import { SportObject } from '../app/models/sport-object';
 
 describe('MarkerInfoWindowService', () => {
   let service: MarkerInfoWindowService = null;

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Coords, SportObject } from '../../models/sport-object';
-import { Marker } from '../../models/marker';
-import { MarkerInfoWindowService } from '../marker-info-window/marker-info-window.service';
+import { SportObject } from '../models/sport-object';
+import { Marker } from '../models/marker';
+import { MarkerInfoWindowService } from './marker-info-window.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class MarkerService {
     const { latitude, longitude } = sportObject.geo_coordinates;
 
     marker = new google.maps.Marker({
-      position: {lat: latitude, lng: longitude},
+      position: { lat: latitude, lng: longitude },
       map: map
     });
 

@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
-import { SportComplexService } from './sport-complex.service';
-import { environment } from '../../../environments/environment';
-import { NewSportComplex, NewSportComplexError, SportComplexList } from '../../models/api-response';
-import { SportComplex } from '../../models/sport-complex';
+import { SportComplexService } from '../app/services/sport-complex.service';
+import { environment } from '../environments/environment';
+import { NewSportComplex, NewSportComplexError, SportComplexList } from '../app/models/api-response';
+import { SportComplex } from '../app/models/sport-complex';
 
 describe('SportComplexService', () => {
   const subscriptionErrorHandler = () => console.error('Error occurred in SportComplexService test');
@@ -30,7 +30,7 @@ describe('SportComplexService', () => {
   });
 
   describe('fetchAll', () => {
-    it('should return sport complexes data when no errors occur', () => {
+    it('should return all sport complexes ', () => {
       const apiResponse: SportComplexList = { status: 'ok', data: [{ name: 'OSIR Marki' }] },
             functionResponse: Array<Object> = apiResponse.data;
 

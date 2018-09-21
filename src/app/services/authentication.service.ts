@@ -3,11 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 
-import { User } from '../../models/user';
+import { User } from '../models/user';
 
-import { FacebookService } from '../facebook/facebook.service';
+import { FacebookService } from './facebook.service';
 
-import { environment } from '../../../environments/environment';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'

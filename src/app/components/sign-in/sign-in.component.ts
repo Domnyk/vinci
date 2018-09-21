@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthenticationService } from '../../services/authentication/authentication.service';
+import { AuthenticationService } from '../../services/authentication.service';
 
 import { Store } from '@ngxs/store';
 import { SignInWithFb, SignInWithPassword } from '../../actions/sign-in.actions';

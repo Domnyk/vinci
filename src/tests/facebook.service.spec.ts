@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { FacebookService } from './facebook.service';
+import { FacebookService } from '../app/services/facebook.service';
 
 describe('FacebookService', () => {
   beforeEach(() => {

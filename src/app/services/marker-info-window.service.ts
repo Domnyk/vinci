@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { SportObject } from '../../models/sport-object';
-import { Router } from '@angular/router';
+import { SportObject } from '../models/sport-object';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MarkerInfoWindowService {
-  constructor(private router: Router) {}
+  constructor() {}
 
   generateInfoWindowContent(sportObject: SportObject): string {
     const { id, name } = sportObject;

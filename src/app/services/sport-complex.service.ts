@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { environment } from '../../../environments/environment';
+import { environment } from '../../environments/environment';
 import { Observable, of, throwError } from 'rxjs';
-import { NewSportComplex, NewSportComplexError, SportComplexList } from '../../models/api-response';
+import { NewSportComplex, NewSportComplexError, SportComplexList } from '../models/api-response';
 import { flatMap } from 'rxjs/operators';
-import { SportComplex } from '../../models/sport-complex';
+import { SportComplex } from '../models/sport-complex';
 
 @Injectable({
   providedIn: 'root'

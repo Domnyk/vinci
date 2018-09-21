@@ -3,8 +3,8 @@ import { tap, take } from 'rxjs/operators';
 
 import { SignInWithFb } from '../actions/sign-in.actions';
 
-import { AuthenticationService } from '../services/authentication/authentication.service';
-import { SignInApiResponse } from '../models/api-response';
+import { AuthenticationService } from '../services/authentication.service';
+import { SignInResponse } from '../models/api-response';
 import { CurrentUser } from '../models/current-user';
 import { Router } from '@angular/router';
 
@@ -27,7 +27,7 @@ export class CurrentUserState {
     return this.authorizationService.signInWithFb()
       .pipe(
         take(1),
-        tap(({ token, email, access_type }: SignInApiResponse) => patchState({ email, token, accessType: access_type })),
+        tap(({ token, email, access_type }: SignInResponse) => patchState({ email, token, accessType: access_type })),
       );
   }
 }

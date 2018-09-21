@@ -1,10 +1,19 @@
-import {SportComplex} from './sport-complex';
+import { SportComplex } from './sport-complex';
 
-export interface SignInApiResponse {
+export interface SignInResponse {
   status: string;
   email: string;
   access_type: string;
   token: string;
+}
+
+// TODO: This interface should stick to convention { status: string, data: Object }
+export interface SignUpResponse {
+ status: string;
+ id: number;
+ email: string;
+ login?: string;
+ display_name?: string;
 }
 
 export interface SportComplexList {

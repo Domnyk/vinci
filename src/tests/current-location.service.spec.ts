@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { CurrentLocationService } from './current-location.service';
+import { CurrentLocationService } from '../app/services/current-location.service';
 
 describe('CurrentLocationService', () => {
   beforeEach(() => {

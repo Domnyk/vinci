@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
-import { SportObjectService } from '../../../services/location/sport-object.service';
+import { SportObjectService } from '../../../services/sport-object.service';
 import { SportObject } from '../../../models/sport-object';
 
-import { CurrentLocationService } from '../../../services/current-location/current-location.service';
-import { MarkerService } from '../../../services/marker/marker.service';
+import { CurrentLocationService } from '../../../services/current-location.service';
+import { MarkerService } from '../../../services/marker.service';
 import { zip } from 'rxjs';
 
 @Component({

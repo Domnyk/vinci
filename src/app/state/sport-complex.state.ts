@@ -2,7 +2,7 @@ import { State, Action, StateContext } from '@ngxs/store';
 import { tap, take } from 'rxjs/operators';
 
 import { SportComplex } from '../models/sport-complex';
-import { SportComplexService } from '../services/sport-complex/sport-complex.service';
+import { SportComplexService } from '../services/sport-complex.service';
 import { FetchAllSportComplexes } from '../components/admin-dashboard/admin-dashboard.actions';
 import { CreateNewSportComplex } from '../components/new-sport-complex/new-sport-complex.actions';
 

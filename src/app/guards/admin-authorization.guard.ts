@@ -1,6 +1,6 @@
 import { Observable, of } from 'rxjs';
 import { CanActivate, Router } from '@angular/router';
-import { AuthorizationService } from '../services/authorization/authorization.service';
+import { AuthorizationService } from '../services/authorization.service';
 import { Store } from '@ngxs/store';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
