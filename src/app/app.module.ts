@@ -22,6 +22,8 @@ import { SportObjectComponent } from './components/sport-object/sport-object.com
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { NewSportComplexComponent } from './components/new-sport-complex/new-sport-complex.component';
+import { AdminDashboardSidebarComponent } from './components/admin-dashboard-sidebar/admin-dashboard-sidebar.component';
+import {SportComplexState} from './state/sport-complex.state';
 
 
 @NgModule({
@@ -36,6 +38,7 @@ import { NewSportComplexComponent } from './components/new-sport-complex/new-spo
     NavbarComponent,
     AdminDashboardComponent,
     NewSportComplexComponent,
+    AdminDashboardSidebarComponent,
   ],
   imports: [
     RouterModule.forRoot(
@@ -46,7 +49,8 @@ import { NewSportComplexComponent } from './components/new-sport-complex/new-spo
     FormsModule,
     HttpClientModule,
     NgxsModule.forRoot([
-      CurrentUserState
+      CurrentUserState,
+      SportComplexState,
     ]),
     NgxsLoggerPluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot(),

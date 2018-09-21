@@ -9,8 +9,6 @@ import { CurrentUser } from '../models/current-user';
 import { Router } from '@angular/router';
 
 
-
-
 @State<CurrentUser>({
   name: 'currentUser',
   defaults: {
@@ -20,10 +18,10 @@ import { Router } from '@angular/router';
   }
 })
 
-
 export class CurrentUserState {
   constructor (private authorizationService: AuthenticationService, private router: Router) { }
 
+  // TODO: In other action handlers 'take(1)' call is not necessary. Why it is here?
   @Action(SignInWithFb)
   signInWithFb({ patchState }: StateContext<CurrentUser>) {
     return this.authorizationService.signInWithFb()

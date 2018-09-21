@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class AdminAuthorizationGuard implements CanActivate{
+export class AdminAuthorizationGuard implements CanActivate {
 
   constructor(
     private authorizationService: AuthorizationService,
@@ -19,6 +19,7 @@ export class AdminAuthorizationGuard implements CanActivate{
   canActivate(): Observable<boolean> {
     // TODO: Uncomment later. For now it is convenience mock
 
+    console.warn('AdminAuthorizationGuard.canActive is mocked and returns always true');
     return of(true);
     /* const adminStatusHandler: (value: boolean) => boolean = isAdmin => {
       if (isAdmin) {

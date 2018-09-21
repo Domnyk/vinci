@@ -1,27 +1,8 @@
-<div>
-  <div class="row">
-    <section class="col">
-      <h2> Lista ośrodków sportu</h2>
-      <div class="row">
-        <div class="col-3">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Ośrodek sportu i rekreacji Targówek</h5>
-              <a href="#" class="btn btn-primary">Przejdź do strony ośrodka</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-3">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Special title treatment</h5>
-              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-  <app-new-sport-complex></app-new-sport-complex>
+<div class="row">
+  <section id="sidebar" class="col-2 bg-light">
+    <app-admin-dashboard-sidebar></app-admin-dashboard-sidebar>
+  </section>
+  <section id="content" class="col">
+    <router-outlet></router-outlet>
+  </section>
 </div>
