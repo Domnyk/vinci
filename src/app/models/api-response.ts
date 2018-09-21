@@ -1,3 +1,5 @@
+import {SportComplex} from './sport-complex';
+
 export interface SignInApiResponse {
   status: string;
   email: string;
@@ -10,22 +12,13 @@ export interface SportComplexList {
   data: Array<Object>;
 }
 
-export interface SportComplexListError {
-  status: string;
-  message: string;
-}
-
 export interface NewSportComplex {
   status: string;
-  data: {
-    name: string;
-    id: number;
-  };
+  data: SportComplex;
 }
 
+// TODO: errors property should have proper type
 export interface NewSportComplexError {
   status: string;
-  errors: {
-    name?: Array<string>;
-  };
+  errors: any;
 }

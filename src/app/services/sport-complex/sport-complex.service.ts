@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { environment } from '../../../environments/environment';
 import { Observable, of, throwError } from 'rxjs';
-import { NewSportComplex, NewSportComplexError, SportComplexList, SportComplexListError } from '../../models/api-response';
+import { NewSportComplex, NewSportComplexError, SportComplexList } from '../../models/api-response';
 import { flatMap } from 'rxjs/operators';
 import { SportComplex } from '../../models/sport-complex';
 
@@ -16,16 +16,10 @@ export class SportComplexService {
   ) { }
 
   fetchAll(): Observable<any> {
-    type dataHandlerType = (response: SportComplexList & SportComplexListError) => Observable<Object>;
-    const dataHandler: dataHandlerType = (response: SportComplexList & SportComplexListError) => {
-      console.log('Received data is: ', response);
-
+    type dataHandlerType = (response: SportComplexList) => Observable<Object>;
+    const dataHandler: dataHandlerType = response => {
       if (response.status === 'ok') {
         return of(response.data);
-      }
-
-      if (response.status === 'error') {
-        return throwError(response.message);
       }
     };
 
@@ -38,7 +32,6 @@ export class SportComplexService {
   create(data: SportComplex): Observable<any> {
     type responseHandlerType = (response: NewSportComplex & NewSportComplexError) => Observable<Object>;
     const responseHandler: responseHandlerType = (response) => {
-      console.log('Received response is: ', response);
 
       if (response.status === 'ok') {
         return of(response.data);
