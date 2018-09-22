@@ -16,7 +16,6 @@ Test:
   stage: test
   before_script:
     # Install Chrome to use headless browser. In futere, I need to make own image with headless Chrome
-    -
     - yarn install
   script:
     - yarn run test
