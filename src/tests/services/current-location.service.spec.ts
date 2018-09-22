@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CurrentLocationService } from '../app/services/current-location.service';
-import { Coords } from '../app/models/sport-object';
+import { CurrentLocationService } from '../../app/services/current-location.service';
+import { Coords } from '../../app/models/sport-object';
 
 describe('CurrentLocationService', () => {
   let service: CurrentLocationService = null;

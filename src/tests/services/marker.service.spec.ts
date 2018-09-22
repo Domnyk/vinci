@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
-import { MarkerService } from '../app/services/marker.service';
-import { Coords, SportObject} from '../app/models/sport-object';
-import { Marker } from '../app/models/marker';
+import { MarkerService } from '../../app/services/marker.service';
+import { Coords, SportObject} from '../../app/models/sport-object';
+import { Marker } from '../../app/models/marker';
 
 // TODO: Add Google Maps mock: https://github.com/ScottieR/angular-google-maps-mock
 describe('MarkerService', () => {

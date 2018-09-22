@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ErrorNotFoundComponent } from '../app/components/error-not-found/error-not-found.component';
+import { SportObjectComponent } from '../../app/components/sport-object/sport-object.component';
 
-describe('ErrorNotFoundComponent', () => {
-  let component: ErrorNotFoundComponent;
-  let fixture: ComponentFixture<ErrorNotFoundComponent>;
+xdescribe('SportObjectComponent', () => {
+  let component: SportObjectComponent;
+  let fixture: ComponentFixture<SportObjectComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ErrorNotFoundComponent ]
+      declarations: [ SportObjectComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ErrorNotFoundComponent);
+    fixture = TestBed.createComponent(SportObjectComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

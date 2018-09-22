@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MapComponent } from './map.component';
+import { ErrorNotFoundComponent } from '../../app/components/error-not-found/error-not-found.component';
 
-describe('MapComponent', () => {
-  let component: MapComponent;
-  let fixture: ComponentFixture<MapComponent>;
+xdescribe('ErrorNotFoundComponent', () => {
+  let component: ErrorNotFoundComponent;
+  let fixture: ComponentFixture<ErrorNotFoundComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MapComponent ]
+      declarations: [ ErrorNotFoundComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MapComponent);
+    fixture = TestBed.createComponent(ErrorNotFoundComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

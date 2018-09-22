@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
-import { SportObjectService } from '../app/services/sport-object.service';
-import { environment } from '../environments/environment';
-import {Coords, SportObject} from '../app/models/sport-object';
+import { SportObjectService } from '../../app/services/sport-object.service';
+import { environment } from '../../environments/environment';
+import {Coords, SportObject} from '../../app/models/sport-object';
 
 describe('SportObjectService', () => {
   const subscriptionErrorHandler = () => console.error('Error occurred in SportObjectService test');
