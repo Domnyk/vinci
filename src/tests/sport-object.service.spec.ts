@@ -3,7 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 
 import { SportObjectService } from '../app/services/sport-object.service';
 import { environment } from '../environments/environment';
-import { SportObject } from '../app/models/sport-object';
+import {Coords, SportObject} from '../app/models/sport-object';
 
 describe('SportObjectService', () => {
   const subscriptionErrorHandler = () => console.error('Error occurred in SportObjectService test');
@@ -28,7 +28,7 @@ describe('SportObjectService', () => {
 
   describe('fetchAll', () => {
     it('should return all sport objects', () => {
-      const apiResponse: Array<SportObject> = [ { id: 1, name: 'Pływalnia Polonez', geo_coordinates: { latitude: 2, longitude: 3 } }],
+      const apiResponse: Array<SportObject> = [ { id: 1, name: 'Pływalnia Polonez', geo_coordinates: new Coords(2, 3) }],
         functionResponse: Array<Object> = apiResponse;
 
 

@@ -7,9 +7,13 @@ export class SportObject {
   ) { }
 }
 
-export class Coords {
+export class Coords implements Coords {
   constructor(
     public latitude: number,
     public longitude: number
   ) { }
+
+  get asGoogleCoords(): google.maps.LatLng {
+    return new google.maps.LatLng(this.latitude, this.longitude);
+  }
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { Coords } from '../models/sport-object';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ export class CurrentLocationService {
 
   constructor() {}
 
-  fetchCurrentLocation(fallbackLocation): Observable<any> {
+  fetchCurrentLocation(fallbackLocation: Coords): Observable<Coords> {
     function subscribe(subject) {
       const isGeoLocationNotSupported = !('geolocation' in navigator);
       if (isGeoLocationNotSupported) {

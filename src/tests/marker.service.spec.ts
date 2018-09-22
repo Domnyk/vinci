@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { MarkerService } from '../app/services/marker.service';
-import { SportObject } from '../app/models/sport-object';
+import { Coords, SportObject} from '../app/models/sport-object';
 import { Marker } from '../app/models/marker';
 
 // TODO: Add Google Maps mock: https://github.com/ScottieR/angular-google-maps-mock
@@ -23,7 +23,7 @@ describe('MarkerService', () => {
 
   describe('addMarker', () => {
     it('should place marker on right position', () => {
-      const sportObject: SportObject = new SportObject(1, 'Pływalnia Polonez', { latitude: 52.299046, longitude: 21.033690 });
+      const sportObject: SportObject = new SportObject(1, 'Pływalnia Polonez', new Coords(52.299046, 21.033690 ));
 
       const { googleMapsMarker }: Marker = service.addMarker(sportObject, map),
             actualMarkerLatitude = googleMapsMarker.getPosition().lat(),
@@ -38,7 +38,7 @@ describe('MarkerService', () => {
 
 
     it('should insert infoWindow', () => {
-      const sportObject: SportObject = new SportObject(1, 'Pływalnia Polonez', { latitude: 52.299046, longitude: 21.033690 });
+      const sportObject: SportObject = new SportObject(1, 'Pływalnia Polonez', new Coords(52.299046, 21.033690));
 
       const { infoWindow }: Marker = service.addMarker(sportObject, map),
             infoWindowContent = infoWindow.getContent();
