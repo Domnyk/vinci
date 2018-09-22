@@ -7,8 +7,8 @@ stages:
 
 Build app:
   stage: build
-    script:
-      yarn run build
+  script:
+    yarn run build
 #
 # Test:
 #   stage: test
