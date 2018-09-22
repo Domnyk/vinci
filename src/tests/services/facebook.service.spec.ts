@@ -2,7 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 
 import { FacebookService } from '../../app/services/facebook.service';
 
-describe('FacebookService', () => {
+xdescribe('FacebookService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [FacebookService]

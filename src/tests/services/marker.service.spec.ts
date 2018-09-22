@@ -22,7 +22,7 @@ describe('MarkerService', () => {
   });
 
   describe('addMarker', () => {
-    it('should place marker on right position', () => {
+    xit('should place marker on right position', () => {
       const sportObject: SportObject = new SportObject(1, 'Pływalnia Polonez', new Coords(52.299046, 21.033690 ));
 
       const { googleMapsMarker }: Marker = service.addMarker(sportObject, map),
@@ -34,10 +34,10 @@ describe('MarkerService', () => {
     });
 
     // TODO: Think how to test it
-    it('should add event listener to marker', () => {});
+    xit('should add event listener to marker', () => {});
 
 
-    it('should insert infoWindow', () => {
+    xit('should insert infoWindow', () => {
       const sportObject: SportObject = new SportObject(1, 'Pływalnia Polonez', new Coords(52.299046, 21.033690));
 
       const { infoWindow }: Marker = service.addMarker(sportObject, map),
