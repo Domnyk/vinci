@@ -1,0 +1,41 @@
+image: trion/ng-cli:6.2.3
+
+stages:
+  - build
+  - test
+  - release
+
+Build app:
+  stage: build
+    script:
+      yarn run build
+#
+# Test:
+#   stage: test
+#   services:
+#     - postgres:latest
+#   variables:
+#     MIX_ENV: test
+#     POSTGRES_DB: hadrian_test
+#   before_script:
+#     - apk --update add postgresql-client
+#     - mix local.hex --force
+#     - mix local.rebar --force
+#     - mix deps.get --only $MIX_ENV
+#     - mix ecto.create
+#     - mix ecto.migrate
+#   script:
+#     - mix test
+#
+# Release:
+#   stage: release
+#   before_script:
+#     - apk --update add ruby ruby-dev
+#     - gem install --no-document json
+#     - gem install --no-document dpl
+#   script:
+#     - dpl --provider=heroku --app=$HEROKU_PROJECT_NAME --api-key=$HEROKU_API_KEY
+#   only:
+#     - master
+#   when: manual
+
