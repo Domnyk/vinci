@@ -14,7 +14,12 @@ module.exports = function (config) {
       require('karma-mocha-reporter')
     ],
     client: {
+      captureConsole: true,
       clearContext: false // leave Jasmine Spec Runner output visible in browser
+    },
+    browserConsoleLogOptions: {
+      level: '',
+      terminal: true
     },
     coverageIstanbulReporter: {
       dir: require('path').join(__dirname, '../coverage'),
