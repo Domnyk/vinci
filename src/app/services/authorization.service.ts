@@ -15,11 +15,11 @@ export class AuthorizationService {
     return isAdmin$;
   }
 
-  private _isSignedIn(token: string) {
-    return !!token;
-  }
-
   private _isAdmin(currentUser: any) {
     return this._isSignedIn(currentUser.token) && currentUser.accessType === 'admin';
+  }
+
+  private _isSignedIn(token: string) {
+    return !!token;
   }
 }

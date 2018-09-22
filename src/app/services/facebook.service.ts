@@ -16,14 +16,6 @@ export class FacebookService {
     return this.signInStatus === 'connected';
   }
 
-  get isUserNotSignedIn(): boolean {
-    return !this.isUserSignedIn;
-  }
-
-  fetchUserEmail(cb: Function): any {
-    FB.api('/me', {fields: 'email'}, cb);
-  }
-
   signInUser(): Observable<fb.StatusResponse> {
     function subscribe(observer) {
       FB.login(resp => {
@@ -40,7 +32,7 @@ export class FacebookService {
 
   getUserEmail(): Observable<fb.StatusResponse> {
     function subscribe(observer) {
-      FB.api('/me', {fields: 'email'}, resp => {
+      FB.api('/me', { fields: 'email' }, resp => {
         observer.next(resp);
       });
     }
