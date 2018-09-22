@@ -24,4 +24,3 @@ Release:
   script:
     - yarn -v
   when: manual
-

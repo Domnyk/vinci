@@ -1,9 +1,15 @@
 {
   "name": "vinci",
   "version": "0.0.0",
+  "main": "app.js",
+  "engines": {
+    "node": "~10.9.0",
+    "yarn": "~1.9.4"
+  },
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port 8080",
+    "start:dev": "ng serve --port 8080",
+    "start:prod": "node app.js",
     "build": "ng build",
     "test:dev": "ng test",
     "test:ci": "ng test --watch=false",
@@ -26,6 +32,7 @@
     "@ngxs/store": "^3.2.0",
     "@types/googlemaps": "^3.30.13",
     "core-js": "^2.5.4",
+    "express": "^4.16.3",
     "rxjs": "^6.0.0",
     "zone.js": "~0.8.26"
   },
