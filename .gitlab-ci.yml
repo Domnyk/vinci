@@ -1,4 +1,4 @@
-image: domnyk/chrome-ng-cli:6.2.3
+image: domnyk/heroku-chrome-ng-cli:6.2.3
 
 stages:
   - build
@@ -22,5 +22,5 @@ Test:
 Release:
   stage: release
   script:
-    - yarn -v
+    - dpl --provider=heroku --app=$HEROKU_PROJECT_NAME --api-key=$HEROKU_API_KEY
   when: manual

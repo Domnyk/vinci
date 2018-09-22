@@ -9,12 +9,12 @@
   "scripts": {
     "ng": "ng",
     "start:dev": "ng serve --port 8080",
-    "start:prod": "node app.js",
     "build": "ng build",
     "test:dev": "ng test",
     "test:ci": "ng test --watch=false",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "heroku-postbuild": "ng build --prod"
   },
   "private": true,
   "dependencies": {
