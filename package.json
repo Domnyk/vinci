@@ -2,10 +2,10 @@
   "name": "vinci",
   "version": "0.0.0",
   "main": "app.js",
-  "engines": {
-    "node": "~10.9.0",
-    "yarn": "~1.9.4"
-  },
+  //"engines": {
+  //  "node": "~10.9.0",
+  //  "yarn": "~1.9.4"
+  //},
   "scripts": {
     "ng": "ng",
     "start:dev": "ng serve --port 8080",
