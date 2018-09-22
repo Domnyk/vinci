@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdminDashboardComponent } from './admin-dashboard.component';
+import { ErrorNotFoundComponent } from '../app/components/error-not-found/error-not-found.component';
 
-describe('AdminDashboardComponent', () => {
-  let component: AdminDashboardComponent;
-  let fixture: ComponentFixture<AdminDashboardComponent>;
+describe('ErrorNotFoundComponent', () => {
+  let component: ErrorNotFoundComponent;
+  let fixture: ComponentFixture<ErrorNotFoundComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminDashboardComponent ]
+      declarations: [ ErrorNotFoundComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AdminDashboardComponent);
+    fixture = TestBed.createComponent(ErrorNotFoundComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

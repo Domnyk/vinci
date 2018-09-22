@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdminDashboardSidebarComponent } from './admin-dashboard-sidebar.component';
+import { AdminDashboardSidebarComponent } from '../app/components/admin-dashboard-sidebar/admin-dashboard-sidebar.component';
 
 describe('AdminDashboardSidebarComponent', () => {
   let component: AdminDashboardSidebarComponent;

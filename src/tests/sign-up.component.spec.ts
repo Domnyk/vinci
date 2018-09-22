@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SignUpComponent } from './sign-up.component';
+import { SignUpComponent } from '../app/components/sign-up/sign-up.component';
 
 describe('SignUpComponent', () => {
   let component: SignUpComponent;
@@ -21,7 +21,7 @@ describe('SignUpComponent', () => {
 
   it('should contain <form> element', () => {
     const formElement: HTMLFormElement = fixture.nativeElement.querySelector('form');
-    
+
     expect(formElement).toBeTruthy();
   });
 
