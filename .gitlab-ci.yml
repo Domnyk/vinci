@@ -15,20 +15,13 @@ Build app:
 Test:
   stage: test
   before_script:
-    # Install Chrome to use headless browser. In futere, I need to make own image with headless Chrome
     - yarn install
   script:
-    - yarn run test
-#
-# Release:
-#   stage: release
-#   before_script:
-#     - apk --update add ruby ruby-dev
-#     - gem install --no-document json
-#     - gem install --no-document dpl
-#   script:
-#     - dpl --provider=heroku --app=$HEROKU_PROJECT_NAME --api-key=$HEROKU_API_KEY
-#   only:
-#     - master
-#   when: manual
+    - yarn run test:ci
+
+Release:
+  stage: release
+  script:
+    - yarn -v
+  when: manual
 
