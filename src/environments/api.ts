@@ -24,4 +24,8 @@ export class API {
   get newSportComplexAddress() {
     return this.domain + '/api/sport_complexes';
   }
+
+  deleteSportComplexAddress(id: number) {
+    return this.domain + '/api/sport_complexes/' + id;
+  }
 }

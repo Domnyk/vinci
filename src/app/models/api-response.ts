@@ -31,3 +31,16 @@ export interface NewSportComplexError {
   status: string;
   errors: any;
 }
+
+export interface DeletedSportComplex {
+  status: string;
+  data: {
+    sport_complex: SportComplex
+  };
+}
+
+// TODO: errors property should have proper type
+export interface DeletedSportComplexError {
+  status: string;
+  errors: any;
+}

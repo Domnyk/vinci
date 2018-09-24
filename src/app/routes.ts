@@ -6,9 +6,10 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import { ErrorNotFoundComponent } from './components/error-not-found/error-not-found.component';
 import { MapComponent } from './components/components.maps/map/map.component';
 import { SportObjectComponent } from './components/sport-object/sport-object.component';
-import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
+import { AdminDashboardComponent } from './components/components.admin-dashboard/admin-dashboard/admin-dashboard.component';
 import { AdminAuthorizationGuard } from './guards/admin-authorization.guard';
-import {NewSportComplexComponent} from './components/new-sport-complex/new-sport-complex.component';
+import { NewSportComplexComponent } from './components/new-sport-complex/new-sport-complex.component';
+import { NewSportObjectComponent } from './new-sport-object/new-sport-object.component';
 
 export const routes: Routes = [
   { path: 'sign_up', component: SignUpComponent },
@@ -17,7 +18,9 @@ export const routes: Routes = [
   { path: 'sport_object/:id', component: SportObjectComponent },
   { path: 'admin_dashboard', component: AdminDashboardComponent, canActivate: [AdminAuthorizationGuard],
     children: [
-      { path: 'new_sport_complex', component: NewSportComplexComponent }]
+      { path: 'new_sport_complex', component: NewSportComplexComponent },
+      { path: 'new_sport_object', component: NewSportObjectComponent },
+    ]
   },
   { path: '', component: WelcomeComponent },
   { path: '**', component: ErrorNotFoundComponent },

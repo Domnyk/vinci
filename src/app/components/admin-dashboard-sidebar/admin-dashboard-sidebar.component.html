@@ -1,9 +1,0 @@
-<ul class="nav flex-column">
-  <li *ngFor="let sportComplex of (sportComplexes$ | async)">
-    <a routerLink="/" class="nav-link dashboard-link">{{sportComplex.name}}</a>
-  </li>
-
-  <li class="nav-item text-center">
-    <a routerLink="new_sport_complex" class="nav-link dashboard-link">Dodaj ośrodek sportowy</a>
-  </li>
-</ul>

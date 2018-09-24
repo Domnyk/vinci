@@ -1,10 +1,12 @@
 import { State, Action, StateContext } from '@ngxs/store';
-import { tap, take } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 import { SportComplex } from '../models/sport-complex';
 import { SportComplexService } from '../services/sport-complex.service';
-import { FetchAllSportComplexes } from '../components/admin-dashboard/admin-dashboard.actions';
+import { FetchAllSportComplexes } from '../components/components.admin-dashboard/admin-dashboard/admin-dashboard.actions';
 import { CreateNewSportComplex } from '../components/new-sport-complex/new-sport-complex.actions';
+import { DeleteSportComplex } from '../components/components.admin-dashboard/admin-dashboard-sidebar/admin-dashboard-sidebar.actions';
+
 
 type SportComplexes = Array<SportComplex>;
 
@@ -35,7 +37,7 @@ export class SportComplexState {
 
   @Action(CreateNewSportComplex)
   newSportComplex({ getState, setState }: StateContext<SportComplexes>, { sportComplex }: CreateNewSportComplex) {
-    type stateUpdaterType = (NewSportComplex) => void;
+    type stateUpdaterType = (newSportComplex: SportComplex) => void;
     const stateUpdater: stateUpdaterType = (newSportComplex) => {
       setState(
         [...getState().concat(newSportComplex)]
@@ -43,6 +45,22 @@ export class SportComplexState {
     };
 
     return this.sportComplexService.create(sportComplex)
+      .pipe(
+        tap(stateUpdater)
+      );
+  }
+
+  @Action(DeleteSportComplex)
+  deleteSportComplex({ getState, setState }: StateContext<SportComplexes>, { id }: DeleteSportComplex) {
+    type stateUpdaterType = (deletedSportComplex: SportComplex) => void;
+    const stateUpdater: stateUpdaterType = () => {
+      const updatedSportComplexList: SportComplexes = getState().filter((sportComplex: SportComplex) => sportComplex.id !== id);
+      setState(
+        [...updatedSportComplexList]
+      );
+    };
+
+    return this.sportComplexService.delete(id)
       .pipe(
         tap(stateUpdater)
       );

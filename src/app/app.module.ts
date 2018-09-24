@@ -20,10 +20,12 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { MapComponent } from './components/components.maps/map/map.component';
 import { SportObjectComponent } from './components/sport-object/sport-object.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
+import { AdminDashboardComponent } from './components/components.admin-dashboard/admin-dashboard/admin-dashboard.component';
 import { NewSportComplexComponent } from './components/new-sport-complex/new-sport-complex.component';
-import { AdminDashboardSidebarComponent } from './components/admin-dashboard-sidebar/admin-dashboard-sidebar.component';
+import { AdminDashboardSidebarComponent } from './components/components.admin-dashboard/admin-dashboard-sidebar/admin-dashboard-sidebar.component';
 import {SportComplexState} from './state/sport-complex.state';
+import { NewSportObjectComponent } from './new-sport-object/new-sport-object.component';
+import { ModalComponent } from './components/components.common/modal/modal.component';
 
 
 @NgModule({
@@ -39,6 +41,8 @@ import {SportComplexState} from './state/sport-complex.state';
     AdminDashboardComponent,
     NewSportComplexComponent,
     AdminDashboardSidebarComponent,
+    NewSportObjectComponent,
+    ModalComponent,
   ],
   imports: [
     RouterModule.forRoot(
