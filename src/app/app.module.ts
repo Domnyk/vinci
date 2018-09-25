@@ -26,6 +26,7 @@ import { AdminDashboardSidebarComponent } from './components/components.admin-da
 import {SportComplexState} from './state/sport-complex.state';
 import { NewSportObjectComponent } from './new-sport-object/new-sport-object.component';
 import { ModalComponent } from './components/components.common/modal/modal.component';
+import { SportComplexDashboardComponent } from './components/components.admin-dashboard/sport-complex-dashboard/sport-complex-dashboard.component';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { ModalComponent } from './components/components.common/modal/modal.compo
     AdminDashboardSidebarComponent,
     NewSportObjectComponent,
     ModalComponent,
+    SportComplexDashboardComponent,
   ],
   imports: [
     RouterModule.forRoot(

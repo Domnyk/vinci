@@ -2,7 +2,7 @@
   <li *ngFor="let sportComplex of (sportComplexes$ | async)">
     <a href="#sportComplexMenu{{sportComplex.id}}" class="nav-link dashboard-link" data-toggle="collapse">{{sportComplex.name}}</a>
     <ul class="collapse" id="sportComplexMenu{{sportComplex.id}}">
-      <a routerLink="new_sport_object" class="nav-link dashboard-link">Dodaj nowy obiekt</a>
+      <a routerLink="sport_complex_dashboard/{{sportComplex.id}}" class="nav-link dashboard-link">Zarządzaj ośrodkiem</a>
       <a href="#deleteSportComplex{{sportComplex.id}}" class="nav-link dashboard-link" data-toggle="modal">
         Usuń ośrodek
       </a>
@@ -14,6 +14,6 @@
   </li>
 
   <li class="nav-item">
-    <a routerLink="new_sport_complex" class="nav-link dashboard-link text-info">Dodaj ośrodek sportowy</a>
+     <a routerLink="new_sport_complex" class="nav-link dashboard-link text-info">Dodaj nowy ośrodek sportowy</a>
   </li>
 </ul>

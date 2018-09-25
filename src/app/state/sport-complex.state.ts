@@ -1,4 +1,4 @@
-import { State, Action, StateContext } from '@ngxs/store';
+import {State, Action, StateContext, Selector, createSelector} from '@ngxs/store';
 import { tap } from 'rxjs/operators';
 
 import { SportComplex } from '../models/sport-complex';
@@ -6,6 +6,7 @@ import { SportComplexService } from '../services/sport-complex.service';
 import { FetchAllSportComplexes } from '../components/components.admin-dashboard/admin-dashboard/admin-dashboard.actions';
 import { CreateNewSportComplex } from '../components/new-sport-complex/new-sport-complex.actions';
 import { DeleteSportComplex } from '../components/components.admin-dashboard/admin-dashboard-sidebar/admin-dashboard-sidebar.actions';
+import {Observable} from 'rxjs';
 
 
 type SportComplexes = Array<SportComplex>;
@@ -21,6 +22,12 @@ export class SportComplexState {
   constructor(
     private sportComplexService: SportComplexService,
   ) { }
+
+  static sportComplex(id: number) {
+    return createSelector([SportComplexState], (state: SportComplexes) => {
+      return state.filter(sportComplex => sportComplex.id === id);
+    });
+  }
 
   @Action(FetchAllSportComplexes)
   fetchAllSportComplexesHandler({ setState }: StateContext<SportComplexes>) {
