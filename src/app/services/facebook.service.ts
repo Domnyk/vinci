@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, bindCallback } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +43,7 @@ export class FacebookService {
 
   private initFb() {
     FB.init({
-      appId            : '315422445647491',
+      appId            : environment.facebookAppId,
       xfbml            : true,
       version          : 'v3.1',
       status           : true
