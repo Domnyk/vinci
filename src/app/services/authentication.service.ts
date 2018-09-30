@@ -40,7 +40,7 @@ export class AuthenticationService {
 
   private makeAuthenticationReq(authMethod: AuthMethod, userData: Object): Observable<Object> {
     const payload = this.calculatePayload(authMethod, userData);
-    return this.http.post(environment.api.signInAddress, payload);
+    return this.http.post(environment.api.signInURL, payload);
   }
 
   private calculatePayload(authMethod: AuthMethod, userData: Object): Object {

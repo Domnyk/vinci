@@ -31,8 +31,9 @@ export class GeocoderService {
   }
 }
 
-// TODO: Fix error in typing file. results.geometry.location is LatLngLiteral not LatLng
-// TODO: This is commented until typing error will be fixed
+/*
+  TODO: Fix error in typing file. results.geometry.location is LatLngLiteral not LatLng. This is commented until typing error will be fixed
+*/
 /* interface GoogleGeocoderResponse {
   results: GeocoderResult[];
   status: GeocoderStatus;

@@ -17,7 +17,7 @@ import { environment } from '../../../environments/environment';
   styleUrls: ['./sign-in.component.css']
 })
 export class SignInComponent implements OnInit {
-  fbSignInAddress = environment.api.fbSignInAddress;
+  fbSignInAddress = environment.api.fbSignInURL;
   userLoginStatus: any;
 
   user: User = new User(null, null);

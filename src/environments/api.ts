@@ -1,39 +1,30 @@
 import { EscapedBuildingAddress } from '../app/models/building-address';
 
+/**
+ * @deprecated Use @class API2<T>
+ */
 export class API {
   constructor(private domain: string) { }
 
-  get signUpAddress() {
+  get signUpURL() {
     return this.domain + '/api/users';
   }
 
-  get fbSignInAddress() {
+  get fbSignInURL() {
     return this.domain + '/api/auth/facebook';
   }
 
-  get signInAddress() {
-    return this.domain + '/api/token';
+  get signInURL() {
+    return this.domain + '/token';
   }
 
-  get sportObjectsAddress() {
-    return this.domain + '/api/sport_objects';
+  entityURLs(entityURL: string) {
+    return {
+      fetchAll: `${this.domain}/${entityURL}`,
+      create: `${this.domain}/${entityURL}`,
+      delete: (id: number) => `${this.domain}/${entityURL}/${id}`,
+    };
   }
-
-  get sportComplexesAddress() {
-    return this.domain + '/api/sport_complexes';
-  }
-
-  get newSportComplexAddress() {
-    return this.domain + '/api/sport_complexes';
-  }
-
-  deleteSportComplexAddress(id: number) {
-    return this.domain + '/api/sport_complexes/' + id;
-  }
-
-  get newSportObjectAddress() {
-    return this.domain + '/api/sport_objects';
-  };
 
   /**
    * Returns URL which allows to translate address to geographic coordinates

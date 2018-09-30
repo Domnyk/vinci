@@ -1,12 +1,11 @@
-import {State, Action, StateContext, Selector, createSelector} from '@ngxs/store';
+import { State, Action, StateContext, createSelector } from '@ngxs/store';
 import { tap } from 'rxjs/operators';
 
 import { SportComplex } from '../models/sport-complex';
-import { SportComplexService } from '../services/sport-complex.service';
 import { FetchAllSportComplexes } from '../components/components.admin-dashboard/admin-dashboard/admin-dashboard.actions';
 import { CreateNewSportComplex } from '../components/new-sport-complex/new-sport-complex.actions';
 import { DeleteSportComplex } from '../components/components.admin-dashboard/admin-dashboard-sidebar/admin-dashboard-sidebar.actions';
-import {Observable} from 'rxjs';
+import { EntityService } from '../services/entity.service';
 
 
 type SportComplexes = Array<SportComplex>;
@@ -20,7 +19,7 @@ type SportComplexes = Array<SportComplex>;
 
 export class SportComplexState {
   constructor(
-    private sportComplexService: SportComplexService,
+    private sportComplexService: EntityService<SportComplex>
   ) { }
 
   static sportComplex(id: number) {
@@ -33,25 +32,26 @@ export class SportComplexState {
   fetchAllSportComplexesHandler({ setState }: StateContext<SportComplexes>) {
     type StateUpdaterType = (SportComplexes) => void;
     const stateUpdater: StateUpdaterType = (sportComplexes) => {
-      setState([...sportComplexes]);
+      setState([...sportComplexes.sport_complexes]);
     };
 
-    return this.sportComplexService.fetchAll()
+    return this.sportComplexService.fetchAll('sport_complexes')
       .pipe(
         tap(stateUpdater)
       );
   }
 
+  // TODO: Replace any with something more appropriate
   @Action(CreateNewSportComplex)
   newSportComplex({ getState, setState }: StateContext<SportComplexes>, { sportComplex }: CreateNewSportComplex) {
-    type stateUpdaterType = (newSportComplex: SportComplex) => void;
+    type stateUpdaterType = (newSportComplex: any) => void;
     const stateUpdater: stateUpdaterType = (newSportComplex) => {
       setState(
-        [...getState().concat(newSportComplex)]
+        [...getState().concat(newSportComplex.sport_complex)]
       );
     };
 
-    return this.sportComplexService.create(sportComplex)
+    return this.sportComplexService.create(sportComplex, 'sport_complexes')
       .pipe(
         tap(stateUpdater)
       );
@@ -67,7 +67,7 @@ export class SportComplexState {
       );
     };
 
-    return this.sportComplexService.delete(id)
+    return this.sportComplexService.delete(id, 'sport_complexes')
       .pipe(
         tap(stateUpdater)
       );

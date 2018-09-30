@@ -9,7 +9,7 @@ import { MarkerInfoWindowService } from './marker-info-window.service';
 export class MarkerService {
   constructor(private markerInfoWindowService: MarkerInfoWindowService) { }
 
-  public addMarker(sportObject: SportObject, map: google.maps.Map): Marker {
+  public addMarker(sportObject: any /* SportObject */, map: google.maps.Map): Marker {
     let marker: google.maps.Marker,
         infoWindow: google.maps.InfoWindow;
     const { latitude, longitude } = sportObject.geo_coordinates;

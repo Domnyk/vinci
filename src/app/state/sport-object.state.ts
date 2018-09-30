@@ -3,8 +3,8 @@ import { Action, State, StateContext } from '@ngxs/store';
 import { CreateNewSportObject } from '../components/new-sport-object/new-sport-object.actions';
 import { GeocoderService } from '../services/geocoder.service';
 import { flatMap } from 'rxjs/operators';
-import { SportObjectService } from '../services/sport-object.service';
 import { tap } from 'rxjs/internal/operators';
+import {EntityService} from '../services/entity.service';
 
 type SportObjects = Array<SportObject>;
 
@@ -17,7 +17,7 @@ export class SportObjectState {
 
   constructor(
     private geoCoder: GeocoderService,
-    private sportObjectService: SportObjectService
+    private entityServiceForSportObject: EntityService<SportObject>
   ) { }
 
   @Action(CreateNewSportObject)
@@ -32,7 +32,7 @@ export class SportObjectState {
       .pipe(
         flatMap((coords: Coords) => {
           sportObject.geoCoordinates = coords;
-          return this.sportObjectService.create(sportObject);
+          return this.entityServiceForSportObject.create(sportObject, 'sport_objects');
         }),
         tap(stateUpdater)
       );

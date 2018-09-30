@@ -1,5 +1,3 @@
-import { SportComplex } from './sport-complex';
-
 export interface SignInResponse {
   status: string;
   email: string;
@@ -16,41 +14,28 @@ export interface SignUpResponse {
  display_name?: string;
 }
 
-export interface SportComplexList {
+export interface EntityList<T> {
   status: string;
-  data: Array<Object>;
+  data: Array<T>;
 }
 
-export interface NewSportComplex {
-  status: string;
-  data: SportComplex;
-}
-
-// TODO: errors property should have proper type
-export interface NewSportComplexError {
-  status: string;
-  errors: any;
-}
-
-export interface DeletedSportComplex {
-  status: string;
-  data: {
-    sport_complex: SportComplex
-  };
-}
-
-// TODO: errors property should have proper type
-export interface DeletedSportComplexError {
-  status: string;
-  errors: any;
-}
 
 export interface NewEntity<T> {
   status: string;
-  entity: T;
+  data: T;
 }
 
 export interface NewEntityError {
   status: string;
   errors: any;
+}
+
+export interface DeleteEntityError {
+  status: string;
+  errors: any;
+}
+
+export interface DeletedEntity {
+  status: string;
+  data: any;
 }

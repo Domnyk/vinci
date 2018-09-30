@@ -1,16 +1,16 @@
 import { UnescapedBuildingAddress } from './building-address';
 import { DTO } from './dto';
 
-export class SportObject extends DTO {
+export class SportObject implements DTO {
   constructor(
     public id: number,
     public name: string,
     public address: UnescapedBuildingAddress,
     public geoCoordinates: Coords,
     public bookingMargin: BookingMargin
-  ) { super(); }
+  ) { }
 
-  get dto(): SportObjectDTO {
+   dto(): SportObjectDTO {
     return {
       data: {
         sport_object: {
