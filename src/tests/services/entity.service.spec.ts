@@ -2,7 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 
 import { EntityService } from '../../app/services/entity.service';
 
-describe('EntityService', () => {
+xdescribe('EntityService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [EntityService]
