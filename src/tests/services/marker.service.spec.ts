@@ -29,8 +29,8 @@ describe('MarkerService', () => {
             actualMarkerLatitude = googleMapsMarker.getPosition().lat(),
             actualMarkerLongitude = googleMapsMarker.getPosition().lng();
 
-      expect(actualMarkerLatitude).toEqual(sportObject.geo_coordinates.latitude);
-      expect(actualMarkerLongitude).toEqual(sportObject.geo_coordinates.longitude);
+      expect(actualMarkerLatitude).toEqual(sportObject.geoCoordinates.latitude);
+      expect(actualMarkerLongitude).toEqual(sportObject.geoCoordinates.longitude);
     });
 
     // TODO: Think how to test it

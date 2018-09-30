@@ -27,6 +27,7 @@ import { SportComplexState } from './state/sport-complex.state';
 import { NewSportObjectComponent } from './components/new-sport-object/new-sport-object.component';
 import { ModalComponent } from './components/components.common/modal/modal.component';
 import { SportComplexDashboardComponent } from './components/components.admin-dashboard/sport-complex-dashboard/sport-complex-dashboard.component';
+import { SportObjectState } from './state/sport-object.state';
 
 
 @NgModule({
@@ -57,6 +58,7 @@ import { SportComplexDashboardComponent } from './components/components.admin-da
     NgxsModule.forRoot([
       CurrentUserState,
       SportComplexState,
+      SportObjectState,
     ]),
     NgxsLoggerPluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot(),

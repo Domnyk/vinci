@@ -1,3 +1,53 @@
-<p>
-  new-sport-object works!
-</p>
+<div class="row">
+  <section class="col">
+    <h2>Dodaj nowy obiekt</h2>
+
+    <form (ngSubmit)="onSubmit()" #newSportComplexForm="ngForm">
+      <div class="form-group">
+        <label for="name">Nazwa</label>
+        <input [(ngModel)]="sportObject.name" name="name" type="text" class="form-control" aria-describedby="name"
+               placeholder="Podaj nazwę" required>
+      </div>
+
+      <div class="form-group form-row">
+        <div class="col">
+          <label for="bookingMargin.months">Margines rezerwacji (w miesiąch)</label>
+          <input [(ngModel)]="sportObject.bookingMargin.months" name="bookingMargin.months" type="number" class="form-control" aria-describedby="booking margin in months"
+                 placeholder="Podaj margines rezerwacji (w miesiącach)" required>
+        </div>
+
+        <div class="col">
+          <label for="bookingMargin.days">Margines rezerwacji (w dniach)</label>
+          <input [(ngModel)]="sportObject.bookingMargin.days" name="bookingMargin.days" type="number" class="form-control" aria-describedby="booking margin in days"
+                 placeholder="Podaj margines rezerwacji (w dniach)" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="street">Ulica</label>
+        <input [(ngModel)]="sportObject.address.street" name="street" type="text" class="form-control" aria-describedby="street"
+               placeholder="Podaj ulicę" required>
+      </div>
+
+      <div class="form-group">
+        <label for="buildingNumber">Numer budynku</label>
+        <input [(ngModel)]="sportObject.address.buildingNumber" name="buildingNumber" type="number" class="form-control" aria-describedby="building number"
+               placeholder="Podaj numer budynku" required>
+      </div>
+
+      <div class="form-group">
+        <label for="postalCode">Kod pocztowy</label>
+        <input [(ngModel)]="sportObject.address.postalCode" name="postalCode" type="text" class="form-control" aria-describedby="postal code"
+               placeholder="Podaj kod pocztowy" required>
+      </div>
+
+      <div class="form-group">
+        <label for="city">Miasto</label>
+        <input [(ngModel)]="sportObject.address.city" name="city" type="text" class="form-control" aria-describedby="city"
+               placeholder="Podaj miasto" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Dodaj obiekt</button>
+    </form>
+  </section>
+</div>
+

@@ -27,7 +27,7 @@ export class MapComponent implements OnInit {
   }
 
   private createMap(currentLocation: Coords, sportObjects: Array<SportObject>) {
-
+    console.log('sport objects are: ', sportObjects);
 
     this.map = new google.maps.Map(document.getElementById('map'), { center: currentLocation.asGoogleCoords, zoom: 15 });
 

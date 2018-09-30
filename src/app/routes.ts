@@ -10,6 +10,7 @@ import { AdminDashboardComponent } from './components/components.admin-dashboard
 import { AdminAuthorizationGuard } from './guards/admin-authorization.guard';
 import { NewSportComplexComponent } from './components/new-sport-complex/new-sport-complex.component';
 import { SportComplexDashboardComponent } from './components/components.admin-dashboard/sport-complex-dashboard/sport-complex-dashboard.component';
+import {NewSportObjectComponent} from './components/new-sport-object/new-sport-object.component';
 
 export const routes: Routes = [
   { path: 'sign_up', component: SignUpComponent },
@@ -20,6 +21,7 @@ export const routes: Routes = [
     children: [
       { path: 'new_sport_complex', component: NewSportComplexComponent },
       { path: 'sport_complex_dashboard/:id', component: SportComplexDashboardComponent },
+      { path: 'sport_complex_dashboard/:id/new_sport_object', component: NewSportObjectComponent }
     ]
   },
   { path: '', component: WelcomeComponent },

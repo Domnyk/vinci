@@ -44,3 +44,13 @@ export interface DeletedSportComplexError {
   status: string;
   errors: any;
 }
+
+export interface NewEntity<T> {
+  status: string;
+  entity: T;
+}
+
+export interface NewEntityError {
+  status: string;
+  errors: any;
+}
