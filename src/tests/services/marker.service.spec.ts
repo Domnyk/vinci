@@ -21,7 +21,7 @@ describe('MarkerService', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('addMarker', () => {
+  /* describe('addMarker', () => {
     xit('should place marker on right position', () => {
       const sportObject: SportObject = new SportObject(1, 'Pływalnia Polonez', new Coords(52.299046, 21.033690 ));
 
@@ -45,5 +45,5 @@ describe('MarkerService', () => {
 
       expect(infoWindowContent).toContain(sportObject.name);
     });
-  });
+  }); */
 });

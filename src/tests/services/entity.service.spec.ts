@@ -9,7 +9,7 @@ xdescribe('EntityService', () => {
     });
   });
 
-  it('should be created', inject([EntityService], (service: EntityService) => {
+  /* it('should be created', inject([EntityService], (service: EntityService) => {
     expect(service).toBeTruthy();
-  }));
+  })); */
 });
