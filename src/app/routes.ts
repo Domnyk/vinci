@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
-import { WelcomeComponent } from './components/welcome/welcome.component';
+import { WelcomeNewUserComponent } from './components/components.welcome/welcome/welcome-new-user.component';
 import { ErrorNotFoundComponent } from './components/error-not-found/error-not-found.component';
 import { MapComponent } from './components/components.maps/map/map.component';
 import { SportObjectComponent } from './components/sport-object/sport-object.component';
@@ -24,6 +24,6 @@ export const routes: Routes = [
       { path: 'sport_complex_dashboard/:id/new_sport_object', component: NewSportObjectComponent }
     ]
   },
-  { path: '', component: WelcomeComponent },
+  { path: '', component: WelcomeNewUserComponent },
   { path: '**', component: ErrorNotFoundComponent },
 ];

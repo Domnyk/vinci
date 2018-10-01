@@ -14,7 +14,7 @@ import { CurrentUserState } from './state/user.state';
 
 import { AppComponent } from './app.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
-import { WelcomeComponent } from './components/welcome/welcome.component';
+import { WelcomeNewUserComponent } from './components/components.welcome/welcome/welcome-new-user.component';
 import { ErrorNotFoundComponent } from './components/error-not-found/error-not-found.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { MapComponent } from './components/components.maps/map/map.component';
@@ -34,7 +34,7 @@ import { SportObjectState } from './state/sport-object.state';
   declarations: [
     AppComponent,
     SignUpComponent,
-    WelcomeComponent,
+    WelcomeNewUserComponent,
     ErrorNotFoundComponent,
     SignInComponent,
     MapComponent,
