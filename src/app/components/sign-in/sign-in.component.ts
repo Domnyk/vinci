@@ -36,7 +36,8 @@ export class SignInComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.store.dispatch(new SignInWithPassword());
+    this.store.dispatch(new SignInWithPassword(this.user))
+      .subscribe(() => this.router.navigate(['/admin_dashboard']));
   }
 
 }

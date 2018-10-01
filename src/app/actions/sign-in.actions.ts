@@ -1,3 +1,5 @@
+import { User } from '../models/user';
+
 export class SignInWithFb {
   static readonly type = `[sign-in component] User has clicked 'Sign in with Facebook' button`
 
@@ -7,5 +9,5 @@ export class SignInWithFb {
 export class SignInWithPassword {
   static readonly type = `[sign-in component] User has clicked 'Sing in' button`;
 
-  constructor() { }
+  constructor(public user: User) { }
 }

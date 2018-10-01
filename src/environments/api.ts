@@ -7,7 +7,7 @@ export class API {
   constructor(private domain: string) { }
 
   get signUpURL() {
-    return this.domain + '/api/users';
+    return this.domain + '/users';
   }
 
   get fbSignInURL() {
