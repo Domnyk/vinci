@@ -14,7 +14,7 @@ import { CurrentUserState } from './state/user.state';
 
 import { AppComponent } from './app.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
-import { WelcomeNewUserComponent } from './components/components.welcome/welcome/welcome-new-user.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
 import { ErrorNotFoundComponent } from './components/error-not-found/error-not-found.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { MapComponent } from './components/components.maps/map/map.component';
@@ -28,13 +28,14 @@ import { NewSportObjectComponent } from './components/new-sport-object/new-sport
 import { ModalComponent } from './components/components.common/modal/modal.component';
 import { SportComplexDashboardComponent } from './components/components.admin-dashboard/sport-complex-dashboard/sport-complex-dashboard.component';
 import { SportObjectState } from './state/sport-object.state';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     SignUpComponent,
-    WelcomeNewUserComponent,
+    WelcomeComponent,
     ErrorNotFoundComponent,
     SignInComponent,
     MapComponent,
@@ -63,7 +64,7 @@ import { SportObjectState } from './state/sport-object.state';
     NgxsLoggerPluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot(),
   ],
-  providers: [],
+  providers: [ CookieService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
