@@ -64,7 +64,7 @@ import { CookieService } from 'ngx-cookie-service';
     NgxsLoggerPluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot(),
   ],
-  providers: [ CookieService ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
