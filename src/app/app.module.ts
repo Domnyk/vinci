@@ -28,7 +28,6 @@ import { NewSportObjectComponent } from './components/new-sport-object/new-sport
 import { ModalComponent } from './components/components.common/modal/modal.component';
 import { SportComplexDashboardComponent } from './components/components.admin-dashboard/sport-complex-dashboard/sport-complex-dashboard.component';
 import { SportObjectState } from './state/sport-object.state';
-import { CookieService } from 'ngx-cookie-service';
 
 
 @NgModule({
