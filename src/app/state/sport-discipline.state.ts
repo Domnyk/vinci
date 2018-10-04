@@ -3,6 +3,7 @@ import { Action, State, StateContext } from '@ngxs/store';
 import { EntityService } from '../services/entity.service';
 import { FetchSportDisciplines } from '../components/components.admin-dashboard/new-sport-arena/new-sport-arena.actions';
 import { tap } from 'rxjs/operators';
+import { SportDiscipline } from '../models/sport-discipline';
 
 type SportDisciplines = Array<SportDiscipline>;
 
