@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { ModelFactoryService } from '../../services/model-factory.service';
+import { ModelFactoryService } from '../../../services/model-factory.service';
 import {CreateNewSportObject} from './new-sport-object.actions';
 
 @Component({

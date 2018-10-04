@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BookingMargin, Coords, SportObject } from '../models/sport-object';
 import { UnescapedBuildingAddress } from '../models/building-address';
+import { SportDiscipline } from '../models/sport-discipline';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ export class ModelFactoryService {
 
   get forForm(): ForForm {
     return {
-      newSportObject: () => SportObjectFactory.sportObject
+      newSportObject: () => SportObjectFactory.sportObject,
+      newSportDiscipline: () => SportDisciplineFactory.sportDiscipline
     };
   }
 }
@@ -27,8 +29,20 @@ class SportObjectFactory {
   }
 }
 
+class SportDisciplineFactory {
+  static get sportDiscipline(): SportDiscipline {
+    const id: number = null,
+          name = '';
+
+    return new SportDiscipline(id, name);
+  }
+
+
+}
+
 interface ForForm {
   newSportObject: () => SportObject;
+  newSportDiscipline: () => SportDiscipline;
 }
 
 

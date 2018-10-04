@@ -8,9 +8,10 @@ import { MapComponent } from './components/components.maps/map/map.component';
 import { SportObjectComponent } from './components/sport-object/sport-object.component';
 import { AdminDashboardComponent } from './components/components.admin-dashboard/admin-dashboard/admin-dashboard.component';
 import { AdminAuthorizationGuard } from './guards/admin-authorization.guard';
-import { NewSportComplexComponent } from './components/new-sport-complex/new-sport-complex.component';
+import { NewSportComplexComponent } from './components/components.admin-dashboard/new-sport-complex/new-sport-complex.component';
 import { SportComplexDashboardComponent } from './components/components.admin-dashboard/sport-complex-dashboard/sport-complex-dashboard.component';
-import {NewSportObjectComponent} from './components/new-sport-object/new-sport-object.component';
+import {NewSportObjectComponent} from './components/components.admin-dashboard/new-sport-object/new-sport-object.component';
+import {NewSportArenaComponent} from './components/components.admin-dashboard/new-sport-arena/new-sport-arena.component';
 
 export const routes: Routes = [
   { path: 'sign_up', component: SignUpComponent },
@@ -20,6 +21,7 @@ export const routes: Routes = [
   { path: 'admin_dashboard', component: AdminDashboardComponent, canActivate: [AdminAuthorizationGuard],
     children: [
       { path: 'new_sport_complex', component: NewSportComplexComponent },
+      { path: 'new_sport_arena', component: NewSportArenaComponent },
       { path: 'sport_complex_dashboard/:id', component: SportComplexDashboardComponent },
       { path: 'sport_complex_dashboard/:id/new_sport_object', component: NewSportObjectComponent }
     ]

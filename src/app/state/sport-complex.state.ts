@@ -3,7 +3,7 @@ import { tap } from 'rxjs/operators';
 
 import { SportComplex } from '../models/sport-complex';
 import { FetchAllSportComplexes } from '../components/components.admin-dashboard/admin-dashboard/admin-dashboard.actions';
-import { CreateNewSportComplex } from '../components/new-sport-complex/new-sport-complex.actions';
+import { CreateNewSportComplex } from '../components/components.admin-dashboard/new-sport-complex/new-sport-complex.actions';
 import { DeleteSportComplex } from '../components/components.admin-dashboard/admin-dashboard-sidebar/admin-dashboard-sidebar.actions';
 import { EntityService } from '../services/entity.service';
 
