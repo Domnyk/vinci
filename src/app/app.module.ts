@@ -21,13 +21,15 @@ import { MapComponent } from './components/components.maps/map/map.component';
 import { SportObjectComponent } from './components/sport-object/sport-object.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AdminDashboardComponent } from './components/components.admin-dashboard/admin-dashboard/admin-dashboard.component';
-import { NewSportComplexComponent } from './components/new-sport-complex/new-sport-complex.component';
+import { NewSportComplexComponent } from './components/components.admin-dashboard/new-sport-complex/new-sport-complex.component';
 import { AdminDashboardSidebarComponent } from './components/components.admin-dashboard/admin-dashboard-sidebar/admin-dashboard-sidebar.component';
 import { SportComplexState } from './state/sport-complex.state';
-import { NewSportObjectComponent } from './components/new-sport-object/new-sport-object.component';
+import { NewSportObjectComponent } from './components/components.admin-dashboard/new-sport-object/new-sport-object.component';
 import { ModalComponent } from './components/components.common/modal/modal.component';
 import { SportComplexDashboardComponent } from './components/components.admin-dashboard/sport-complex-dashboard/sport-complex-dashboard.component';
 import { SportObjectState } from './state/sport-object.state';
+import { NewSportArenaComponent } from './components/components.admin-dashboard/new-sport-arena/new-sport-arena.component';
+import { SportDisciplineState } from './state/sport-discipline.state';
 
 
 @NgModule({
@@ -46,6 +48,7 @@ import { SportObjectState } from './state/sport-object.state';
     NewSportObjectComponent,
     ModalComponent,
     SportComplexDashboardComponent,
+    NewSportArenaComponent,
   ],
   imports: [
     RouterModule.forRoot(
@@ -59,6 +62,7 @@ import { SportObjectState } from './state/sport-object.state';
       CurrentUserState,
       SportComplexState,
       SportObjectState,
+      SportDisciplineState
     ]),
     NgxsLoggerPluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot(),

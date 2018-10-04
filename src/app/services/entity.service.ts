@@ -9,7 +9,7 @@ import { DTO } from '../models/dto';
 @Injectable({
   providedIn: 'root'
 })
-export class EntityService<T extends DTO> {
+export class EntityService<T> {
 
   constructor(
     private http: HttpClient
@@ -39,11 +39,11 @@ export class EntityService<T extends DTO> {
   /**
    * Creates new entity
    *
-   * @param {T} entity - entity to create
+   * @param {K} entity - entity to create
    * @param {string} entityURL - @see fetchAll
    */
-  create(entity: T, entityURL: string): Observable<T> {
-    type responseHandlerType = (response: NewEntity<T> & NewEntityError) => Observable<T>;
+  create<K extends (T & DTO)>(entity: K, entityURL: string): Observable<K> {
+    type responseHandlerType = (response: NewEntity<K> & NewEntityError) => Observable<K>;
     const responseHandler: responseHandlerType = (response) => {
 
       if (response.status === 'ok') {
