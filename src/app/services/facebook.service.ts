@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, bindCallback } from 'rxjs';
-import { environment } from '../../environments/environment';
+import { environment } from '../../environments/environment.generated.dev';
 
 @Injectable({
   providedIn: 'root'

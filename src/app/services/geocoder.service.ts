@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
+import { environment } from '../../environments/environment.generated.dev';
 import { BuildingAddress, UnescapedBuildingAddress } from '../models/building-address';
 import { HttpClient } from '@angular/common/http';
 import { flatMap } from 'rxjs/operators';

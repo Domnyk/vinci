@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { DeletedEntity, DeleteEntityError, EntityList, NewEntity, NewEntityError, } from '../models/api-response';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import { environment } from '../../environments/environment.generated.dev';
 import { flatMap } from 'rxjs/operators';
 import { DTO } from '../models/dto';
 

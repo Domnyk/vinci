@@ -14,7 +14,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/vinci",
-            "index": "src/index.html",
+            "index": "src/index.generated.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
@@ -31,8 +31,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "replace": "src/environments/environment.generated.dev.ts",
+                  "with": "src/environments/environment.generated.prod.ts"
                 }
               ],
               "optimization": true,
