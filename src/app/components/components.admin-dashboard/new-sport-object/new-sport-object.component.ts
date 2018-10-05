@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { ModelFactoryService } from '../../../services/model-factory.service';
-import {CreateNewSportObject} from './new-sport-object.actions';
+import { CreateNewSportObject } from './new-sport-object.actions';
+import { ShowFlashMessage } from '../../../actions/flash-message.actions';
 
 @Component({
   selector: 'app-new-sport-object',
@@ -21,7 +22,8 @@ export class NewSportObjectComponent implements OnInit {
   }
 
   onSubmit() {
-    this.store.dispatch(new CreateNewSportObject(this.sportObject));
+    this.store.dispatch(new CreateNewSportObject(this.sportObject))
+      .subscribe(() => this.store.dispatch(new ShowFlashMessage('Nowy obiekt sportowy został dodany')));
   }
 
 }

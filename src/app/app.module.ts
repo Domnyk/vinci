@@ -30,6 +30,8 @@ import { SportComplexDashboardComponent } from './components/components.admin-da
 import { SportObjectState } from './state/sport-object.state';
 import { NewSportArenaComponent } from './components/components.admin-dashboard/new-sport-arena/new-sport-arena.component';
 import { SportDisciplineState } from './state/sport-discipline.state';
+import { FlashMessageComponent } from './components/flash-message/flash-message.component';
+import { FlashMessageState } from './state/flash-message.state';
 
 
 @NgModule({
@@ -49,6 +51,7 @@ import { SportDisciplineState } from './state/sport-discipline.state';
     ModalComponent,
     SportComplexDashboardComponent,
     NewSportArenaComponent,
+    FlashMessageComponent,
   ],
   imports: [
     RouterModule.forRoot(
@@ -62,7 +65,8 @@ import { SportDisciplineState } from './state/sport-discipline.state';
       CurrentUserState,
       SportComplexState,
       SportObjectState,
-      SportDisciplineState
+      SportDisciplineState,
+      FlashMessageState,
     ]),
     NgxsLoggerPluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot(),
