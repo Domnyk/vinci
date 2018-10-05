@@ -39,6 +39,11 @@ elif [[ ${ENV} == "prod" ]]; then
 
   FILENAME_ENV="./src/environments/environment.${GENERATION_INTERFIX}.${ENV}.ts"
 
+  # Dev env file has to be generated to make Angular's env file replacement work
+  DEV_ENV_MOCK="./src/environments/environment.${GENERATION_INTERFIX}.dev.ts"
+  touch "${DEV_ENV_MOCK}"
+  echo "Generated ${DEV_ENV_MOCK}"
+
   sed -e "s;{{#PRODUCTION#}};true;" \
       -e "s;{{#API_ADDRESS#}};$API_ADDRESS_PROD;" \
       -e "s;{{#GOOGLE_MAPS_API_KEY#}};$GOOGLE_MAPS_API_KEY_PROD;" \
