@@ -19,6 +19,8 @@ exit_if_empty () {
 if [[ ${ENV} == "dev" ]] || [[ ${ENV} == "test" ]]; then
   exit_if_empty GOOGLE_MAPS_API_KEY_DEV
 
+  # TODO: Delete this after adding separate step for test stage
+  ENV="dev"
   FILENAME_ENV="./src/environments/environment.${GENERATION_INTERFIX}.${ENV}.ts"
 
   sed -e "s;{{#PRODUCTION#}};false;" \
