@@ -7,7 +7,7 @@ const express = require('express'),
 app.use(express.static(path.join(__dirname, 'dist/vinci')));
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist/vinci/index.html'));
+  res.sendFile(path.join(__dirname, 'dist/vinci/index.generated.html'));
 });
 
 http

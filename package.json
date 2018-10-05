@@ -4,13 +4,13 @@
   "main": "app.js",
   "scripts": {
     "ng": "ng",
-    "start:dev": "ng serve --port 8080",
-    "build": "ng build",
-    "test:dev": "ng test",
-    "test:ci": "ng test --watch=false",
+    "start:dev": "bash configure.sh dev && ng serve --port 8080 --ssl",
+    "build": "bash configure.sh dev && ng build",
+    "test:dev": "bash configure.sh test && ng test",
+    "test:ci": "bash configure.sh test && ng test --watch=false",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "heroku-postbuild": "ng build --prod"
+    "heroku-postbuild": "bash configure.sh prod && ng build --prod"
   },
   "private": true,
   "dependencies": {

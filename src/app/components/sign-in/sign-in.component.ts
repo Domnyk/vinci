@@ -9,7 +9,7 @@ import { SignInWithFb, SignInWithPassword } from '../../actions/sign-in.actions'
 import { User } from '../../models/user';
 import { FbUser } from '../../models/fb-user';
 
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../environments/environment.generated.dev';
 
 @Component({
   selector: 'app-sign-in',
