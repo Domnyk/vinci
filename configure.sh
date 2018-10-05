@@ -16,7 +16,7 @@ exit_if_empty () {
    fi
 }
 
-if [[ ${ENV} == "dev" ]] || [[ ${ENV} == "test" ]]; then
+if [ ${ENV} == "dev" ] || [ ${ENV} == "test" ]; then
   exit_if_empty GOOGLE_MAPS_API_KEY_DEV
 
   FILENAME_ENV="./src/environments/environment.${GENERATION_INTERFIX}.${ENV}.ts"
@@ -31,7 +31,7 @@ if [[ ${ENV} == "dev" ]] || [[ ${ENV} == "test" ]]; then
       ./src/templates/index.html.template > ${FILENAME_HTML}
   echo "Generated ${FILENAME_HTML}"
 
-elif [[ ${ENV} == "prod" ]]; then
+elif [ ${ENV} == "prod" ]; then
   exit_if_empty GOOGLE_MAPS_API_KEY_PROD
   exit_if_empty API_ADDRESS_PROD
 
