@@ -9,7 +9,7 @@ ENV=$1
 GENERATION_INTERFIX="generated"
 FILENAME_HTML="./src/index.${GENERATION_INTERFIX}.html"
 
-function exit_if_empty {
+exit_if_empty () {
   if [[ -z ${!1} ]]; then
     echo "$1 not set. Please set it and then run this script again"
     exit 1
