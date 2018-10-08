@@ -6,6 +6,7 @@ import { SignInWithPassword } from '../actions/sign-in.actions';
 import { AuthenticationService } from '../services/authentication.service';
 import { SignInResponse } from '../models/api-response';
 import { CurrentUser } from '../models/current-user';
+import { FetchUserTokenFromStorage } from '../actions/user.actions';
 
 
 @State<CurrentUser>({
@@ -27,5 +28,12 @@ export class CurrentUserState {
         take(1),
         tap(({ token, email, access_type }: SignInResponse) => patchState({ email, token, accessType: access_type })),
       );
+  }
+
+  @Action(FetchUserTokenFromStorage)
+  fetchUserTokenFromStorage({ patchState }: StateContext<CurrentUser>) {
+    if (sessionStorage.getItem('currentUserToken')) {
+      patchState( { token: sessionStorage.getItem('currentUserToken') });
+    }
   }
 }

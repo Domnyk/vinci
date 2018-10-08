@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngxs/store';
+import { FetchUserTokenFromStorage } from './actions/user.actions';
 
 
 @Component({
@@ -9,8 +11,11 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent implements OnInit {
   title = 'Vinci';
 
-  constructor() { }
+  constructor(
+    private store: Store
+  ) { }
 
   ngOnInit() {
+    this.store.dispatch(new FetchUserTokenFromStorage());
   }
 }

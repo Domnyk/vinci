@@ -3,3 +3,9 @@ export class SignUpUser {
 
   constructor(public payload: any) { }
 }
+
+export class FetchUserTokenFromStorage {
+  static readonly type = '[Any component] Fetch user token from HTML5 Storage';
+
+  constructor() { }
+}
