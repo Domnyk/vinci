@@ -5,6 +5,5 @@ import { API } from './api';
 export const environment = {
   production: {{#PRODUCTION#}},
   api: new API('{{#API_ADDRESS#}}'),
-  facebookAppId: '2117105365183917',
   googleMapsApiKey: '{{#GOOGLE_MAPS_API_KEY#}}',
 };

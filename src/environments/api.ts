@@ -10,10 +10,6 @@ export class API {
     return this.domain + '/users';
   }
 
-  get fbSignInURL() {
-    return this.domain + '/api/auth/facebook';
-  }
-
   get signInURL() {
     return this.domain + '/token';
   }

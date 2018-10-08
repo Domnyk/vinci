@@ -22,10 +22,4 @@ xdescribe('AuthenticationService', () => {
       expect(false).toEqual(true);
     })
   });
-
-  describe('signInWithFb', () => {
-    it(`should get response containing token`, () => {
-      expect(false).toEqual(true);
-    });
-  });
 });
