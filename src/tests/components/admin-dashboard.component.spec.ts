@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdminDashboardComponent } from '../../app/components/components.admin-dashboard/admin-dashboard/admin-dashboard.component';
+import { ComplexOwnerDashboardComponent } from '../../app/components/components.complex-owner-dashboard/complex-owner-dashboard/complex-owner-dashboard.component';
 
-xdescribe('AdminDashboardComponent', () => {
-  let component: AdminDashboardComponent;
-  let fixture: ComponentFixture<AdminDashboardComponent>;
+xdescribe('ComplexOwnerDashboardComponent', () => {
+  let component: ComplexOwnerDashboardComponent;
+  let fixture: ComponentFixture<ComplexOwnerDashboardComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminDashboardComponent ]
+      declarations: [ ComplexOwnerDashboardComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AdminDashboardComponent);
+    fixture = TestBed.createComponent(ComplexOwnerDashboardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

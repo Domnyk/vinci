@@ -1,6 +1,6 @@
 import { Coords, SportObject } from '../models/sport-object';
 import { Action, State, StateContext } from '@ngxs/store';
-import { CreateNewSportObject } from '../components/components.admin-dashboard/new-sport-object/new-sport-object.actions';
+import { CreateNewSportObject } from '../components/components.complex-owner-dashboard/new-sport-object/new-sport-object.actions';
 import { GeocoderService } from '../services/geocoder.service';
 import { flatMap } from 'rxjs/operators';
 import { tap } from 'rxjs/internal/operators';

@@ -6,20 +6,22 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import { ErrorNotFoundComponent } from './components/error-not-found/error-not-found.component';
 import { MapComponent } from './components/components.maps/map/map.component';
 import { SportObjectComponent } from './components/sport-object/sport-object.component';
-import { AdminDashboardComponent } from './components/components.admin-dashboard/admin-dashboard/admin-dashboard.component';
+import { ComplexOwnerDashboardComponent } from './components/components.complex-owner-dashboard/complex-owner-dashboard/complex-owner-dashboard.component';
 import { AdminAuthorizationGuard } from './guards/admin-authorization.guard';
-import { NewSportComplexComponent } from './components/components.admin-dashboard/new-sport-complex/new-sport-complex.component';
-import { SportComplexDashboardComponent } from './components/components.admin-dashboard/sport-complex-dashboard/sport-complex-dashboard.component';
-import {NewSportObjectComponent} from './components/components.admin-dashboard/new-sport-object/new-sport-object.component';
-import {NewSportArenaComponent} from './components/components.admin-dashboard/new-sport-arena/new-sport-arena.component';
+import { NewSportComplexComponent } from './components/components.complex-owner-dashboard/new-sport-complex/new-sport-complex.component';
+import { SportComplexDashboardComponent } from './components/components.complex-owner-dashboard/sport-complex-dashboard/sport-complex-dashboard.component';
+import {NewSportObjectComponent} from './components/components.complex-owner-dashboard/new-sport-object/new-sport-object.component';
+import {NewSportArenaComponent} from './components/components.complex-owner-dashboard/new-sport-arena/new-sport-arena.component';
+import { WelcomeToDashboardComponent } from './welcome-to-dashboard/welcome-to-dashboard.component';
 
 export const routes: Routes = [
   { path: 'sign_up', component: SignUpComponent },
   { path: 'sign_in', component: SignInComponent },
   { path: 'map', component: MapComponent },
   { path: 'sport_object/:id', component: SportObjectComponent },
-  { path: 'admin_dashboard', component: AdminDashboardComponent, canActivate: [AdminAuthorizationGuard],
+  { path: 'owner', component: ComplexOwnerDashboardComponent, canActivate: [AdminAuthorizationGuard],
     children: [
+      { path: '', component: WelcomeToDashboardComponent },
       { path: 'new_sport_complex', component: NewSportComplexComponent },
       { path: 'new_sport_arena', component: NewSportArenaComponent },
       { path: 'sport_complex_dashboard/:id', component: SportComplexDashboardComponent },
