@@ -1,0 +1,11 @@
+<section>
+  <form (ngSubmit)="onSubmit()" >
+    <div class="form-group">
+      <label for="name">Nazwa kompleksu sportowego</label>
+      <input [formControl]="sportComplexNameFormControl" name="name" type="text" class="form-control"
+             aria-describedby="name" placeholder="Podaj nazwę kompleksu sportowego" required autocomplete="off">
+    </div>
+
+    <button type="submit" class="btn btn-danger" [disabled]="isInputDifferentFromSportComplexName()">Usuń obiekt</button>
+  </form>
+</section>

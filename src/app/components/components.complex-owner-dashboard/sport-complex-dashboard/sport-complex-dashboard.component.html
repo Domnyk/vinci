@@ -1,6 +1,53 @@
-<section>
-  <h2> Dostępne akcje</h2>
-  <ul class="list-unstyled">
-    <li><a routerLink="new_sport_object" class="btn btn-success">Dodaj nowy obiekt</a></li>
+<section *ngIf="(sportComplex$ | async) as sportComplex">
+  <h2> Podstawowe informacje </h2>
+  <p>Nazwa kompleksu:
+    <span class="font-weight-bold">{{sportComplex.name}}</span>
+  </p>
+
+  <p>Obiekty sportowe:</p>
+  <ul *ngIf="(sportObjects$ | async) as sportObjects">
+    <li *ngFor="let sportObject of sportObjects">
+      <a routerLink="/owner/object/{{sportObject.id}}">{{sportObject.name}}</a>
+    </li>
   </ul>
+
+  <h2> Dostępne akcje</h2>
+
+  <div class="accordion" id="sport-complex-accordion">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <a routerLink="new_sport_object" data-toggle="collapse" data-target="#collapseOne">Dodaj nowy obiekt</a>
+      </div>
+
+      <div id="collapseOne" class="collapse" data-parent="#sport-complex-accordion">
+        <div class="card-body">
+          <app-new-sport-object></app-new-sport-object>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header" id="headingTwo">
+        <a routerLink="new_sport_object" data-toggle="collapse" data-target="#collapseTwo">Edytuj dane kompleksu</a>
+      </div>
+
+      <div id="collapseTwo" class="collapse" data-parent="#sport-complex-accordion">
+        <div class="card-body">
+          <app-new-sport-complex [sportComplexToEdit]="sportComplex"></app-new-sport-complex>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header" id="headingThree">
+        <a href="#" data-toggle="collapse" data-target="#collapseThree">Usuń kompleks</a>
+      </div>
+
+      <div id="collapseThree" class="collapse" data-parent="#sport-complex-accordion">
+        <div class="card-body">
+          <app-delete-sport-complex [sportComplex]="sportComplex"></app-delete-sport-complex>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>

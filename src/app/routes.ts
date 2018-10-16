@@ -5,7 +5,7 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { ErrorNotFoundComponent } from './components/error-not-found/error-not-found.component';
 import { MapComponent } from './components/components.maps/map/map.component';
-import { SportObjectComponent } from './components/sport-object/sport-object.component';
+import { SportObjectComponent } from './components/components.complex-owner-dashboard/sport-object/sport-object.component';
 import { ComplexOwnerDashboardComponent } from './components/components.complex-owner-dashboard/complex-owner-dashboard/complex-owner-dashboard.component';
 import { AdminAuthorizationGuard } from './guards/admin-authorization.guard';
 import { NewSportComplexComponent } from './components/components.complex-owner-dashboard/new-sport-complex/new-sport-complex.component';
@@ -24,7 +24,8 @@ export const routes: Routes = [
       { path: '', component: WelcomeToDashboardComponent },
       { path: 'new_sport_complex', component: NewSportComplexComponent },
       { path: 'new_sport_arena', component: NewSportArenaComponent },
-      { path: 'sport_complex_dashboard/:id', component: SportComplexDashboardComponent },
+      { path: 'complex/:id', component: SportComplexDashboardComponent },
+      { path: 'object/:id', component: SportObjectComponent },
       { path: 'sport_complex_dashboard/:id/new_sport_object', component: NewSportObjectComponent }
     ]
   },

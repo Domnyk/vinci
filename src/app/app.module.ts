@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
@@ -18,7 +18,7 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import { ErrorNotFoundComponent } from './components/error-not-found/error-not-found.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { MapComponent } from './components/components.maps/map/map.component';
-import { SportObjectComponent } from './components/sport-object/sport-object.component';
+import { SportObjectComponent } from './components/components.complex-owner-dashboard/sport-object/sport-object.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ComplexOwnerDashboardComponent } from './components/components.complex-owner-dashboard/complex-owner-dashboard/complex-owner-dashboard.component';
 import { NewSportComplexComponent } from './components/components.complex-owner-dashboard/new-sport-complex/new-sport-complex.component';
@@ -34,6 +34,10 @@ import { FlashMessageComponent } from './components/flash-message/flash-message.
 import { FlashMessageState } from './state/flash-message.state';
 import { WelcomeToDashboardComponent } from './welcome-to-dashboard/welcome-to-dashboard.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { DeleteSportComplexComponent } from './components/components.complex-owner-dashboard/delete-sport-complex/delete-sport-complex.component';
+import { SidebarListElemComponent } from './components/components.complex-owner-dashboard/sidebar-list-elem/sidebar-list-elem.component';
+import { SportArenaComponent } from './components/components.complex-owner-dashboard/sport-arena/sport-arena.component';
+
 
 
 @NgModule({
@@ -55,6 +59,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     NewSportArenaComponent,
     FlashMessageComponent,
     WelcomeToDashboardComponent,
+    DeleteSportComplexComponent,
+    SidebarListElemComponent,
+    SportArenaComponent,
   ],
   imports: [
     RouterModule.forRoot(
@@ -74,6 +81,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     NgxsLoggerPluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     FontAwesomeModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

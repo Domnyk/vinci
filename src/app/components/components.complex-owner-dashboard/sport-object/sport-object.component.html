@@ -1,0 +1,47 @@
+<section *ngIf="(sportObject$ | async) as sportObject">
+  <h2> Podstawowe informacje </h2>
+  <p>Nazwa obiektu:
+    <span class="font-weight-bold">{{sportObject.name}}</span>
+  </p>
+
+  <p>Areny sportowe:</p>
+
+  <h2> Dostępne akcje</h2>
+  <div class="accordion" id="sport-complex-accordion">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <a routerLink="new_sport_object" data-toggle="collapse" data-target="#collapseOne">Dodaj nową arenę</a>
+      </div>
+
+      <div id="collapseOne" class="collapse" data-parent="#sport-complex-accordion">
+        <div class="card-body">
+          <!-- <app-new-sport-object></app-new-sport-object> -->
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header" id="headingTwo">
+        <a routerLink="new_sport_object" data-toggle="collapse" data-target="#collapseTwo">Edytuj dane obiektu</a>
+      </div>
+
+      <div id="collapseTwo" class="collapse" data-parent="#sport-complex-accordion">
+        <div class="card-body">
+          <!-- <app-new-sport-complex [sportComplexToEdit]="sportComplex"></app-new-sport-complex> -->
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header" id="headingThree">
+        <a href="#" data-toggle="collapse" data-target="#collapseThree">Usuń obiekt</a>
+      </div>
+
+      <div id="collapseThree" class="collapse" data-parent="#sport-complex-accordion">
+        <div class="card-body">
+          <!-- <app-delete-sport-complex [sportComplex]="sportComplex"></app-delete-sport-complex> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

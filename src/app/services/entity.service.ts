@@ -36,6 +36,31 @@ export class EntityService<T> {
       );
   }
 
+  fetchAllChildren(entityURL, entityId, childrenURL): Promise<any[]> {
+    type dataHandlerType = (response: EntityList<any>) => Observable<any[]>;
+    const dataHandler: dataHandlerType = response => {
+      if (response.status === 'ok') {
+        return of(response.data);
+      }
+    };
+
+    return this.http.get(environment.api.entityURLs(entityURL, childrenURL).fetchAllChildren(entityId))
+      .pipe(flatMap(dataHandler)).toPromise();
+  }
+
+  nestedResource(entity: string, entityId: number, nestedEntity: string) {
+    type dataHandlerType = (response: EntityList<any>) => Observable<any[]>;
+    const dataHandler: dataHandlerType = response => {
+      if (response.status === 'ok') {
+        return of(response.data);
+      }
+    };
+
+    return {
+      index: () => this.http.get(environment.api.rest(entity, entityId, nestedEntity).index).pipe(flatMap(dataHandler))
+    };
+  }
+
   /**
    * Creates new entity
    *

@@ -1,0 +1,12 @@
+<button type="button" attr.data-target="#sportComplexMenu{{sportComplex.id}}" id="Elem{{sportComplex.id}}" class="btn-link"
+   data-toggle="collapse" (click)="changeIcon()" role="button">
+    <fa-icon [icon]="chevron"></fa-icon>&nbsp;{{sportComplex.name}}
+</button>
+
+<ul class="collapse" id="sportComplexMenu{{sportComplex.id}}">
+  <li>
+    <a routerLink="complex/{{sportComplex.id}}" class="nav-link dashboard-link">
+      Zarządzaj kompleksem
+    </a>
+  </li>
+</ul>

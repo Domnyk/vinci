@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { AfterViewInit, Component, HostBinding, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { FetchAllSportComplexes } from './complex-owner-dasboard.actions';
 

@@ -7,7 +7,8 @@ export class SportObject implements DTO {
     public name: string,
     public address: UnescapedBuildingAddress,
     public geoCoordinates: Coords,
-    public bookingMargin: BookingMargin
+    public bookingMargin: BookingMargin,
+    public sport_complex_id?: number
   ) { }
 
    dto(): SportObjectDTO {
@@ -27,6 +28,13 @@ export class SportObject implements DTO {
       }
     };
   }
+}
+
+export class SportObjectBasicInformation {
+  constructor(
+    public id: number,
+    public name: string,
+  ) { }
 }
 
 interface SportObjectDTO {

@@ -1,4 +1,4 @@
-import { State, Action, StateContext, createSelector } from '@ngxs/store';
+import { State, Action, StateContext, createSelector, Selector } from '@ngxs/store';
 import { tap } from 'rxjs/operators';
 
 import { SportComplex } from '../models/sport-complex';
@@ -6,6 +6,11 @@ import { FetchAllSportComplexes } from '../components/components.complex-owner-d
 import { CreateNewSportComplex } from '../components/components.complex-owner-dashboard/new-sport-complex/new-sport-complex.actions';
 import { DeleteSportComplex } from '../components/components.complex-owner-dashboard/admin-dashboard-sidebar/admin-dashboard-sidebar.actions';
 import { EntityService } from '../services/entity.service';
+import { FetchSportObjectsInSportComplex } from '../components/components.complex-owner-dashboard/sport-complex-dashboard/sport-complex-dashboard.actions';
+import { SportObject } from '../models/sport-object';
+
+import { environment } from '../../environments/environment.generated.dev';
+import { HttpClient } from '@angular/common/http';
 
 
 type SportComplexes = Array<SportComplex>;
@@ -19,13 +24,15 @@ type SportComplexes = Array<SportComplex>;
 
 export class SportComplexState {
   constructor(
-    private sportComplexService: EntityService<SportComplex>
+    private sportComplexService: EntityService<SportComplex>,
+    private http: HttpClient
   ) { }
 
-  static sportComplex(id: number) {
-    return createSelector([SportComplexState], (state: SportComplexes) => {
-      return state.filter(sportComplex => sportComplex.id === id);
-    });
+  @Selector()
+  static sportComplex(state: SportComplexes) {
+    return (id: number) => {
+      return state.filter(sportComplex => sportComplex.id === +id);
+    };
   }
 
   @Action(FetchAllSportComplexes)

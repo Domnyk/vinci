@@ -18,7 +18,6 @@ export class NewSportObjectComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.sportObject);
   }
 
   onSubmit() {
