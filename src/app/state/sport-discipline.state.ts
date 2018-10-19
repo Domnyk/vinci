@@ -1,7 +1,7 @@
 
 import { Action, State, StateContext } from '@ngxs/store';
 import { EntityService } from '../services/entity.service';
-import { FetchSportDisciplines } from '../components/components.complex-owner-dashboard/new-sport-arena/new-sport-arena.actions';
+import { FetchSportDisciplines } from '../components/owner/new-sport-arena/new-sport-arena.actions';
 import { tap } from 'rxjs/operators';
 import { SportDiscipline } from '../models/sport-discipline';
 

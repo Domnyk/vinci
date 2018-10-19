@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ComplexOwnerDashboardComponent } from '../../app/components/components.complex-owner-dashboard/complex-owner-dashboard/complex-owner-dashboard.component';
+import { ComplexOwnerDashboardComponent } from '../../app/components/owner/complex-owner-dashboard/complex-owner-dashboard.component';
 
 xdescribe('ComplexOwnerDashboardComponent', () => {
   let component: ComplexOwnerDashboardComponent;

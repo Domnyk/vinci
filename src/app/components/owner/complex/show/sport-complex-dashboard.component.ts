@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { SportComplex } from '../../../models/sport-complex';
+import { SportComplex } from '../../../../models/sport-complex';
 import { Store } from '@ngxs/store';
-import { SportComplexState } from '../../../state/sport-complex.state';
+import { SportComplexState } from '../../../../state/sport-complex.state';
 import { Observable } from 'rxjs/index';
 import { map } from 'rxjs/operators';
 import { FetchSportObjectsInSportComplex } from './sport-complex-dashboard.actions';
-import { SportObject } from '../../../models/sport-object';
-import { SportObjectState } from '../../../state/sport-object.state';
+import { SportObject } from '../../../../models/sport-object';
+import { SportObjectState } from '../../../../state/sport-object.state';
 
 @Component({
   selector: 'app-sport-complex-dashboard',
@@ -39,5 +39,4 @@ export class SportComplexDashboardComponent implements OnInit {
       }
     );
   }
-
 }

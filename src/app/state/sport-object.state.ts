@@ -1,12 +1,12 @@
 import { _ } from 'underscore';
 import { Coords, SportObject } from '../models/sport-object';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
-import { CreateNewSportObject } from '../components/components.complex-owner-dashboard/new-sport-object/new-sport-object.actions';
+import { CreateNewSportObject } from '../components/owner/new-sport-object/new-sport-object.actions';
 import { GeocoderService } from '../services/geocoder.service';
 import { flatMap } from 'rxjs/operators';
 import { tap } from 'rxjs/internal/operators';
 import { EntityService } from '../services/entity.service';
-import { FetchSportObjectsInSportComplex } from '../components/components.complex-owner-dashboard/sport-complex-dashboard/sport-complex-dashboard.actions';
+import { FetchSportObjectsInSportComplex } from '../components/owner/complex/show/sport-complex-dashboard.actions';
 import { environment } from '../../environments/environment.generated.dev';
 import { HttpClient } from '@angular/common/http';
 import { ShowFlashMessage } from '../actions/flash-message.actions';

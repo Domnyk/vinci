@@ -2,10 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
-import { DeleteSportComplex } from '../admin-dashboard-sidebar/admin-dashboard-sidebar.actions';
-import { SportComplex } from '../../../models/sport-complex';
-import { ShowFlashMessage } from '../../../actions/flash-message.actions';
-
+import { DeleteSportComplex } from './delete-sport-complex.actions';
+import { SportComplex } from '../../../../models/sport-complex';
+import { ShowFlashMessage } from '../../../../actions/flash-message.actions';
 
 @Component({
   selector: 'app-delete-sport-complex',
@@ -27,13 +26,16 @@ export class DeleteSportComplexComponent implements OnInit {
   }
 
   onSubmit() {
-    this.router.navigate(['/owner'])
-      .then(() => {
-        this.store.dispatch([
-          new DeleteSportComplex(this.sportComplex.id),
-          new ShowFlashMessage('Kompleks sportowy został pomyślnie usunięty')
-        ]);
-    });
+    const successfulDeletion = () => {
+      this.router.navigate(['/owner']);
+      this.store.dispatch(new ShowFlashMessage('Kompleks pomyślnie usunięty'));
+    };
+
+    this.store.dispatch(new DeleteSportComplex(this.sportComplex.id))
+      .subscribe(
+        successfulDeletion,
+        () => this.store.dispatch(new ShowFlashMessage('Nie można usunąć tego kompleksu sportowego'))
+      );
   }
 
 }

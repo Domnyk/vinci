@@ -28,12 +28,13 @@
 
     <div class="card">
       <div class="card-header" id="headingTwo">
-        <a routerLink="new_sport_object" data-toggle="collapse" data-target="#collapseTwo">Edytuj dane kompleksu</a>
+        <a routerLink="" data-toggle="collapse" data-target="#collapseTwo">Edytuj dane kompleksu</a>
       </div>
 
       <div id="collapseTwo" class="collapse" data-parent="#sport-complex-accordion">
         <div class="card-body">
-          <app-new-sport-complex [sportComplexToEdit]="sportComplex"></app-new-sport-complex>
+          <!--<app-edit-sport-complex [sportComplexToEdit]="sportComplex"></app-edit-sport-complex>-->
+          <app-edit-sport-complex></app-edit-sport-complex>
         </div>
       </div>
     </div>

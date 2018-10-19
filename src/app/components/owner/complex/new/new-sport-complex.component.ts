@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SportComplex } from '../../../models/sport-complex';
+import { SportComplex } from '../../../../models/sport-complex';
 import { Store } from '@ngxs/store';
 import { CreateNewSportComplex } from './new-sport-complex.actions';
 import { FormControl, Validators } from '@angular/forms';

@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SportComplexListElemComponent } from '../../app/components/components.complex-owner-dashboard/sport-complex-list-elem/sport-complex-list-elem.component';
+import { SportComplexListElemComponent } from '../../app/components/owner/sport-complex-list-elem/sport-complex-list-elem.component';
 
 describe('SportComplexListElemComponent', () => {
   let component: SportComplexListElemComponent;
