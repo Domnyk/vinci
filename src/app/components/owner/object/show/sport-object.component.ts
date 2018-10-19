@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute , Params } from '@angular/router';
-import { SportObject } from '../../../models/sport-object';
+import { SportObject } from '../../../../models/sport-object';
 import { Observable } from 'rxjs/index';
 import { Store } from '@ngxs/store';
-import { SportObjectState } from '../../../state/sport-object.state';
+import { SportObjectState } from '../../../../state/sport-object.state';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -13,7 +13,7 @@ import { map } from 'rxjs/operators';
 })
 export class SportObjectComponent implements OnInit {
   public sportObject$: Observable<SportObject>;
-  // public sportArenas$: Observable<SportArena[]>
+  public sportArenas$: Observable<any[]>;
 
   constructor(
     private route: ActivatedRoute,

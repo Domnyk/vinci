@@ -5,7 +5,7 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { ErrorNotFoundComponent } from './components/error-not-found/error-not-found.component';
 import { MapComponent } from './components/components.maps/map/map.component';
-import { SportObjectComponent } from './components/owner/sport-object/sport-object.component';
+import { SportObjectComponent } from './components/owner/object/show/sport-object.component';
 import { ComplexOwnerDashboardComponent } from './components/owner/complex-owner-dashboard/complex-owner-dashboard.component';
 import { AdminAuthorizationGuard } from './guards/admin-authorization.guard';
 import { NewSportComplexComponent } from './components/owner/complex/new/new-sport-complex.component';

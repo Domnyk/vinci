@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SportObjectComponent } from '../../app/components/owner/sport-object/sport-object.component';
+import { SportObjectComponent } from '../../app/components/owner/object/show/sport-object.component';
 
 xdescribe('SportObjectComponent', () => {
   let component: SportObjectComponent;

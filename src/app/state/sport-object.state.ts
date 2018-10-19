@@ -4,12 +4,14 @@ import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { CreateNewSportObject } from '../components/owner/new-sport-object/new-sport-object.actions';
 import { GeocoderService } from '../services/geocoder.service';
 import { flatMap } from 'rxjs/operators';
-import { tap } from 'rxjs/internal/operators';
+import { catchError, map, tap } from 'rxjs/internal/operators';
 import { EntityService } from '../services/entity.service';
 import { FetchSportObjectsInSportComplex } from '../components/owner/complex/show/sport-complex-dashboard.actions';
 import { environment } from '../../environments/environment.generated.dev';
 import { HttpClient } from '@angular/common/http';
 import { ShowFlashMessage } from '../actions/flash-message.actions';
+import { DeleteSportObject } from '../components/owner/object/delete/delete-sport-object.actions';
+import { throwError } from 'rxjs/index';
 
 
 type SportObjects = Array<SportObject>;
@@ -75,5 +77,25 @@ export class SportObjectState {
       };
 
     return this.http.get(url).pipe(tap(stateUpdater));
+  }
+
+  @Action(DeleteSportObject)
+  deleteSportComplex({ getState, setState }: StateContext<SportObjects>, { id }: DeleteSportObject) {
+    const url = environment.api.resource('sport_objects', id),
+      successDeletionHandler = () => {
+        const updatedSportComplexList: SportObjects = getState().filter((sportObject: SportObject) => sportObject.id !== id);
+        setState(
+          [...updatedSportComplexList]
+        );
+      },
+      failureDeletionHandler = (error: any) => {
+        return throwError('Sport object still has sport arenas');
+      };
+
+    return this.http.delete(url)
+      .pipe(
+        map(successDeletionHandler),
+        catchError(failureDeletionHandler),
+      );
   }
 }

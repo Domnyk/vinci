@@ -18,7 +18,7 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import { ErrorNotFoundComponent } from './components/error-not-found/error-not-found.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { MapComponent } from './components/components.maps/map/map.component';
-import { SportObjectComponent } from './components/owner/sport-object/sport-object.component';
+import { SportObjectComponent } from './components/owner/object/show/sport-object.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ComplexOwnerDashboardComponent } from './components/owner/complex-owner-dashboard/complex-owner-dashboard.component';
 import { NewSportComplexComponent } from './components/owner/complex/new/new-sport-complex.component';
@@ -38,6 +38,7 @@ import { DeleteSportComplexComponent } from './components/owner/complex/delete/d
 import { SidebarListElemComponent } from './components/owner/sidebar-list-elem/sidebar-list-elem.component';
 import { SportArenaComponent } from './components/owner/sport-arena/sport-arena.component';
 import { EditSportComplexComponent } from './components/owner/complex/edit/edit-sport-complex.component';
+import { DeleteSportObjectComponent } from './components/owner/object/delete/delete-sport-object.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { EditSportComplexComponent } from './components/owner/complex/edit/edit-
     SidebarListElemComponent,
     SportArenaComponent,
     EditSportComplexComponent,
+    DeleteSportObjectComponent,
   ],
   imports: [
     RouterModule.forRoot(
