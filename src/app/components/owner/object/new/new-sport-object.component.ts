@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { ModelFactoryService } from '../../../services/model-factory.service';
+import { ModelFactoryService } from '../../../../services/model-factory.service';
 import { CreateNewSportObject } from './new-sport-object.actions';
-import { ShowFlashMessage } from '../../../actions/flash-message.actions';
+import { ShowFlashMessage } from '../../../../actions/flash-message.actions';
 
 @Component({
   selector: 'app-new-sport-object',

@@ -10,7 +10,7 @@ import { ComplexOwnerDashboardComponent } from './components/owner/complex-owner
 import { AdminAuthorizationGuard } from './guards/admin-authorization.guard';
 import { NewSportComplexComponent } from './components/owner/complex/new/new-sport-complex.component';
 import { SportComplexDashboardComponent } from './components/owner/complex/show/sport-complex-dashboard.component';
-import {NewSportObjectComponent} from './components/owner/new-sport-object/new-sport-object.component';
+import {NewSportObjectComponent} from './components/owner/object/new/new-sport-object.component';
 import {NewSportArenaComponent} from './components/owner/new-sport-arena/new-sport-arena.component';
 import { WelcomeToDashboardComponent } from './welcome-to-dashboard/welcome-to-dashboard.component';
 

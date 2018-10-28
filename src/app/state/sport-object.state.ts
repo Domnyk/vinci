@@ -1,7 +1,7 @@
 import { _ } from 'underscore';
 import { Coords, SportObject } from '../models/sport-object';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
-import { CreateNewSportObject } from '../components/owner/new-sport-object/new-sport-object.actions';
+import { CreateNewSportObject } from '../components/owner/object/new/new-sport-object.actions';
 import { GeocoderService } from '../services/geocoder.service';
 import { flatMap } from 'rxjs/operators';
 import { catchError, map, tap } from 'rxjs/internal/operators';

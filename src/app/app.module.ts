@@ -24,7 +24,7 @@ import { ComplexOwnerDashboardComponent } from './components/owner/complex-owner
 import { NewSportComplexComponent } from './components/owner/complex/new/new-sport-complex.component';
 import { AdminDashboardSidebarComponent } from './components/owner/admin-dashboard-sidebar/admin-dashboard-sidebar.component';
 import { SportComplexState } from './state/sport-complex.state';
-import { NewSportObjectComponent } from './components/owner/new-sport-object/new-sport-object.component';
+import { NewSportObjectComponent } from './components/owner/object/new/new-sport-object.component';
 import { ModalComponent } from './components/components.common/modal/modal.component';
 import { SportComplexDashboardComponent } from './components/owner/complex/show/sport-complex-dashboard.component';
 import { SportObjectState } from './state/sport-object.state';
