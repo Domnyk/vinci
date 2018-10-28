@@ -11,18 +11,15 @@ import { ShowFlashMessage } from '../../../../actions/flash-message.actions';
   templateUrl: './delete-sport-object.component.html',
   styleUrls: []
 })
-export class DeleteSportObjectComponent implements OnInit {
+export class DeleteSportObjectComponent {
   @Input() sportObject: SportObject;
 
-  sportObjectNameFormControl = new FormControl('');
+  name = new FormControl('');
 
   constructor(private router: Router, private store: Store) { }
 
-  ngOnInit() {
-  }
-
-  isInputDifferentFromSportobjectName(): boolean {
-    return this.sportObjectNameFormControl.value !== this.sportObject.name;
+  isInputDifferentFromSportObjectName(): boolean {
+    return this.name.value !== this.sportObject.name;
   }
 
   onSubmit() {

@@ -20,7 +20,7 @@ export class BuildingAddress {
       escapedAddress[key] = this.replaceReservedCharacters(value);
     });
 
-    escapedAddress['buildingNumber'] = this.unescapedBuildingAddress.buildingNumber.toString();
+    escapedAddress['buildingNumber'] = this.unescapedBuildingAddress.buildingNumber;
     escapedAddress['postalCode'] = this.unescapedBuildingAddress.postalCode;
 
     return (escapedAddress as EscapedBuildingAddress);
@@ -56,7 +56,7 @@ export interface EscapedBuildingAddress {
  */
 export interface UnescapedBuildingAddress {
   street: string;
-  buildingNumber: number;
+  buildingNumber: string;
   postalCode: string;
   city: string;
 }

@@ -23,7 +23,13 @@ export class SportObject implements DTO {
             days: this.bookingMargin.days,
             secs: this.bookingMargin.seconds
           },
-          sport_complex_id: 1
+          address: {
+            city: this.address.city,
+            building_number: this.address.buildingNumber,
+            postal_code: this.address.postalCode,
+            street: this.address.street,
+          },
+          sport_complex_id: this.sport_complex_id
         }
       }
     };
@@ -47,6 +53,12 @@ interface SportObjectDTO {
         months: number;
         days: number;
         secs: number;
+      };
+      address: {
+        city: string;
+        building_number: string;
+        postal_code: string;
+        street: string;
       };
       sport_complex_id: number
     }

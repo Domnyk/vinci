@@ -5,8 +5,8 @@
   </p>
 
   <p>Obiekty sportowe:</p>
-  <ul *ngIf="(sportObjects$ | async) as sportObjects">
-    <li *ngFor="let sportObject of sportObjects">
+  <ul>
+    <li *ngFor="let sportObject of (sportObjects$ | async)">
       <a routerLink="/owner/object/{{sportObject.id}}">{{sportObject.name}}</a>
     </li>
   </ul>
@@ -21,7 +21,7 @@
 
       <div id="collapseOne" class="collapse" data-parent="#sport-complex-accordion">
         <div class="card-body">
-          <app-new-sport-object></app-new-sport-object>
+          <app-new-sport-object [sportComplexId]="(sportComplex$ | async).id"></app-new-sport-object>
         </div>
       </div>
     </div>
@@ -33,8 +33,7 @@
 
       <div id="collapseTwo" class="collapse" data-parent="#sport-complex-accordion">
         <div class="card-body">
-          <!--<app-edit-sport-complex [sportComplexToEdit]="sportComplex"></app-edit-sport-complex>-->
-          <app-edit-sport-complex></app-edit-sport-complex>
+          <app-edit-sport-complex [sportComplexInput]="(sportComplex$ | async)"></app-edit-sport-complex>
         </div>
       </div>
     </div>

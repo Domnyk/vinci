@@ -39,6 +39,7 @@ import { SidebarListElemComponent } from './components/owner/sidebar-list-elem/s
 import { SportArenaComponent } from './components/owner/sport-arena/sport-arena.component';
 import { EditSportComplexComponent } from './components/owner/complex/edit/edit-sport-complex.component';
 import { DeleteSportObjectComponent } from './components/owner/object/delete/delete-sport-object.component';
+import { EditSportObjectComponent } from './components/owner/object/edit/edit-sport-object.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { DeleteSportObjectComponent } from './components/owner/object/delete/del
     SportArenaComponent,
     EditSportComplexComponent,
     DeleteSportObjectComponent,
+    EditSportObjectComponent
   ],
   imports: [
     RouterModule.forRoot(

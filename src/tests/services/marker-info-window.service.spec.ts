@@ -19,7 +19,7 @@ describe('MarkerInfoWindowService', () => {
   });
 
   xit('should have proper content', () => {
-    /* const sportObject: SportObject = new SportObject(1, 'Pływalnia Polonez', new Coords(52.299046, 21.033690)),
+    /* const sportObject: sportObject = new sportObject(1, 'Pływalnia Polonez', new Coords(52.299046, 21.033690)),
           actualContent = service.generateInfoWindowContent(sportObject),
           expectedContent = `<div>` +
                             `<p class="lead">${sportObject.name}</p>` +

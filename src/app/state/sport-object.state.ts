@@ -12,6 +12,7 @@ import { HttpClient } from '@angular/common/http';
 import { ShowFlashMessage } from '../actions/flash-message.actions';
 import { DeleteSportObject } from '../components/owner/object/delete/delete-sport-object.actions';
 import { throwError } from 'rxjs/index';
+import { UpdateSportObject } from '../components/owner/object/edit/edit-sport-object.actions';
 
 
 type SportObjects = Array<SportObject>;
@@ -45,18 +46,49 @@ export class SportObjectState {
   }
 
   @Action(CreateNewSportObject)
-  createNewSportObject({ getState, setState }: StateContext<SportObjects>, { sportObject }: CreateNewSportObject ){
-    const stateUpdater = (newSportObject: SportObject) => {
-      setState(
-        [...getState().concat(newSportObject)]
-      );
-    };
+  createNewSportObject({ getState, setState }: StateContext<SportObjects>, { sportObject }: CreateNewSportObject ) {
+    const url = environment.api.resource('sport_complexes', sportObject.sport_complex_id, 'sport_objects'),
+          stateUpdater = (newSportObject) => {
+            setState(
+              [...getState().concat(newSportObject.data.sport_object)]
+            );
+          };
+
+    console.debug(sportObject);
+    console.debug(url);
 
     return this.geoCoder.geocode(sportObject.address)
       .pipe(
         flatMap((coords: Coords) => {
           sportObject.geoCoordinates = coords;
-          return this.entityServiceForSportObject.create(sportObject, 'sport_objects');
+          return this.http.post(url, sportObject.dto());
+        }),
+        tap(stateUpdater)
+      );
+  }
+
+  @Action(UpdateSportObject)
+  updateSportObject({ getState, setState }: StateContext<SportObjects>, { sportObjectToUpdate }: UpdateSportObject) {
+    const url = environment.api.resource('sport_objects', sportObjectToUpdate.id),
+          stateUpdater = (response) => {
+            if (response.status === 'error') {
+              this.store.dispatch(new ShowFlashMessage('Wystąpił błąd w czasie aktualizacja danych obiektu sportowego'));
+              return;
+            }
+
+            const updatedSportObject = response.data.sport_object,
+                  newState = getState().map(sportObject => sportObject.id === sportObjectToUpdate.id ? updatedSportObject : sportObject);
+
+
+            setState(newState);
+            this.store.dispatch(new ShowFlashMessage('Obiekt sportowy został pomyślnie zaktualizowany'));
+          };
+
+    return this.geoCoder.geocode(sportObjectToUpdate.address)
+      .pipe(
+        flatMap((coords: Coords) => {
+          sportObjectToUpdate.geo_coordinates = coords;
+          return this.http.put(url, { data: { sport_object: sportObjectToUpdate } });
         }),
         tap(stateUpdater)
       );

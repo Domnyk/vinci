@@ -1,0 +1,51 @@
+<div class="row">
+  <section class="col">
+    <form (ngSubmit)="onSubmit()" #newSportObjectForm="ngForm">
+      <div class="form-group">
+        <label for="name">Nazwa obiektu sportowego</label>
+        <input [formControl]="name" name="name" type="text" class="form-control"
+               aria-describedby="name" placeholder="Wprowadź nazwę obiektu" required>
+      </div>
+
+      <div class="form-group form-row">
+        <div class="col">
+          <label for="bookingMarginInMonths">Margines rezerwacji (w miesiąch)</label>
+          <input [formControl]="bookingMarginInMonths" name="bookingMarginInMonths" type="number" class="form-control" aria-describedby="booking margin in months"
+                 placeholder="Podaj margines rezerwacji (w miesiącach)" required>
+        </div>
+
+        <div class="col">
+          <label for="bookingMarginInDays">Margines rezerwacji (w dniach)</label>
+          <input [formControl]="bookingMarginInDays" name="bookingMarginInDays" type="number" class="form-control" aria-describedby="booking margin in days"
+                 placeholder="Podaj margines rezerwacji (w dniach)" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="street">Ulica</label>
+        <input [formControl]="street" name="street" type="text" class="form-control" aria-describedby="street"
+               placeholder="Podaj ulicę" required>
+      </div>
+
+      <div class="form-group">
+        <label for="buildingNumber">Numer budynku</label>
+        <input [formControl]="buildingNumber" name="buildingNumber" type="number" class="form-control" aria-describedby="building number"
+               placeholder="Podaj numer budynku" required>
+      </div>
+
+      <div class="form-group">
+        <label for="postalCode">Kod pocztowy</label>
+        <input [formControl]="postalCode" name="postalCode" type="text" class="form-control" aria-describedby="postal code"
+               placeholder="Podaj kod pocztowy" required>
+      </div>
+
+      <div class="form-group">
+        <label for="city">Miasto</label>
+        <input [formControl]="city" name="city" type="text" class="form-control" aria-describedby="city"
+               placeholder="Podaj miasto" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Edytuj</button>
+    </form>
+  </section>
+</div>
+
