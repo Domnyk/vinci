@@ -12,6 +12,8 @@ import { DeleteSportObject } from '../components/owner/object/delete/delete-spor
 import { SportObject } from '../models/sport-object';
 import { throwError } from 'rxjs';
 import { DeleteSportArena } from '../components/owner/arena/delete/delete-sport-arena.actions';
+import { UpdateSportComplex } from '../components/owner/complex/edit/edit-sport-complex.actions';
+import { UpdateSportArena } from '../components/owner/arena/edit/edit-sport-arena.actions';
 
 type SportArenas = Array<SportArena>;
 
@@ -92,6 +94,28 @@ export class SportArenaState {
 
     return this.http.delete(url)
       .pipe(tap(successDeletionHandler))
+      .subscribe(() => {}, (error) => this.handleError(error));
+  }
+
+  @Action(UpdateSportArena)
+  updateSportArena({ getState, setState }: StateContext<SportArenas>, { sportArena }: UpdateSportArena) {
+    const url = environment.api.resource('sport_arenas', sportArena.id),
+      stateUpdater = (response: Response) => {
+        if (response.status === 'error') {
+          this.store.dispatch(new ShowFlashMessage('Wystąpił błąd w czasie aktualizacja danych areny sportowej'));
+          return;
+        }
+
+        const updatedSportArena = SportArena.fromDTO(response.data.sport_arena),
+          newState = getState().map((sportArenaFromState: SportArena) => sportArenaFromState.id === sportArena.id ? updatedSportArena : sportArenaFromState);
+
+
+        setState(newState);
+        this.store.dispatch(new ShowFlashMessage('Arena sportowa została pomyślnie zaktualizowana'));
+      };
+
+    return this.http.put(url, sportArena.dto())
+      .pipe(tap(stateUpdater))
       .subscribe(() => {}, (error) => this.handleError(error));
   }
 
