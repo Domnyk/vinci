@@ -21,22 +21,17 @@ export class EditSportComplexComponent implements OnChanges {
     this.name = new FormControl('', [
       Validators.required
     ]);
-
-    this.id = new FormControl('', [
-      Validators.required
-    ]);
   }
 
   ngOnChanges(changes: SimpleChanges) {
     const sportComplex = changes.sportComplexInput.currentValue;
 
     this.name.setValue(sportComplex.name);
-    this.id.setValue(sportComplex.id);
   }
 
   // TODO: How conveniently connect form controls with model?
   onSubmit() {
-    const sportComplex = new SportComplex(this.name.value, null, this.id.value);
+    const sportComplex = new SportComplex(this.name.value, this.sportComplexInput.id);
     this.store.dispatch(new UpdateSportComplex(sportComplex));
   }
 

@@ -10,9 +10,9 @@ import { ComplexOwnerDashboardComponent } from './components/owner/complex-owner
 import { AdminAuthorizationGuard } from './guards/admin-authorization.guard';
 import { NewSportComplexComponent } from './components/owner/complex/new/new-sport-complex.component';
 import { SportComplexDashboardComponent } from './components/owner/complex/show/sport-complex-dashboard.component';
-import {NewSportObjectComponent} from './components/owner/object/new/new-sport-object.component';
-import {NewSportArenaComponent} from './components/owner/new-sport-arena/new-sport-arena.component';
+import { NewSportArenaComponent } from './components/owner/arena/new/new-sport-arena.component';
 import { WelcomeToDashboardComponent } from './welcome-to-dashboard/welcome-to-dashboard.component';
+import { SportArenaComponent } from './components/owner/arena/show/sport-arena.component';
 
 export const routes: Routes = [
   { path: 'sign_up', component: SignUpComponent },
@@ -26,7 +26,7 @@ export const routes: Routes = [
       { path: 'new_sport_arena', component: NewSportArenaComponent },
       { path: 'complex/:id', component: SportComplexDashboardComponent },
       { path: 'object/:id', component: SportObjectComponent },
-      { path: 'sport_complex_dashboard/:id/new_sport_object', component: NewSportObjectComponent }
+      { path: 'arena/:id', component: SportArenaComponent },
     ]
   },
   { path: '', component: WelcomeComponent },

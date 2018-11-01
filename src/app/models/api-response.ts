@@ -39,3 +39,13 @@ export interface DeletedEntity {
   status: string;
   data: any;
 }
+
+export interface Response {
+  status: string;
+  data: any;
+}
+
+export interface ErrorResponse {
+  status: string;
+  errors: Array<any>;
+}

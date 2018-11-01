@@ -5,6 +5,11 @@
   </p>
 
   <p>Areny sportowe:</p>
+  <ul>
+    <li *ngFor="let sportArena of (sportArenas$ | async)">
+      <a routerLink="/owner/arena/{{sportArena.id}}">{{sportArena.name}}</a>
+    </li>
+  </ul>
 
   <h2> Dostępne akcje</h2>
   <div class="accordion" id="sport-complex-accordion">
@@ -15,7 +20,7 @@
 
       <div id="collapseOne" class="collapse" data-parent="#sport-complex-accordion">
         <div class="card-body">
-          <app-new-sport-arena></app-new-sport-arena>
+          <app-new-sport-arena [sportObjectId]="sportObject.id"></app-new-sport-arena>
         </div>
       </div>
     </div>

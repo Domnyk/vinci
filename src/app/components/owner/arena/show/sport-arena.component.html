@@ -1,0 +1,41 @@
+<section>
+  <h2> Podstawowe informacje </h2>
+  <p>
+    Nazwa areny:
+    <span class="font-weight-bold">{{(sportArena$ | async).name}}</span>
+  </p>
+
+  <p>Dostępne dyscypliny sportowe</p>
+  <ul>
+    <li *ngFor="let sportDiscipline of ((sportArena$ | async).sportDisciplines)">
+      {{sportDiscipline.name}}
+    </li>
+  </ul>
+
+  <h2> Dostępne akcje</h2>
+  <div class="accordion" id="sport-arena-accordion">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <a routerLink="#" data-toggle="collapse" data-target="#collapseOne">Edytuj dane areny</a>
+      </div>
+
+      <div id="collapseOne" class="collapse" data-parent="#sport-arena-accordion">
+        <div class="card-body">
+          <!--<app-edit-sport-arena [sportArena]="(sportArena$ | async)" ></app-edit-sport-arena>-->
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header" id="headingTwo">
+        <a href="#" data-toggle="collapse" data-target="#collapseTwo">Usuń arenę</a>
+      </div>
+
+      <div id="collapseTwo" class="collapse" data-parent="#sport-arena-accordion">
+        <div class="card-body">
+          <!--<app-delete-sport-arena [sportArena]="(sportArena$ | async)"></app-delete-sport-arena>-->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

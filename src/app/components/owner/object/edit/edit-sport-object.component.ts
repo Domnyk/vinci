@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { SportObject } from '../../../../models/sport-object';
+import { BookingMargin, SportObject } from '../../../../models/sport-object';
 import { Store } from '@ngxs/store';
 import { FormControl, Validators } from '@angular/forms';
 import { UpdateSportObject } from './edit-sport-object.actions';
@@ -60,10 +60,12 @@ export class EditSportObjectComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     const sportObject = changes.sportObject.currentValue;
 
+    console.debug('sportObject is: ', sportObject);
+
     this.name.setValue(sportObject.name);
     this.id.setValue(sportObject.id);
-    this.bookingMarginInMonths.setValue(sportObject.booking_margin.months);
-    this.bookingMarginInDays.setValue(sportObject.booking_margin.days);
+    this.bookingMarginInMonths.setValue(sportObject.bookingMargin.months);
+    this.bookingMarginInDays.setValue(sportObject.bookingMargin.days);
     this.street.setValue(sportObject.address.street);
     this.buildingNumber.setValue(sportObject.address.buildingNumber);
     this.postalCode.setValue(sportObject.address.postalCode);
@@ -71,21 +73,16 @@ export class EditSportObjectComponent implements OnChanges {
   }
 
   onSubmit() {
-    const sportObject = {
-      id: this.id.value,
-      name: this.name.value,
-      booking_margin: {
+    const bookingMargin: BookingMargin = {
         months: this.bookingMarginInMonths.value,
         days: this.bookingMarginInDays.value,
-        secs: 0
-      },
-      address: {
+        seconds: 0
+    }, address = {
         street: this.street.value,
         buildingNumber: this.buildingNumber.value,
         postalCode: this.postalCode.value,
         city: this.city.value
-      }
-    };
+    }, sportObject = new SportObject(this.id.value, this.name.value, address, this.sportObject.geoCoordinates, bookingMargin, this.sportObject.sportComplexId);
 
     this.store.dispatch(new UpdateSportObject(sportObject));
   }

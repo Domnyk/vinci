@@ -28,7 +28,7 @@ import { NewSportObjectComponent } from './components/owner/object/new/new-sport
 import { ModalComponent } from './components/components.common/modal/modal.component';
 import { SportComplexDashboardComponent } from './components/owner/complex/show/sport-complex-dashboard.component';
 import { SportObjectState } from './state/sport-object.state';
-import { NewSportArenaComponent } from './components/owner/new-sport-arena/new-sport-arena.component';
+import { NewSportArenaComponent } from './components/owner/arena/new/new-sport-arena.component';
 import { SportDisciplineState } from './state/sport-discipline.state';
 import { FlashMessageComponent } from './components/flash-message/flash-message.component';
 import { FlashMessageState } from './state/flash-message.state';
@@ -36,10 +36,11 @@ import { WelcomeToDashboardComponent } from './welcome-to-dashboard/welcome-to-d
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DeleteSportComplexComponent } from './components/owner/complex/delete/delete-sport-complex.component';
 import { SidebarListElemComponent } from './components/owner/sidebar-list-elem/sidebar-list-elem.component';
-import { SportArenaComponent } from './components/owner/sport-arena/sport-arena.component';
+import { SportArenaComponent } from './components/owner/arena/show/sport-arena.component';
 import { EditSportComplexComponent } from './components/owner/complex/edit/edit-sport-complex.component';
 import { DeleteSportObjectComponent } from './components/owner/object/delete/delete-sport-object.component';
 import { EditSportObjectComponent } from './components/owner/object/edit/edit-sport-object.component';
+import { SportArenaState } from './state/sport-arena.state';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,7 @@ import { EditSportObjectComponent } from './components/owner/object/edit/edit-sp
     SportArenaComponent,
     EditSportComplexComponent,
     DeleteSportObjectComponent,
-    EditSportObjectComponent
+    EditSportObjectComponent,
   ],
   imports: [
     RouterModule.forRoot(
@@ -81,6 +82,7 @@ import { EditSportObjectComponent } from './components/owner/object/edit/edit-sp
       SportObjectState,
       SportDisciplineState,
       FlashMessageState,
+      SportArenaState,
     ]),
     NgxsLoggerPluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot(),

@@ -1,6 +1,7 @@
-import { AfterViewInit, Component, HostBinding, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { FetchAllSportComplexes } from './complex-owner-dasboard.actions';
+import { FetchSportDisciplines } from './complex-owner-dasboard.actions';
 
 @Component({
   selector: 'app-complex-owner-dashboard',
@@ -15,6 +16,6 @@ export class ComplexOwnerDashboardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.store.dispatch(new FetchAllSportComplexes());
+    this.store.dispatch([new FetchAllSportComplexes(), new FetchSportDisciplines()]);
   }
 }

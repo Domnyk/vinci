@@ -6,6 +6,15 @@
  * @member {string} city
  */
 export class BuildingAddress {
+  static equals(address1: UnescapedBuildingAddress, address2: UnescapedBuildingAddress) {
+    const isStreetSame = address1.street === address2.street,
+          isBuldingNumberSame = address1.buildingNumber === address2.buildingNumber,
+          isCitySame = address1.city === address2.city,
+          isPostalCodeSame = address1.postalCode === address2.postalCode;
+
+    return isStreetSame && isBuldingNumberSame && isCitySame && isPostalCodeSame;
+  }
+
   constructor(
     private unescapedBuildingAddress: UnescapedBuildingAddress
   ) { }

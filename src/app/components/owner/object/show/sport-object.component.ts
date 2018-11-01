@@ -5,6 +5,8 @@ import { Observable } from 'rxjs/index';
 import { Store } from '@ngxs/store';
 import { SportObjectState } from '../../../../state/sport-object.state';
 import { map } from 'rxjs/operators';
+import { FetchSportArenasInSportObject } from './sport-object.actions';
+import { SportArenaState } from '../../../../state/sport-arena.state';
 
 @Component({
   selector: 'app-sport-object',
@@ -28,7 +30,11 @@ export class SportObjectComponent implements OnInit {
           map((sportObjects: Array<SportObject>) => sportObjects[0])
         );
 
-        // this.store.dispatch(new FetchSportObjectsInSportComplex(id));
+        this.store.dispatch(new FetchSportArenasInSportObject(id));
+
+        this.sportArenas$ = this.store.select(SportArenaState.sportArenasInSportObject).pipe(
+          map(filterFn => filterFn(id))
+        );
       }
     );
   }

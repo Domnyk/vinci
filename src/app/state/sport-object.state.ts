@@ -11,8 +11,10 @@ import { environment } from '../../environments/environment.generated.dev';
 import { HttpClient } from '@angular/common/http';
 import { ShowFlashMessage } from '../actions/flash-message.actions';
 import { DeleteSportObject } from '../components/owner/object/delete/delete-sport-object.actions';
-import { throwError } from 'rxjs/index';
+import { Observable, throwError } from 'rxjs/index';
 import { UpdateSportObject } from '../components/owner/object/edit/edit-sport-object.actions';
+import { ErrorResponse, Response } from '../models/api-response';
+import { BuildingAddress } from '../models/building-address';
 
 
 type SportObjects = Array<SportObject>;
@@ -41,21 +43,24 @@ export class SportObjectState {
   @Selector()
   static sportObjectsInSportComplex(state: SportObjects) {
     return (sportComplexId: number) => {
-      return state.filter(sportObject => sportObject.sport_complex_id === +sportComplexId);
+      return state.filter(sportObject => sportObject.sportComplexId === +sportComplexId);
     };
   }
 
   @Action(CreateNewSportObject)
   createNewSportObject({ getState, setState }: StateContext<SportObjects>, { sportObject }: CreateNewSportObject ) {
-    const url = environment.api.resource('sport_complexes', sportObject.sport_complex_id, 'sport_objects'),
-          stateUpdater = (newSportObject) => {
-            setState(
-              [...getState().concat(newSportObject.data.sport_object)]
-            );
-          };
+    const url = environment.api.resource('sport_complexes', sportObject.sportComplexId, 'sport_objects'),
+          stateUpdater = (response: Response) => {
+            if (response.status === 'error') {
+              this.store.dispatch(new ShowFlashMessage('Wystąpił błąd w czasie tworzenia obiektu sportowego'));
+              return;
+            }
 
-    console.debug(sportObject);
-    console.debug(url);
+            const sportObjectFromResponse: SportObject = SportObject.fromDTO(response.data.sport_object),
+                  newState = [...getState().concat(sportObjectFromResponse)];
+            setState(newState);
+            this.store.dispatch(new ShowFlashMessage('Obiekt sportowy został pomyślnie zaktualizowany'));
+          };
 
     return this.geoCoder.geocode(sportObject.address)
       .pipe(
@@ -64,34 +69,46 @@ export class SportObjectState {
           return this.http.post(url, sportObject.dto());
         }),
         tap(stateUpdater)
-      );
+      )
+      .subscribe(() => {}, (error) => this.handleError(error));
   }
 
   @Action(UpdateSportObject)
   updateSportObject({ getState, setState }: StateContext<SportObjects>, { sportObjectToUpdate }: UpdateSportObject) {
     const url = environment.api.resource('sport_objects', sportObjectToUpdate.id),
+          oldSportObject: SportObject = getState().filter((sportObject: SportObject) => sportObject.id === sportObjectToUpdate.id)[0],
           stateUpdater = (response) => {
             if (response.status === 'error') {
               this.store.dispatch(new ShowFlashMessage('Wystąpił błąd w czasie aktualizacja danych obiektu sportowego'));
               return;
             }
 
-            const updatedSportObject = response.data.sport_object,
+            const updatedSportObject = SportObject.fromDTO(response.data.sport_object),
                   newState = getState().map(sportObject => sportObject.id === sportObjectToUpdate.id ? updatedSportObject : sportObject);
 
 
             setState(newState);
             this.store.dispatch(new ShowFlashMessage('Obiekt sportowy został pomyślnie zaktualizowany'));
           };
+    let call: Observable<any> = null;
 
-    return this.geoCoder.geocode(sportObjectToUpdate.address)
-      .pipe(
-        flatMap((coords: Coords) => {
-          sportObjectToUpdate.geo_coordinates = coords;
-          return this.http.put(url, { data: { sport_object: sportObjectToUpdate } });
-        }),
-        tap(stateUpdater)
-      );
+    if (BuildingAddress.equals(oldSportObject.address, sportObjectToUpdate.address)) {
+      console.debug('Not calling geocoder');
+      call = this.http.put(url, sportObjectToUpdate.dto())
+        .pipe(tap(stateUpdater));
+    } else {
+      console.debug('Calling geocoder');
+      call = this.geoCoder.geocode(sportObjectToUpdate.address)
+        .pipe(
+          flatMap((coords: Coords) => {
+            sportObjectToUpdate.geoCoordinates = coords;
+            return this.http.put(url, sportObjectToUpdate.dto());
+          }),
+          tap(stateUpdater)
+        );
+    }
+
+    return call.subscribe(() => {}, (error) => this.handleError(error));
   }
 
   @Action(FetchSportObjectsInSportComplex)
@@ -103,7 +120,8 @@ export class SportObjectState {
           return;
         }
 
-        const sportObjects = receivedData.data.sport_objects,
+        const sportObjectsData = receivedData.data.sport_objects,
+              sportObjects = sportObjectsData.map((sportObjectData: any) => SportObject.fromDTO(sportObjectData)),
               newState = _.uniq([...getState(), ...sportObjects], true, (sportObject) => sportObject.id);
         setState(newState);
       };
@@ -129,5 +147,10 @@ export class SportObjectState {
         map(successDeletionHandler),
         catchError(failureDeletionHandler),
       );
+  }
+
+  private handleError(errorResponse: ErrorResponse) {
+    console.debug('Error response: ', errorResponse);
+    this.store.dispatch(new ShowFlashMessage('Wystąpił błąd'));
   }
 }

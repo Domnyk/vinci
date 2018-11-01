@@ -4,7 +4,6 @@ import { SportObject, SportObjectBasicInformation } from './sport-object';
 export class SportComplex implements DTO {
   constructor(
     public name: string,
-    public sportObjects: Array<SportObject | SportObjectBasicInformation> = [],
     public id?: number
   ) { }
 

@@ -2,14 +2,26 @@ import { UnescapedBuildingAddress } from './building-address';
 import { DTO } from './dto';
 
 export class SportObject implements DTO {
-  constructor(
-    public id: number,
-    public name: string,
-    public address: UnescapedBuildingAddress,
-    public geoCoordinates: Coords,
-    public bookingMargin: BookingMargin,
-    public sport_complex_id?: number
-  ) { }
+   constructor(
+     public id: number,
+     public name: string,
+      public address: UnescapedBuildingAddress,
+      public geoCoordinates: Coords,
+      public bookingMargin: BookingMargin,
+      public sportComplexId?: number
+   ) { }
+
+   static fromDTO(dto: any): SportObject {
+     const address = {
+             street: dto.address.street,
+             buildingNumber: dto.address.building_number,
+             postalCode: dto.address.postal_code,
+             city: dto.address.city
+           },
+           geoCoordinates = new Coords(dto.geo_coordinates.latitude, dto.geo_coordinates.longitude);
+
+     return new SportObject(dto.id, dto.name, address, geoCoordinates, dto.booking_margin, dto.sport_complex_id);
+   }
 
    dto(): SportObjectDTO {
     return {
@@ -29,7 +41,7 @@ export class SportObject implements DTO {
             postal_code: this.address.postalCode,
             street: this.address.street,
           },
-          sport_complex_id: this.sport_complex_id
+          sport_complex_id: this.sportComplexId
         }
       }
     };

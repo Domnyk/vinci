@@ -1,14 +1,14 @@
 <section>
-  <form>
+  <form (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label>Nazwa areny sportowej</label>
-      <input type="text" class="form-control" placeholder="Podaj nazwę areny sportowej">
+      <input type="text" [formControl]="name" class="form-control" placeholder="Podaj nazwę areny sportowej">
     </div>
 
     <div class="form-group">
       <label>Dostępne dyscypliny sportowe</label>
-      <select multiple class="form-control" aria-describedby="sport-discipline-help-block">
-        <option *ngFor="let sportDiscipline of (sportDisciplines$ | async)">
+      <select multiple class="form-control" aria-describedby="sport-discipline-help-block" [formControl]="sportDisciplines">
+        <option *ngFor="let sportDiscipline of (sportDisciplines$ | async)" value="{{sportDiscipline.id}}">
           {{sportDiscipline.name}}
         </option>
       </select>

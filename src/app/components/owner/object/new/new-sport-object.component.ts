@@ -67,8 +67,9 @@ export class NewSportObjectComponent implements OnInit {
   ngOnInit() {
   }
 
+
   onSubmit() {
-    this.sportObject.sport_complex_id = this.sportComplexId;
+    this.sportObject.sportComplexId = this.sportComplexId;
     this.sportObject.name = this.name.value;
     this.sportObject.bookingMargin = {
       months: this.bookingMarginInMonths.value,
