@@ -2,12 +2,16 @@ import { SportArena } from '../models/sport-arena';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { environment } from '../../environments/environment.generated.dev';
 import { ShowFlashMessage } from '../actions/flash-message.actions';
-import { tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { ErrorResponse, Response } from '../models/api-response';
 import { _ } from 'underscore';
 import { HttpClient } from '@angular/common/http';
 import { FetchSportArenasInSportObject } from '../components/owner/object/show/sport-object.actions';
 import { CreateSportArena } from '../components/owner/arena/new/new-sport-arena.actions';
+import { DeleteSportObject } from '../components/owner/object/delete/delete-sport-object.actions';
+import { SportObject } from '../models/sport-object';
+import { throwError } from 'rxjs';
+import { DeleteSportArena } from '../components/owner/arena/delete/delete-sport-arena.actions';
 
 type SportArenas = Array<SportArena>;
 
@@ -73,6 +77,21 @@ export class SportArenaState {
 
     return this.http.post(url, sportArena.dto())
       .pipe(tap(stateUpdater))
+      .subscribe(() => {}, (error) => this.handleError(error));
+  }
+
+  @Action(DeleteSportArena)
+  deleteSportArena({ getState, setState }: StateContext<SportArenas>, { id }: DeleteSportArena) {
+    const url = environment.api.resource('sport_arenas', id),
+      successDeletionHandler = () => {
+        const updatedSportArenaList: SportArenas = getState().filter((sportArena: SportArena) => sportArena.id !== id);
+        setState(
+          [...updatedSportArenaList]
+        );
+      };
+
+    return this.http.delete(url)
+      .pipe(tap(successDeletionHandler))
       .subscribe(() => {}, (error) => this.handleError(error));
   }
 

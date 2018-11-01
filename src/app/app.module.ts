@@ -41,6 +41,7 @@ import { EditSportComplexComponent } from './components/owner/complex/edit/edit-
 import { DeleteSportObjectComponent } from './components/owner/object/delete/delete-sport-object.component';
 import { EditSportObjectComponent } from './components/owner/object/edit/edit-sport-object.component';
 import { SportArenaState } from './state/sport-arena.state';
+import { DeleteSportArenaComponent } from './components/owner/arena/delete/delete-sport-arena.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { SportArenaState } from './state/sport-arena.state';
     EditSportComplexComponent,
     DeleteSportObjectComponent,
     EditSportObjectComponent,
+    DeleteSportArenaComponent,
   ],
   imports: [
     RouterModule.forRoot(

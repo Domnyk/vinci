@@ -130,7 +130,7 @@ export class SportObjectState {
   }
 
   @Action(DeleteSportObject)
-  deleteSportComplex({ getState, setState }: StateContext<SportObjects>, { id }: DeleteSportObject) {
+  deleteSportObject({ getState, setState }: StateContext<SportObjects>, { id }: DeleteSportObject) {
     const url = environment.api.resource('sport_objects', id),
       successDeletionHandler = () => {
         const updatedSportComplexList: SportObjects = getState().filter((sportObject: SportObject) => sportObject.id !== id);
