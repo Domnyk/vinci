@@ -12,6 +12,9 @@
     </li>
   </ul>
 
+  <h2>Kalendarz</h2>
+  <app-calendar [sportArenaId]="(sportArena$ | async).id"></app-calendar>
+
   <h2> Dostępne akcje</h2>
   <div class="accordion" id="sport-arena-accordion">
     <div class="card">
