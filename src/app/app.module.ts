@@ -17,7 +17,7 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { ErrorNotFoundComponent } from './components/error-not-found/error-not-found.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
-import { MapComponent } from './components/components.maps/map/map.component';
+import { MapComponent } from './components/client/map/map.component';
 import { SportObjectComponent } from './components/owner/object/show/sport-object.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ComplexOwnerDashboardComponent } from './components/owner/complex-owner-dashboard/complex-owner-dashboard.component';
