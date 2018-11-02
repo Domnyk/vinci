@@ -43,6 +43,32 @@ import { EditSportObjectComponent } from './components/owner/object/edit/edit-sp
 import { SportArenaState } from './state/sport-arena.state';
 import { DeleteSportArenaComponent } from './components/owner/arena/delete/delete-sport-arena.component';
 import { EditSportArenaComponent } from './components/owner/arena/edit/edit-sport-arena.component';
+import {
+  CalendarDateFormatter,
+  CalendarModule,
+  CalendarNativeDateFormatter,
+  DateAdapter,
+  DateFormatterParams
+} from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { CalendarComponent } from './components/owner/calendar/calendar.component';
+
+import { registerLocaleData } from '@angular/common';
+import localePl from '@angular/common/locales/pl';
+import { EventState } from './state/event.state';
+
+registerLocaleData(localePl);
+
+// TODO: Move it to separate module
+class CustomDateFormatter extends CalendarNativeDateFormatter {
+
+  public dayViewHour({ date, locale }: DateFormatterParams): string {
+    return new Intl.DateTimeFormat('pl', {
+      hour: 'numeric',
+      minute: 'numeric'
+    }).format(date);
+  }
+}
 
 @NgModule({
   declarations: [
@@ -71,6 +97,7 @@ import { EditSportArenaComponent } from './components/owner/arena/edit/edit-spor
     EditSportObjectComponent,
     DeleteSportArenaComponent,
     EditSportArenaComponent,
+    CalendarComponent,
   ],
   imports: [
     RouterModule.forRoot(
@@ -79,6 +106,7 @@ import { EditSportArenaComponent } from './components/owner/arena/edit/edit-spor
     ),
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     NgxsModule.forRoot([
       CurrentUserState,
@@ -87,11 +115,20 @@ import { EditSportArenaComponent } from './components/owner/arena/edit/edit-spor
       SportDisciplineState,
       FlashMessageState,
       SportArenaState,
+      EventState
     ]),
     NgxsLoggerPluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     FontAwesomeModule,
-    ReactiveFormsModule
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }, {
+      dateFormatter: {
+        provide: CalendarDateFormatter,
+        useClass: CustomDateFormatter
+      }
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
