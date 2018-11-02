@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SidebarListElemComponent } from '../../app/components/owner/sidebar-list-elem/sidebar-list-elem.component';
 
-describe('SidebarListElemComponent', () => {
+xdescribe('SidebarListElemComponent', () => {
   let component: SidebarListElemComponent;
   let fixture: ComponentFixture<SidebarListElemComponent>;
 
