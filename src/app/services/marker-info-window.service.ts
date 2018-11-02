@@ -10,11 +10,11 @@ export class MarkerInfoWindowService {
   generateInfoWindowContent(sportObject: SportObject): string {
     const { id, name } = sportObject;
 
-    return  `<div>` +
+    return  `<div #infoWindowContainer>` +
             `<p class="lead">${name}</p>` +
             `<p>Dostępne dyscypliny sportowe:</p>` +
             `<ul><li>Piłka nożna</li><li>Piłka halowa</li></ul>` +
-            `<a href="/sport_objects/${id}">Przejdź do strony obiektu</a>` +
+            `<button type="button" class="btn btn-outline-info btn-sm" id="sport-object-info-window-${id}">Przejdź do strony obiektu</button>` +
             `</div>`;
   }
 }
