@@ -14,6 +14,7 @@ import { throwError } from 'rxjs';
 import { DeleteSportArena } from '../components/owner/arena/delete/delete-sport-arena.actions';
 import { UpdateSportComplex } from '../components/owner/complex/edit/edit-sport-complex.actions';
 import { UpdateSportArena } from '../components/owner/arena/edit/edit-sport-arena.actions';
+import { InsertArenas } from '../actions/sport-arena.actions';
 
 type SportArenas = Array<SportArena>;
 
@@ -42,6 +43,14 @@ export class SportArenaState {
     return (sportObjectId: number) => {
       return state.filter(sportArena => sportArena.sportObjectId === +sportObjectId);
     };
+  }
+
+  @Action(InsertArenas)
+  insertArenas({ getState, setState }: StateContext<SportArenas>, { sportArenasData }: InsertArenas) {
+    const sportArenas: SportArena[] = sportArenasData.map(sport_arena => SportArena.fromDTO(sport_arena)),
+          newState = _.uniq([...getState(), ...sportArenas], true, (sportObject) => sportObject.id);
+
+    setState(newState);
   }
 
   @Action(FetchSportArenasInSportObject)

@@ -23,7 +23,7 @@ export class SportArena implements DTO {
           id: this.id,
           name: this.name,
           sport_disciplines: <Array<number>> this.sportDisciplines.slice(0),
-          // sport_object_id: this.sportObjectId
+          sport_object_id: this.sportObjectId
         }
       }
     };
@@ -38,7 +38,14 @@ interface SportArenaDTO {
       id: number;
       name: string;
       sport_disciplines: Array<number>;
-      // sport_object_id: number
+      sport_object_id: number
     }
   };
+}
+
+export interface SportArenaData {
+  id: number;
+  name: string;
+  sport_disciplines: Array<number>;
+  sport_object_id: number;
 }

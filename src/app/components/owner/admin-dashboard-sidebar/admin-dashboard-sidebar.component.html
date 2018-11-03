@@ -1,6 +1,11 @@
 <ul class="nav flex-column">
   <li *ngFor="let sportComplex of (sportComplexes$ | async)">
-    <app-sidebar-list-elem [sportComplex]="sportComplex"></app-sidebar-list-elem>
+    <details>
+      <summary>{{ sportComplex.name }}</summary>
+      <a routerLink="complex/{{ sportComplex.id }}" class="nav-link dashboard-link">
+        Zarządzaj kompleksem
+      </a>
+    </details>
   </li>
 
   <li class="nav-item">

@@ -3,9 +3,11 @@ import {Coords, SportObject} from '../../../models/sport-object';
 
 import { CurrentLocationService } from '../../../services/current-location.service';
 import { MarkerService } from '../../../services/marker.service';
-import { zip } from 'rxjs';
+import { Observable, zip } from 'rxjs';
 import {EntityService} from '../../../services/entity.service';
 import { Router } from '@angular/router';
+import { FetchAllObjects } from './map.actions';
+import { Select, Store } from '@ngxs/store';
 
 @Component({
   selector: 'app-map',
@@ -13,17 +15,18 @@ import { Router } from '@angular/router';
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit {
+  @Select(state => state.SportObjects) sportObjects$: Observable<SportObject[]>;
+
   map: google.maps.Map;
   warsaw: Coords = new Coords(52.22977, 21.01178);
 
   constructor(private sportObjectService: EntityService<SportObject>, private currentLocationService: CurrentLocationService,
-              private markerService: MarkerService, private router: Router) {}
+              private markerService: MarkerService, private router: Router, private store: Store) {}
 
   ngOnInit() {
-    zip(
-      this.currentLocationService.fetchCurrentLocation(this.warsaw),
-      this.sportObjectService.fetchAll('sport_objects'),
-    ).subscribe(([currentLocation, sportObjects]) => this.createMap(currentLocation, sportObjects));
+    this.store.dispatch(new FetchAllObjects);
+    this.currentLocationService.fetchCurrentLocation(this.warsaw)
+      .subscribe((currentLocation) => this.createMap(currentLocation));
   }
 
   handleClick(event) {
@@ -34,18 +37,14 @@ export class MapComponent implements OnInit {
     }
 
     const sportObjectId: number = +sourceElemId.split('-').pop();
-    this.router.navigate([`/owner/object/${sportObjectId}`]);
+    this.router.navigate([`/objects/${sportObjectId}`]);
   }
 
-  private createMap(currentLocation: Coords, sportObjects: any /* Array<sportObject> */) {
-    console.log('sport objects are: ', sportObjects);
-
+  private createMap(currentLocation: Coords) {
     this.map = new google.maps.Map(document.getElementById('map'), { center: currentLocation.asGoogleCoords, zoom: 15 });
 
-    sportObjects.sport_objects.forEach(
-      sportObject => {
-        console.log(sportObject);
-        this.markerService.addMarker(sportObject, this.map);
-      });
+    this.sportObjects$.subscribe((sportObjects: SportObject[]) => {
+      sportObjects.forEach(sportObject => this.markerService.addMarker(sportObject, this.map));
+    });
   }
 }

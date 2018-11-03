@@ -26,8 +26,7 @@ export class SportObjectComponent implements OnInit {
     this.route.params.subscribe(
       ({ id }: Params) => {
         this.sportObject$ = this.store.select(SportObjectState.sportObject).pipe(
-          map(filterFn => filterFn(id)),
-          map((sportObjects: Array<SportObject>) => sportObjects[0])
+          map(filterFn => filterFn(id))
         );
 
         this.store.dispatch(new FetchSportArenasInSportObject(id));

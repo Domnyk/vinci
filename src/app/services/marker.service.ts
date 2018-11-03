@@ -15,9 +15,9 @@ export class MarkerService {
     });
   }
 
-  public addMarker(sportObject: any /* sportObject */, map: google.maps.Map): Marker {
+  public addMarker(sportObject: SportObject, map: google.maps.Map): Marker {
     let marker: google.maps.Marker;
-    const { latitude, longitude } = sportObject.geo_coordinates;
+    const { latitude, longitude } = sportObject.geoCoordinates;
 
     marker = new google.maps.Marker({
       position: { lat: latitude, lng: longitude },
