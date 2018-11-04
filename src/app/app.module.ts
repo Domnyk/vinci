@@ -45,9 +45,7 @@ import { EditSportArenaComponent } from './components/owner/arena/edit/edit-spor
 import {
   CalendarDateFormatter,
   CalendarModule,
-  CalendarNativeDateFormatter,
   DateAdapter,
-  DateFormatterParams
 } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalendarComponent } from './components/owner/calendar/calendar.component';
@@ -59,19 +57,11 @@ import { ObjectComponent } from './components/client/object/show/object.componen
 import { NgxsRouterPluginModule, RouterStateSerializer } from '@ngxs/router-plugin';
 import { CustomRouterStateSerializer } from './state/custom-router-state-serializer';
 import { ListArenasComponent } from './components/client/arena/list/list-arenas.component';
+import { CustomDateFormatter } from './custom-date-formatter';
 
 registerLocaleData(localePl);
 
-// TODO: Move it to separate module
-class CustomDateFormatter extends CalendarNativeDateFormatter {
 
-  public dayViewHour({ date, locale }: DateFormatterParams): string {
-    return new Intl.DateTimeFormat('pl', {
-      hour: 'numeric',
-      minute: 'numeric'
-    }).format(date);
-  }
-}
 
 @NgModule({
   declarations: [
