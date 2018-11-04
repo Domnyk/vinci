@@ -15,7 +15,6 @@ import { Observable, throwError } from 'rxjs';
 import { UpdateSportObject } from '../components/owner/object/edit/edit-sport-object.actions';
 import { ErrorResponse, Response } from '../models/api-response';
 import { BuildingAddress } from '../models/building-address';
-import { SelectObject } from '../components/client/object/show/object.actions';
 import { FetchAllObjects } from '../components/client/map/map.actions';
 import { InsertArenas } from '../actions/sport-arena.actions';
 
@@ -199,7 +198,7 @@ export class SportObjectState {
         );
       },
       failureDeletionHandler = (error: any) => {
-        return throwError('Sport show still has sport arena');
+        return throwError('Sport object still has sport arena');
       };
 
     return this.http.delete(url)

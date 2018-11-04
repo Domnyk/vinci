@@ -30,13 +30,15 @@ export class MapComponent implements OnInit {
   }
 
   handleClick(event) {
+    console.debug('Source elem id: ', event.srcElement.id);
     event.preventDefault();
-    const sourceElemId: string = event.path[0].id;
-    if (!sourceElemId.includes('sport-object-info-window')) {
+
+    const sourceElem: string = event.srcElement.id;
+    if (!sourceElem.includes('sport-object-info-window')) {
       return;
     }
 
-    const sportObjectId: number = +sourceElemId.split('-').pop();
+    const sportObjectId: number = +sourceElem.split('-').pop();
     this.router.navigate([`/objects/${sportObjectId}`]);
   }
 
