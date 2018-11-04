@@ -11,7 +11,7 @@ export class API {
   }
 
   get signInURL() {
-    return this.domain + '/token';
+    return this.domain + '/token/new';
   }
 
   entityURLs(entityURL: string, childrenURL?: string) {

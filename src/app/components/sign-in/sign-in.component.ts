@@ -4,6 +4,7 @@ import { Store } from '@ngxs/store';
 import { SignInWithPassword } from '../../actions/sign-in.actions';
 
 import { User } from '../../models/user';
+import { environment } from '../../../environments/environment.generated.dev';
 
 @Component({
   selector: 'app-sign-in',
@@ -12,6 +13,7 @@ import { User } from '../../models/user';
 })
 export class SignInComponent implements OnInit {
   user: User = new User(null, null);
+  backendSignInAddress: string = environment.api.signInURL;
 
   constructor(
     private router: Router,
