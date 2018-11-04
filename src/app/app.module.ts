@@ -35,7 +35,6 @@ import { FlashMessageState } from './state/flash-message.state';
 import { WelcomeToDashboardComponent } from './welcome-to-dashboard/welcome-to-dashboard.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DeleteSportComplexComponent } from './components/owner/complex/delete/delete-sport-complex.component';
-import { SidebarListElemComponent } from './components/owner/sidebar-list-elem/sidebar-list-elem.component';
 import { SportArenaComponent } from './components/owner/arena/show/sport-arena.component';
 import { EditSportComplexComponent } from './components/owner/complex/edit/edit-sport-complex.component';
 import { DeleteSportObjectComponent } from './components/owner/object/delete/delete-sport-object.component';
@@ -56,6 +55,10 @@ import { CalendarComponent } from './components/owner/calendar/calendar.componen
 import { registerLocaleData } from '@angular/common';
 import localePl from '@angular/common/locales/pl';
 import { EventState } from './state/event.state';
+import { ObjectComponent } from './components/client/object/show/object.component';
+import { NgxsRouterPluginModule, RouterStateSerializer } from '@ngxs/router-plugin';
+import { CustomRouterStateSerializer } from './state/custom-router-state-serializer';
+import { ListArenasComponent } from './components/client/arena/list/list-arenas.component';
 
 registerLocaleData(localePl);
 
@@ -90,7 +93,6 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
     FlashMessageComponent,
     WelcomeToDashboardComponent,
     DeleteSportComplexComponent,
-    SidebarListElemComponent,
     SportArenaComponent,
     EditSportComplexComponent,
     DeleteSportObjectComponent,
@@ -98,6 +100,8 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
     DeleteSportArenaComponent,
     EditSportArenaComponent,
     CalendarComponent,
+    ObjectComponent,
+    ListArenasComponent,
   ],
   imports: [
     RouterModule.forRoot(
@@ -119,6 +123,7 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
     ]),
     NgxsLoggerPluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot(),
+    NgxsRouterPluginModule.forRoot(),
     FontAwesomeModule,
     CalendarModule.forRoot({
       provide: DateAdapter,
@@ -130,7 +135,7 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
       }
     })
   ],
-  providers: [],
+  providers: [{ provide: RouterStateSerializer, useClass: CustomRouterStateSerializer }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col">
+
+  </div>
+  <div class="col">
+    <h2> {{ (object$ | async)?.name }} </h2>
+
+    <p>Dostępne areny sportowe:</p>
+    <app-list-arenas [arenas$]="arenas$"></app-list-arenas>
+  </div>
+  <div class="col">
+
+  </div>
+</div>
+
+
+

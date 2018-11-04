@@ -28,6 +28,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.4.1",
     "@ngxs/devtools-plugin": "^3.2.0",
     "@ngxs/logger-plugin": "^3.2.0",
+    "@ngxs/router-plugin": "^3.2.0",
     "@ngxs/store": "^3.2.0",
     "@types/googlemaps": "^3.30.13",
     "add": "^2.0.6",

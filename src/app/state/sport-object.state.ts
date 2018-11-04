@@ -1,6 +1,6 @@
 import { _ } from 'underscore';
 import { Coords, SportObject } from '../models/sport-object';
-import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
+import { Action, createSelector, Selector, State, StateContext, Store } from '@ngxs/store';
 import { CreateNewSportObject } from '../components/owner/object/new/new-sport-object.actions';
 import { GeocoderService } from '../services/geocoder.service';
 import { flatMap } from 'rxjs/operators';
@@ -11,10 +11,13 @@ import { environment } from '../../environments/environment.generated.dev';
 import { HttpClient } from '@angular/common/http';
 import { ShowFlashMessage } from '../actions/flash-message.actions';
 import { DeleteSportObject } from '../components/owner/object/delete/delete-sport-object.actions';
-import { Observable, throwError } from 'rxjs/index';
+import { Observable, throwError } from 'rxjs';
 import { UpdateSportObject } from '../components/owner/object/edit/edit-sport-object.actions';
 import { ErrorResponse, Response } from '../models/api-response';
 import { BuildingAddress } from '../models/building-address';
+import { SelectObject } from '../components/client/object/show/object.actions';
+import { FetchAllObjects } from '../components/client/map/map.actions';
+import { InsertArenas } from '../actions/sport-arena.actions';
 
 
 type SportObjects = Array<SportObject>;
@@ -36,7 +39,7 @@ export class SportObjectState {
   @Selector()
   static sportObject(state: SportObjects) {
     return (id: number) => {
-      return state.filter(sportObject => sportObject.id === +id);
+      return state.filter(sportObject => sportObject.id === +id)[0];
     };
   }
 
@@ -45,6 +48,35 @@ export class SportObjectState {
     return (sportComplexId: number) => {
       return state.filter(sportObject => sportObject.sportComplexId === +sportComplexId);
     };
+  }
+
+  static sportObject2(id$: Observable<string>) {
+    return createSelector([SportObjectState], (state: SportObjects) => {
+      id$.subscribe((id: string) => {
+        return state.filter((sportObject: SportObject) => sportObject.id === +id)[0];
+      });
+    });
+  }
+
+
+  @Action(FetchAllObjects)
+  fetchAllObjects({ getState, setState }: StateContext<SportObjects>, { }: FetchAllObjects ) {
+    const url: string = environment.api.resource('sport_objects'),
+          stateUpdater = (response: Response) => {
+            const sportObjectsData = response.data.sport_objects,
+                  sportObjects = sportObjectsData.map((sportObjectData: any) => SportObject.fromDTO(sportObjectData)),
+                  newState = _.uniq([...getState(), ...sportObjects], true, (sportObject) => sportObject.id);
+
+            sportObjectsData.map(sport_object => this.store.dispatch(new InsertArenas(sport_object.sport_arenas)));
+            setState(newState);
+          };
+
+    return this.http.get(url)
+      .pipe(
+        tap(console.log),
+        tap((response: Response) => this.maybeLogError(response, 'Wystąpił błąd w czasie pobierania listy obiektów sportowych ')),
+        tap(stateUpdater)
+      );
   }
 
   @Action(CreateNewSportObject)
@@ -129,6 +161,34 @@ export class SportObjectState {
     return this.http.get(url).pipe(tap(stateUpdater));
   }
 
+  // @Action(SelectObject)
+  // selectObject({ getState, setState }: StateContext<SportObjects>, { id }: SelectObject) {
+  //   const url = environment.api.resource('sport_objects', id),
+  //         isObjectAlreadyInState = getState().find((sportObject: SportObject) => sportObject.id === id) !== undefined,
+  //         stateUpdater = (resposnse: Response) => {
+  //           if (resposnse.status === 'error') {
+  //             this.store.dispatch(new ShowFlashMessage('Wystąpił błąd w czasie pobierania danych obiektu sportowego'));
+  //             return;
+  //           }
+  //
+  //           const sportObject = SportObject.fromDTO(resposnse.data.sport_object);
+  //           let newState = null;
+  //           if (isObjectAlreadyInState) {
+  //             newState = getState().map((sportObject: SportObject) => sportObject.id === id ? )
+  //
+  //               _.uniq([...getState(), sportObject]);
+  //           } else {
+  //             newState = ([...getState(), sportObject]);
+  //           }
+  //
+  //           setState(newState);
+  //         };
+  //
+  //   return this.http.get(url)
+  //     .pipe(tap(stateUpdater))
+  //     .subscribe(() => {}, (error) => this.handleError(error));
+  // }
+
   @Action(DeleteSportObject)
   deleteSportObject({ getState, setState }: StateContext<SportObjects>, { id }: DeleteSportObject) {
     const url = environment.api.resource('sport_objects', id),
@@ -139,7 +199,7 @@ export class SportObjectState {
         );
       },
       failureDeletionHandler = (error: any) => {
-        return throwError('Sport object still has sport arenas');
+        return throwError('Sport show still has sport arena');
       };
 
     return this.http.delete(url)
@@ -152,5 +212,12 @@ export class SportObjectState {
   private handleError(errorResponse: ErrorResponse) {
     console.debug('Error response: ', errorResponse);
     this.store.dispatch(new ShowFlashMessage('Wystąpił błąd'));
+  }
+
+  private maybeLogError(response: Response | ErrorResponse, msg: string) {
+    if (response.status === 'error') {
+      console.debug('Error response: ', response);
+      this.store.dispatch(new ShowFlashMessage(msg));
+    }
   }
 }

@@ -13,12 +13,15 @@ import { SportComplexDashboardComponent } from './components/owner/complex/show/
 import { NewSportArenaComponent } from './components/owner/arena/new/new-sport-arena.component';
 import { WelcomeToDashboardComponent } from './welcome-to-dashboard/welcome-to-dashboard.component';
 import { SportArenaComponent } from './components/owner/arena/show/sport-arena.component';
+import { ObjectComponent } from './components/client/object/show/object.component';
+
+
 
 export const routes: Routes = [
   { path: 'sign_up', component: SignUpComponent },
   { path: 'sign_in', component: SignInComponent },
   { path: 'map', component: MapComponent },
-  { path: 'sport_object/:id', component: SportObjectComponent },
+  { path: 'objects/:id', component: ObjectComponent },
   { path: 'owner', component: ComplexOwnerDashboardComponent, canActivate: [AdminAuthorizationGuard],
     children: [
       { path: '', component: WelcomeToDashboardComponent },
