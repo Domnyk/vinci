@@ -1,5 +1,5 @@
 import { SportArena } from '../models/sport-arena';
-import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
+import { Action, createSelector, Selector, State, StateContext, Store } from '@ngxs/store';
 import { environment } from '../../environments/environment.generated.dev';
 import { ShowFlashMessage } from '../actions/flash-message.actions';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -15,6 +15,7 @@ import { DeleteSportArena } from '../components/owner/arena/delete/delete-sport-
 import { UpdateSportComplex } from '../components/owner/complex/edit/edit-sport-complex.actions';
 import { UpdateSportArena } from '../components/owner/arena/edit/edit-sport-arena.actions';
 import { InsertArenas } from '../actions/sport-arena.actions';
+import { SportDiscipline } from '../models/sport-discipline';
 
 type SportArenas = Array<SportArena>;
 
@@ -42,6 +43,17 @@ export class SportArenaState {
   static sportArenasInSportObject(state: SportArenas) {
     return (sportObjectId: number) => {
       return state.filter(sportArena => sportArena.sportObjectId === +sportObjectId);
+    };
+  }
+
+  @Selector()
+  static disciplinesInObject(state: SportArenas) {
+    return (id: number) => {
+      return state
+        .filter(arena => arena.sportObjectId === id)
+        .map(arena => arena.sportDisciplines)
+        .reduce((prev, curr) => [...prev, ...curr], [])
+        .map((discipline: SportDiscipline) => discipline.name);
     };
   }
 
