@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="col">
+    <h2>Znajdź wydarzenie spełniające Twoje kryteria</h2>
+
+    <form (ngSubmit)="searchForEvents()">
+      <app-select-disciplines
+        [label]="'Zaznacz interesujące Cię dyscypliny'">
+      </app-select-disciplines>
+    </form>
+  </div>
+</div>

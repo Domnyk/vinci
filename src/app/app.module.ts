@@ -58,6 +58,8 @@ import { NgxsRouterPluginModule, RouterStateSerializer } from '@ngxs/router-plug
 import { CustomRouterStateSerializer } from './state/custom-router-state-serializer';
 import { ListArenasComponent } from './components/client/arena/list/list-arenas.component';
 import { CustomDateFormatter } from './custom-date-formatter';
+import { SearchComponent } from './components/client/search/search.component';
+import { SelectDisciplinesComponent } from './components/components.common/select-disciplines/select-disciplines.component';
 
 registerLocaleData(localePl);
 
@@ -92,6 +94,8 @@ registerLocaleData(localePl);
     CalendarComponent,
     ObjectComponent,
     ListArenasComponent,
+    SearchComponent,
+    SelectDisciplinesComponent,
   ],
   imports: [
     RouterModule.forRoot(

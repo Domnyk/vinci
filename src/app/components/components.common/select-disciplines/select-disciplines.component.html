@@ -1,0 +1,11 @@
+<div class="form-group">
+  <label>{{label}}</label>
+  <select multiple class="form-control" aria-describedby="sport-discipline-help-block" [formControl]="sportDisciplines">
+    <option *ngFor="let sportDiscipline of (sportDisciplines$ | async)" value="{{sportDiscipline.id}}">
+      {{sportDiscipline.name}}
+    </option>
+  </select>
+  <small id="sport-discipline-help-block" class="form-text text-muted">
+    Aby zaznaczyć kilka opcji użyć klawiasza Shift lub przeciągnij myszką (na komputerze) lub przeciągnij palcem (na smartphonie)
+  </small>
+</div>

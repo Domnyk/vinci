@@ -4,17 +4,20 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a routerLink="/sign_in" class="nav-link">Sign in</a>
+        <li class="nav-item">
+          <a routerLink="/sign_in" class="nav-link">Zaloguj</a>
         </li>
-        <li class="nav-item active">
-          <a routerLink="/sign_up" class="nav-link">Sign up</a>
+        <li class="nav-item">
+          <a routerLink="/sign_up" class="nav-link">Zarejestruj</a>
         </li>
-        <li class="nav-item active">
-          <a routerLink="/map" class="nav-link">Map</a>
+        <li class="nav-item">
+          <a routerLink="/map" class="nav-link">Mapa</a>
         </li>
-        <li *ngIf="isAdmin" class="nav-item active">
-          <a routerLink="/admin_dashboard" class="nav-link">Manage your facilities</a>
+        <li class="nav-item">
+          <a routerLink="/search" class="nav-link">Szukaj</a>
+        </li>
+        <li *ngIf="isAdmin" class="nav-item">
+          <a routerLink="/admin_dashboard" class="nav-link">Zarządzaj kompleksami</a>
         </li>
       </ul>
     </div>
