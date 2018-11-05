@@ -49,14 +49,6 @@ export class SportObjectState {
     };
   }
 
-  static sportObject2(id$: Observable<string>) {
-    return createSelector([SportObjectState], (state: SportObjects) => {
-      id$.subscribe((id: string) => {
-        return state.filter((sportObject: SportObject) => sportObject.id === +id)[0];
-      });
-    });
-  }
-
 
   @Action(FetchAllObjects)
   fetchAllObjects({ getState, setState }: StateContext<SportObjects>, { }: FetchAllObjects ) {
