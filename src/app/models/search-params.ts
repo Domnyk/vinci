@@ -11,14 +11,16 @@ export class SearchParams implements DTO {
 
   dto(): SearchParamsDTO {
     const dto: SearchParamsDTO = {
-      disciplines: this.disciplines,
-      price: this.price,
-      date: this.date
+      search_params: {
+        disciplines: this.disciplines,
+        price: this.price,
+        date: this.date
+      }
     };
 
     if (!!this.location && !!this.searchRadius) {
-      dto.location = this.location;
-      dto.search_radius = this.searchRadius;
+      dto.search_params.location = this.location;
+      dto.search_params.search_radius = this.searchRadius;
     }
 
     return dto;
@@ -26,9 +28,11 @@ export class SearchParams implements DTO {
 }
 
 interface SearchParamsDTO {
-  disciplines: Array<number>;
-  price: number;
-  date: string;
-  location?: any;
-  search_radius?: number;
+  search_params: {
+    disciplines: Array<number>;
+    price: number;
+    date: string;
+    location?: any;
+    search_radius?: number;
+  };
 }
