@@ -11,15 +11,10 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class SelectDisciplinesComponent implements OnInit {
   @Input() label: string;
+  @Input() disciplinesFormControl: FormControl;
   @Select(state => state.sportDisciplines) sportDisciplines$: Observable<SportDiscipline[]>;
 
-  sportDisciplines: FormControl;
-
-  constructor() {
-    this.sportDisciplines = new FormControl([], [
-      Validators.required
-    ]);
-  }
+  constructor() { }
 
   ngOnInit() {
   }

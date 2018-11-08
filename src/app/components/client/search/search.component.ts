@@ -3,6 +3,7 @@ import { Store } from '@ngxs/store';
 import { FetchSportDisciplines } from '../../owner/complex-owner-dashboard/complex-owner-dasboard.actions';
 import { FormControl, Validators } from '@angular/forms';
 import { SearchParams } from '../../../models/search-params';
+import { customDateValidator } from '../../../custom-validators';
 
 @Component({
   selector: 'app-search',
@@ -21,7 +22,8 @@ export class SearchComponent implements OnInit {
     ]);
 
     this.date = new FormControl('dd.mm.rrrr', [
-      Validators.required
+      Validators.required,
+      customDateValidator()
     ]);
 
     this.disciplines = new FormControl([], [
@@ -35,7 +37,7 @@ export class SearchComponent implements OnInit {
 
   searchForEvents() {
     const searchParams = new SearchParams(this.disciplines.value, this.price.value, this.date.value);
-    console.debug('searchParams: ', searchParams);
+    console.debug('searchParamsDTO: ', searchParams.dto());
   }
 
 }

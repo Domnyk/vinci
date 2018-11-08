@@ -10,13 +10,18 @@ export class SearchParams implements DTO {
   ) { }
 
   dto(): SearchParamsDTO {
-    return {
+    const dto: SearchParamsDTO = {
       disciplines: this.disciplines,
       price: this.price,
-      date: this.date,
-      location: this.location,
-      search_radius: this.searchRadius
+      date: this.date
     };
+
+    if (!!this.location && !!this.searchRadius) {
+      dto.location = this.location;
+      dto.search_radius = this.searchRadius;
+    }
+
+    return dto;
   }
 }
 

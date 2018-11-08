@@ -1,10 +1,15 @@
 <div class="form-group">
   <label>{{label}}</label>
-  <select multiple class="form-control" aria-describedby="sport-discipline-help-block" [formControl]="sportDisciplines">
+  <select multiple class="form-control" [formControl]="disciplinesFormControl"
+          aria-describedby="sport-discipline-help-block" name="disciplines"
+          [class.is-invalid]="disciplinesFormControl.invalid && (disciplinesFormControl.dirty || disciplinesFormControl.touched)">
     <option *ngFor="let sportDiscipline of (sportDisciplines$ | async)" value="{{sportDiscipline.id}}">
       {{sportDiscipline.name}}
     </option>
   </select>
+  <div class="invalid-feedback" *ngIf ="disciplinesFormControl.dirty || disciplinesFormControl.touched">
+    Wybierz dyscyplinę
+  </div>
   <small id="sport-discipline-help-block" class="form-text text-muted">
     Możesz zaznaczyć kilka
   </small>
