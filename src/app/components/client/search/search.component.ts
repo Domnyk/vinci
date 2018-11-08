@@ -4,6 +4,7 @@ import { FetchSportDisciplines } from '../../owner/complex-owner-dashboard/compl
 import { FormControl, Validators } from '@angular/forms';
 import { SearchParams } from '../../../models/search-params';
 import { customDateValidator } from '../../../custom-validators';
+import { Search } from './search.actions';
 
 @Component({
   selector: 'app-search',
@@ -36,8 +37,8 @@ export class SearchComponent implements OnInit {
   }
 
   searchForEvents() {
-    const searchParams = new SearchParams(this.disciplines.value, this.price.value, this.date.value);
-    console.debug('searchParamsDTO: ', searchParams.dto());
+    const params = new SearchParams(this.disciplines.value, this.price.value, this.date.value);
+    this.store.dispatch(new Search(params));
   }
 
 }

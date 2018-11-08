@@ -60,6 +60,7 @@ import { ListArenasComponent } from './components/client/arena/list/list-arenas.
 import { CustomDateFormatter } from './custom-date-formatter';
 import { SearchComponent } from './components/client/search/search.component';
 import { SelectDisciplinesComponent } from './components/components.common/select-disciplines/select-disciplines.component';
+import { SearchResultsState } from './state/search-results.state';
 
 registerLocaleData(localePl);
 
@@ -113,7 +114,8 @@ registerLocaleData(localePl);
       SportDisciplineState,
       FlashMessageState,
       SportArenaState,
-      EventState
+      EventState,
+      SearchResultsState,
     ]),
     NgxsLoggerPluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot(),
