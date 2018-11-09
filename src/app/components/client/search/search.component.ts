@@ -28,8 +28,7 @@ export class SearchComponent implements OnInit {
   day: FormControl;
 
   constructor(private store: Store, private router: Router) {
-    const currentDate = new Date(),
-          monthOffset = 1;
+    const currentDate = new Date();
     this.currentDate = {
       year: +format(currentDate, 'YYYY'),
       month: format(currentDate, 'MM', { locale: pl }),

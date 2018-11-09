@@ -24,7 +24,7 @@
       </div>
 
       <div class="form-row">
-        <div class="col">
+        <div class="form-group col">
           <label>Rok</label>
           <input [formControl]="year" [class.is-invalid]="year.invalid" type="number" min="{{currentDate.year}}"
                  value="{{currentDate.year}}" step="1" name="year" class="form-control" />
@@ -32,7 +32,7 @@
             Podaj prawidłowy rok
           </div>
         </div>
-        <div class="col">
+        <div class="form-group col">
           <label>Miesiąc</label>
           <select [formControl]="month" [class.is-invalid]="month.invalid" name="month" class="form-control">
             <option [ngValue]="month" *ngFor="let month of months">
@@ -43,7 +43,7 @@
             Wybierz prawidłowy miesiąc
           </div>
         </div>
-        <div class="col">
+        <div class="form-group col">
           <label>Dzień</label>
           <input [formControl]="day" [class.is-invalid]="day.invalid" type="number" min="{{currentDate.day}}"
                  max={{lastDayOfMonth}} value="{{currentDate.day}}" name="day" class="form-control" />
