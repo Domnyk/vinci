@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { SportObjectState } from '../../../../state/sport-object.state';
 import { SportObject } from '../../../../models/sport-object';
-import { map } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { SportArenaState } from '../../../../state/sport-arena.state';
 import { SportArena } from '../../../../models/sport-arena';
 
@@ -30,7 +30,8 @@ export class ObjectComponent implements OnInit {
     });
 
     this.foundArenasIds$ = this.store.select(state => state.router.state.params.found).pipe(
-      map((ids: string) => ids.split(',').map(id => +id))
+      map((ids: string) => ids.split(',').map(id => +id)),
+      catchError(() => of([]))
     );
   }
 
