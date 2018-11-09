@@ -57,10 +57,8 @@ export class SearchComponent implements OnInit {
           date = [this.year.value, this.month.value.value, day].join('-'),
           params = new SearchParams(this.disciplines.value, this.price.value, date);
 
-    console.debug('Search params: ', params);
-
     this.store.dispatch(new Search(params));
-    // this.router.navigate(['search_results']);
+    this.router.navigate(['search_results']);
   }
 
 }

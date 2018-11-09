@@ -1,0 +1,8 @@
+#map-wrapper {
+  min-height: 100%;
+}
+
+#map {
+  min-height: 85vh;
+}
+

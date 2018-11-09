@@ -8,11 +8,13 @@ import { Observable } from 'rxjs';
   styleUrls: ['./list-arenas.component.css']
 })
 export class ListArenasComponent implements OnInit {
+  @Input() foundArenasIds$: Observable<number[]>;
   @Input() arenas$: Observable<SportArena[]>;
 
   constructor() { }
 
   ngOnInit() {
+    this.foundArenasIds$.subscribe((ids: number[]) => console.log(ids));
   }
 
 }

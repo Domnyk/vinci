@@ -14,6 +14,7 @@ import { SportArena } from '../../../../models/sport-arena';
 })
 export class ObjectComponent implements OnInit {
   @Select(state => state.router.state.params.id) objectId$: Observable<string>;
+  foundArenasIds$: Observable<number[]>;
   arenas$: Observable<SportArena[]>;
   object$: Observable<SportObject>;
 
@@ -27,6 +28,10 @@ export class ObjectComponent implements OnInit {
         map(filterFn => filterFn(+id))
       );
     });
+
+    this.foundArenasIds$ = this.store.select(state => state.router.state.params.found).pipe(
+      map((ids: string) => ids.split(',').map(id => +id))
+    );
   }
 
 }

@@ -6,7 +6,7 @@
     <h2> {{ (object$ | async)?.name }} </h2>
 
     <p>Dostępne areny sportowe:</p>
-    <app-list-arenas [arenas$]="arenas$"></app-list-arenas>
+    <app-list-arenas [foundArenasIds$]="foundArenasIds$" [arenas$]="arenas$"></app-list-arenas>
   </div>
   <div class="col">
 

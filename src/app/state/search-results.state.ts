@@ -3,7 +3,7 @@ import { SportArena } from '../models/sport-arena';
 import { Action, State, StateContext } from '@ngxs/store';
 import { Search } from '../components/client/search/search.actions';
 
-interface SearchResults {
+export interface SearchResults {
   objects: Array<SportObject>;
   arenas: Array<SportArena>;
 }
@@ -16,7 +16,10 @@ const object = new SportObject(1, 'Obiekt na potrzeby testów',
   name: 'searchResults',
   defaults: {
     objects: [object],
-    arenas: [new SportArena(1, 'Arena na potrzeby testów stanu', [1], 1)]
+    arenas: [
+      new SportArena(1, 'Arena na potrzeby testów stanu', [1], 1),
+      new SportArena(2, 'Arena na potrzeby testów stanu', [1], 1)
+    ]
   }
 })
 export class SearchResultsState {
