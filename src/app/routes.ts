@@ -15,6 +15,7 @@ import { WelcomeToDashboardComponent } from './welcome-to-dashboard/welcome-to-d
 import { SportArenaComponent } from './components/owner/arena/show/sport-arena.component';
 import { ObjectComponent } from './components/client/object/show/object.component';
 import { SearchComponent } from './components/client/search/search.component';
+import { SearchResultsComponent } from './components/client/search-results/search-results.component';
 
 
 
@@ -23,6 +24,7 @@ export const routes: Routes = [
   { path: 'sign_in', component: SignInComponent },
   { path: 'map', component: MapComponent },
   { path : 'search', component: SearchComponent },
+  { path: 'search_results', component: SearchResultsComponent },
   { path: 'objects/:id', component: ObjectComponent },
   { path: 'owner', component: ComplexOwnerDashboardComponent, canActivate: [AdminAuthorizationGuard],
     children: [

@@ -23,15 +23,34 @@
         </div>
       </div>
 
-      <div class="form-group">
-        <label>Data</label>
-        <input [formControl]="date" [class.is-invalid]="date.invalid" type="date" name="date" class="form-control"/>
-        <div class="invalid-feedback">
-          Podaj prawidłową datę
+      <div class="form-row">
+        <div class="col">
+          <label>Rok</label>
+          <input [formControl]="year" [class.is-invalid]="year.invalid" type="number" min="{{currentDate.year}}"
+                 value="{{currentDate.year}}" step="1" name="year" class="form-control" />
+          <div class="invalid-feedback">
+            Podaj prawidłowy rok
+          </div>
         </div>
-        <small class="form-text text-muted">
-          Przykładowo: 01.05.2017
-        </small>
+        <div class="col">
+          <label>Miesiąc</label>
+          <select [formControl]="month" [class.is-invalid]="month.invalid" name="month" class="form-control">
+            <option [ngValue]="month" *ngFor="let month of months">
+              {{month.key}}
+            </option>
+          </select>
+          <div class="invalid-feedback">
+            Wybierz prawidłowy miesiąc
+          </div>
+        </div>
+        <div class="col">
+          <label>Dzień</label>
+          <input [formControl]="day" [class.is-invalid]="day.invalid" type="number" min="{{currentDate.day}}"
+                 max={{lastDayOfMonth}} value="{{currentDate.day}}" name="day" class="form-control" />
+          <div class="invalid-feedback">
+            Podaj prawidłowy dzień
+          </div>
+        </div>
       </div>
 
       <div class="form-group">

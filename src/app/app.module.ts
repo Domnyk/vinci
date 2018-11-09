@@ -61,6 +61,7 @@ import { CustomDateFormatter } from './custom-date-formatter';
 import { SearchComponent } from './components/client/search/search.component';
 import { SelectDisciplinesComponent } from './components/components.common/select-disciplines/select-disciplines.component';
 import { SearchResultsState } from './state/search-results.state';
+import { SearchResultsComponent } from './components/client/search-results/search-results.component';
 
 registerLocaleData(localePl);
 
@@ -97,6 +98,7 @@ registerLocaleData(localePl);
     ListArenasComponent,
     SearchComponent,
     SelectDisciplinesComponent,
+    SearchResultsComponent,
   ],
   imports: [
     RouterModule.forRoot(
