@@ -1,0 +1,157 @@
+<ng-template
+  #openDayTemplate
+  let-events="events"
+  let-eventClicked="eventClicked"
+  let-isOpen="isOpen">
+  <div class="cal-open-day-events" [@collapse] *ngIf="isOpen">
+    <button class="btn btn-link" id="add-event-btn" data-toggle="modal" data-target="#createEventModal" >Dodaj wydarzenie</button>
+    <div
+      *ngFor="let event of events; trackBy:trackByEventId"
+      [ngClass]="event?.cssClass"
+      mwlDraggable
+      [class.cal-draggable]="event.draggable"
+      dragActiveClass="cal-drag-active"
+      [dropData]="{event: event}"
+      [dragAxis]="{x: event.draggable, y: event.draggable}">
+          <span
+            class="cal-event"
+            [style.backgroundColor]="event.color?.primary">
+          </span>
+      &ngsp;
+      <mwl-calendar-event-title
+        [event]="event"
+        view="month"
+        (mwlClick)="eventClicked.emit({event: event})">
+      </mwl-calendar-event-title>
+      &ngsp;
+      <mwl-calendar-event-actions [event]="event">
+      </mwl-calendar-event-actions>
+    </div>
+  </div>
+</ng-template>
+
+<div class="modal fade" id="createEventModal" role="form">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5>Dodaj nowe wydarzenie</h5>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label>Nazwa</label>
+            <input class="form-control" type="text">
+          </div>
+          <div class="form-row">
+            <div class="col form-group">
+              <label>Godzina rozpoczęcia</label>
+              <input class="form-control" type="time" min="00:00" />
+            </div>
+            <div class="col form-group">
+              <label>Godzina zakończenia</label>
+              <input class="form-control" type="time" min="00:00" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col form-group">
+              <label>Minimalna liczba osób</label>
+              <input class="form-control" type="number" min="1" value="1" />
+            </div>
+            <div class="col form-group">
+              <label>Maksymalna liczba osób</label>
+              <input class="form-control" type="number" min="1" value="1" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col form-group">
+              <label>Czas na dołączenie <small class="text-muted">(w dniach)</small></label>
+              <input class="form-control" type="number" min="1" value="1" />
+            </div>
+            <div class="col form-group">
+              <label>Czas na płatność <small class="text-muted">(w dniach)</small></label>
+              <input class="form-control" type="number" min="1" value="1" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Całkowita cena</label>
+            <div class="input-group">
+              <input class="form-control" type="number" min="0" readonly />
+              <div class="input-group-append">
+                <span class="input-group-text">PLN</span>
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success">Dodaj</button>
+        <button class="btn btn-danger" data-dismiss="modal">Zamknij</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row text-center">
+  <div class="col">
+    <div class="btn-group btn-group-sm">
+      <button class="btn btn-outline-info"
+           mwlCalendarPreviousView
+           [view]="view"
+           [(viewDate)]="viewDate"
+           (click)="isTodayViewActive = false">
+        Poprzedni
+      </button>
+      <button class="btn {{getTodayButtonClass()}}"
+           mwlCalendarToday
+           [(viewDate)]="viewDate"
+           (click)="isTodayViewActive = true">
+        Obecny
+      </button>
+      <button class="btn btn-outline-info"
+           mwlCalendarNextView
+           [view]="view"
+           [(viewDate)]="viewDate"
+           (click)="isTodayViewActive = false">
+        Następny
+      </button>
+    </div>
+  </div>
+
+  <div class="col">
+    <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'pl' | titlecase }}</h3>
+  </div>
+
+  <div class="col">
+    <div class="btn-group btn-group-sm" >
+      <div class="btn {{getClassForTimeIntervalButton(CalendarView.Month)}}"
+           (click)="view = CalendarView.Month">
+        Miesiąc
+      </div>
+      <div class="btn {{getClassForTimeIntervalButton(CalendarView.Week)}}"
+           (click)="view = CalendarView.Week">
+        Tydzień
+      </div>
+    </div>
+  </div>
+</div>
+
+<div [ngSwitch]="view" id="calendar-view">
+  <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month"
+                           [viewDate]="viewDate"
+                           [events]="(events$ | async)"
+                           [locale]="'pl'"
+                           [weekStartsOn]="1"
+                           [activeDayIsOpen]="activeDayIsOpen"
+                           [openDayEventsTemplate]="openDayTemplate"
+                           (dayClicked)="dayClicked($event.day)">
+  </mwl-calendar-month-view>
+  <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week"
+                          [viewDate]="viewDate" [events]="(events$ | async)"
+                          [locale]="'pl'"
+                          [weekStartsOn]="1"
+                          [hourSegments]="1"
+                          [dayStartHour]="6">
+  </mwl-calendar-week-view>
+</div>

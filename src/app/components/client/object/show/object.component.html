@@ -1,15 +1,21 @@
 <div class="row">
   <div class="col">
-
+    <h3>Podstawowe informacje</h3>
+    <p>Lokalizacja</p>
+    <ul>
+      <li>{{ (object$ | async)?.address.street }} {{ (object$ | async)?.address.buildingNumber}}</li>
+    </ul>
   </div>
   <div class="col">
-    <h2> {{ (object$ | async)?.name }} </h2>
-
-    <p>Dostępne areny sportowe:</p>
+    <h3> Areny </h3>
     <app-list-arenas [foundArenasIds$]="foundArenasIds$" [arenas$]="arenas$"></app-list-arenas>
   </div>
-  <div class="col">
+</div>
 
+<div class="row">
+  <div class="col">
+    <h3> Kalendarz </h3>
+    <app-calendar-client></app-calendar-client>
   </div>
 </div>
 

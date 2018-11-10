@@ -1,0 +1,11 @@
+#calendar-view {
+  margin-top: 3vh;
+}
+
+#openDay {
+  background-color: black;
+}
+
+#add-event-btn {
+  color: white;
+}

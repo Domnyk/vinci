@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -62,6 +63,7 @@ import { SearchComponent } from './components/client/search/search.component';
 import { SelectDisciplinesComponent } from './components/components.common/select-disciplines/select-disciplines.component';
 import { SearchResultsState } from './state/search-results.state';
 import { SearchResultsComponent } from './components/client/search-results/search-results.component';
+import { CalendarComponent as CalendarComponentClient } from './components/client/calendar/calendar.component';
 
 registerLocaleData(localePl);
 
@@ -99,6 +101,7 @@ registerLocaleData(localePl);
     SearchComponent,
     SelectDisciplinesComponent,
     SearchResultsComponent,
+    CalendarComponentClient,
   ],
   imports: [
     RouterModule.forRoot(
@@ -106,6 +109,7 @@ registerLocaleData(localePl);
       { enableTracing: false }
     ),
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,

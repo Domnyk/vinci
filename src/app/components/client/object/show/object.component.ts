@@ -3,7 +3,7 @@ import { Select, Store } from '@ngxs/store';
 import { Observable, of } from 'rxjs';
 import { SportObjectState } from '../../../../state/sport-object.state';
 import { SportObject } from '../../../../models/sport-object';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { SportArenaState } from '../../../../state/sport-arena.state';
 import { SportArena } from '../../../../models/sport-arena';
 
