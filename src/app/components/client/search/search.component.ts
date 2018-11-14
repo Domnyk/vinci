@@ -6,10 +6,10 @@ import { SearchParams } from '../../../models/search-params';
 import { Search } from './search.actions';
 import { Router } from '@angular/router';
 import { format, lastDayOfMonth } from 'date-fns';
-import * as pl from 'date-fns/locale/pl';
 import { months } from './months';
+import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 
-// TODO: Replace date input with date picker
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -19,6 +19,7 @@ export class SearchComponent implements OnInit {
   readonly months: Array<{key: string, value: number}> = months;
   readonly currentDate: CurrentDate;
   readonly lastDayOfMonth: number;
+  readonly currentLocationIcon: IconDefinition = faMapMarkerAlt;
 
   disciplines: FormControl;
   price: FormControl;
@@ -26,12 +27,16 @@ export class SearchComponent implements OnInit {
   year: FormControl;
   month: FormControl;
   day: FormControl;
+  localisation: FormControl;
 
   constructor(private store: Store, private router: Router) {
-    const currentDate = new Date();
+    const currentDate = new Date(),
+          monthOffset = 1,
+          zeroBasedMonth = +format(currentDate, 'MM') - monthOffset;
+
     this.currentDate = {
       year: +format(currentDate, 'YYYY'),
-      month: format(currentDate, 'MM', { locale: pl }),
+      month: zeroBasedMonth,
       day: +format(currentDate, 'DD')
     };
 
@@ -41,9 +46,10 @@ export class SearchComponent implements OnInit {
     this.year = new FormControl(this.currentDate.year, [
       Validators.required, Validators.min(this.currentDate.year)
     ]);
-    this.month = new FormControl(this.months[+this.currentDate.month], [Validators.required]);
+    this.month = new FormControl(this.months[this.currentDate.month], [Validators.required]);
     this.day = new FormControl(this.currentDate.day, [Validators.required]);
     this.disciplines = new FormControl([], [Validators.required]);
+    this.localisation = new FormControl({ value: '', disabled: false });
   }
 
   ngOnInit() {
@@ -61,10 +67,20 @@ export class SearchComponent implements OnInit {
     this.router.navigate(['search_results']);
   }
 
+  fetchCurrentLocation() {
+    this.localisation.setValue('Obecna lokalizacja');
+    this.localisation.disable();
+  }
+
+  fixLocation() {
+    this.localisation.setValue('');
+    this.localisation.enable();
+  }
+
 }
 
 interface CurrentDate {
   readonly year: number;
-  readonly month: string;
+  readonly month: number;
   readonly day: number;
 }

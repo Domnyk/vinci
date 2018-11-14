@@ -55,7 +55,16 @@
 
       <div class="form-group">
         <label>Lokalizacja <small class="text-muted">(pole opcjonalne)</small></label>
-        <input type="text" name="location" class="form-control" />
+        <div class="input-group">
+          <input [formControl]="localisation" type="text" name="location"
+                 class="form-control" />
+          <div class="input-group-append">
+            <div class="btn btn-outline-secondary" (click)="fetchCurrentLocation()">
+              <fa-icon [icon]="currentLocationIcon"></fa-icon>
+            </div>
+          </div>
+        </div>
+        <small class="text-muted">Zła lokalizacja? Edytuj</small>
       </div>
 
        <div class="form-group">
