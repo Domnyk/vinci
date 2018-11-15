@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { flatMap } from 'rxjs/operators';
 import GeocoderStatus = google.maps.GeocoderStatus;
 import GeocoderResult = google.maps.GeocoderResult;
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { Coords } from '../models/sport-object';
 import LatLngLiteral = google.maps.LatLngLiteral;
 
@@ -27,6 +27,15 @@ export class GeocoderService {
     return this.http.get(geocoderURL)
       .pipe(
         flatMap((response: any) => of(adjustLocationFormat(response.results[0].geometry.location)))
+      );
+  }
+
+  reverseGeocode(coords: Coords): Observable<string> {
+    const url = environment.api.reverseGeocoderAddress(coords, environment.googleMapsApiKey);
+
+    return this.http.get(url)
+      .pipe(
+        flatMap((response: any) => response.results.length === 0 ? throwError('No results') : of(response.results[0].formatted_address))
       );
   }
 }

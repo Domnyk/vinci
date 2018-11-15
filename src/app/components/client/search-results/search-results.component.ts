@@ -27,7 +27,7 @@ export class SearchResultsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.currentLocationService.fetchCurrentLocation(this.warsaw)
+    this.currentLocationService.fetch(this.warsaw)
       .subscribe((currentLocation: Coords) => this.createMap(currentLocation));
   }
 

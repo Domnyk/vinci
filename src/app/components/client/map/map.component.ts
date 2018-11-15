@@ -8,6 +8,7 @@ import {EntityService} from '../../../services/entity.service';
 import { Router } from '@angular/router';
 import { FetchAllObjects } from './map.actions';
 import { Select, Store } from '@ngxs/store';
+import { warsaw } from '../../../locations';
 
 @Component({
   selector: 'app-map',
@@ -16,16 +17,14 @@ import { Select, Store } from '@ngxs/store';
 })
 export class MapComponent implements OnInit {
   @Select(state => state.SportObjects) sportObjects$: Observable<SportObject[]>;
-
   map: google.maps.Map;
-  warsaw: Coords = new Coords(52.22977, 21.01178);
 
   constructor(private sportObjectService: EntityService<SportObject>, private currentLocationService: CurrentLocationService,
               private markerService: MarkerService, private router: Router, private store: Store) {}
 
   ngOnInit() {
     this.store.dispatch(new FetchAllObjects);
-    this.currentLocationService.fetchCurrentLocation(this.warsaw)
+    this.currentLocationService.fetch({ fallbackLocation: warsaw })
       .subscribe((currentLocation) => this.createMap(currentLocation));
   }
 

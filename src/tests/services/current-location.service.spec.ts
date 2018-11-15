@@ -18,11 +18,11 @@ describe('CurrentLocationService', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('fetchCurrentLocation', () => {
+  describe('fetch', () => {
     xit('should return error when location api is not supported', (done: DoneFn) => {
       const fallbackLocation: Coords = new Coords(40.712990, -74.013197);
 
-      service.fetchCurrentLocation(fallbackLocation).subscribe(
+      service.fetch(fallbackLocation).subscribe(
         () => { fail('Next subscription handler should not get executed'); done(); },
         error => { expect(error).toEqual('Location api not supported'); done(); },
       );
@@ -31,7 +31,7 @@ describe('CurrentLocationService', () => {
     it('should return current location or fallback location when location api is supported', (done: DoneFn) => {
       const fallbackLocation: Coords = new Coords(40.712990, -74.013197);
 
-      service.fetchCurrentLocation(fallbackLocation).subscribe(
+      service.fetch(fallbackLocation).subscribe(
         location => { expect(location).toEqual(fallbackLocation); done(); },
         () => { fail('Error occurred in CurrentLocationService test'); done(); }
       );

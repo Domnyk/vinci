@@ -56,15 +56,17 @@
       <div class="form-group">
         <label>Lokalizacja <small class="text-muted">(pole opcjonalne)</small></label>
         <div class="input-group">
-          <input [formControl]="localisation" type="text" name="location"
+          <input [formControl]="location" type="text" name="location"
                  class="form-control" />
           <div class="input-group-append">
-            <div class="btn btn-outline-secondary" (click)="fetchCurrentLocation()">
+            <button [disabled]="isCurrentLocationButtonDisabled" (click)="fetchCurrentLocation()" class="btn btn-outline-secondary" type="button">
               <fa-icon [icon]="currentLocationIcon"></fa-icon>
-            </div>
+            </button>
           </div>
         </div>
-        <small class="form-text text-muted">Zła lokalizacja? <span (click)="fixLocation()" class="clickable-text">Edytuj</span></small>
+        <small *ngIf="isEditTextVisible" class="form-text text-muted">
+          Wykryto złą lokalizacje? <span (click)="editLocation()" class="clickable-text">Edytuj</span>
+        </small>
       </div>
 
        <div class="form-group">

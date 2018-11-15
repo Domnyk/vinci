@@ -9,6 +9,11 @@ import { format, lastDayOfMonth } from 'date-fns';
 import { months } from './months';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { CurrentLocationService } from '../../../services/current-location.service';
+import { warsaw } from '../../../locations';
+import { flatMap, tap } from 'rxjs/operators';
+import { Coords } from '../../../models/sport-object';
+import { GeocoderService } from '../../../services/geocoder.service';
 
 @Component({
   selector: 'app-search',
@@ -21,15 +26,19 @@ export class SearchComponent implements OnInit {
   readonly lastDayOfMonth: number;
   readonly currentLocationIcon: IconDefinition = faMapMarkerAlt;
 
+  isEditTextVisible = false;
+  isCurrentLocationButtonDisabled = false;
+
   disciplines: FormControl;
   price: FormControl;
   date: FormGroup;
   year: FormControl;
   month: FormControl;
   day: FormControl;
-  localisation: FormControl;
+  location: FormControl;
 
-  constructor(private store: Store, private router: Router) {
+  constructor(private store: Store, private router: Router, private currentLocationService: CurrentLocationService,
+              private geocoderService: GeocoderService) {
     const currentDate = new Date(),
           monthOffset = 1,
           zeroBasedMonth = +format(currentDate, 'MM') - monthOffset;
@@ -49,7 +58,7 @@ export class SearchComponent implements OnInit {
     this.month = new FormControl(this.months[this.currentDate.month], [Validators.required]);
     this.day = new FormControl(this.currentDate.day, [Validators.required]);
     this.disciplines = new FormControl([], [Validators.required]);
-    this.localisation = new FormControl({ value: '', disabled: false });
+    this.location = new FormControl({ value: '', disabled: false });
   }
 
   ngOnInit() {
@@ -68,15 +77,27 @@ export class SearchComponent implements OnInit {
   }
 
   fetchCurrentLocation() {
-    this.localisation.setValue('Obecna lokalizacja');
-    this.localisation.disable();
+    this.isCurrentLocationButtonDisabled = true;
+    this.location.disable();
+    this.location.setValue('Proszę czekać...');
+    this.currentLocationService.fetch({ fallbackLocation: warsaw })
+      .pipe(
+        flatMap( (coords: Coords) => this.geocoderService.reverseGeocode(coords))
+      )
+      .subscribe(this.onSuccessfulLocationFetchHandleControls.bind(this));
   }
 
-  fixLocation() {
-    this.localisation.setValue('');
-    this.localisation.enable();
+  editLocation() {
+    this.location.setValue('');
+    this.location.enable();
+    this.isEditTextVisible = false;
   }
 
+  private onSuccessfulLocationFetchHandleControls(readableAddress: string) {
+    this.location.setValue(readableAddress);
+    this.isCurrentLocationButtonDisabled = false;
+    this.isEditTextVisible = true;
+  }
 }
 
 interface CurrentDate {

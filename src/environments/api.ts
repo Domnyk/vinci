@@ -1,4 +1,5 @@
 import { EscapedBuildingAddress } from '../app/models/building-address';
+import { Coords } from '../app/models/sport-object';
 
 /**
  * @deprecated Use @class API2<T>
@@ -67,5 +68,10 @@ export class API {
                         + `&key=${apiKey}`;
 
     return geocoderURL;
+  }
+
+  reverseGeocoderAddress({ latitude, longitude }: Coords, apiKey: string): string {
+    return `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${apiKey}&` +
+           'language=pl';
   }
 }

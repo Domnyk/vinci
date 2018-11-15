@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, Subscriber } from 'rxjs';
 import { Coords } from '../models/sport-object';
 
 @Injectable({
@@ -9,22 +9,27 @@ export class CurrentLocationService {
 
   constructor() {}
 
-  fetchCurrentLocation(fallbackLocation: Coords): Observable<Coords> {
-    function subscribe(subject) {
-      const isGeoLocationNotSupported = !('geolocation' in navigator);
+  fetch(options?: FetchOptions): Observable<Coords> {
+    const subscribe = (subject: Subscriber<Coords>) => {
+      const isGeoLocationNotSupported: boolean = !('geolocation' in navigator);
       if (isGeoLocationNotSupported) {
         subject.error('Location api not supported');
       }
 
-      /* navigator.geolocation.watchPosition(
-        (postion) => {subject.next({lat: postion.coords.latitude, lng: postion.coords.longitude}); subject.complete(); },
-        (error) => {subject.next(fallbackLocation); subject.complete(); }
-      ); */
-      // TODO: Location service hangs application. Why?
+      const handleSuccess = ({ coords: { latitude, longitude } }: Position) => {
+        subject.next(new Coords(latitude, longitude));
+      }, handleError = (error: PositionError) => {
+          console.debug('Error in navigator.geolocation.getCurrentPosition: ', error);
+          subject.next(options.fallbackLocation);
+      };
 
-      subject.next(fallbackLocation);
-    }
+      navigator.geolocation.getCurrentPosition(handleSuccess, handleError);
+    };
 
     return Observable.create(subscribe);
   }
+}
+
+interface FetchOptions {
+  fallbackLocation: Coords;
 }
