@@ -26,7 +26,7 @@ import { NewSportComplexComponent } from './components/owner/complex/new/new-spo
 import { AdminDashboardSidebarComponent } from './components/owner/admin-dashboard-sidebar/admin-dashboard-sidebar.component';
 import { SportComplexState } from './state/sport-complex.state';
 import { NewSportObjectComponent } from './components/owner/object/new/new-sport-object.component';
-import { ModalComponent } from './components/components.common/modal/modal.component';
+import { ModalComponent } from './components/common/modal/modal.component';
 import { SportComplexDashboardComponent } from './components/owner/complex/show/sport-complex-dashboard.component';
 import { SportObjectState } from './state/sport-object.state';
 import { NewSportArenaComponent } from './components/owner/arena/new/new-sport-arena.component';
@@ -60,7 +60,7 @@ import { CustomRouterStateSerializer } from './state/custom-router-state-seriali
 import { ListArenasComponent } from './components/client/arena/list/list-arenas.component';
 import { CustomDateFormatter } from './custom-date-formatter';
 import { SearchComponent } from './components/client/search/search.component';
-import { SelectDisciplinesComponent } from './components/components.common/select-disciplines/select-disciplines.component';
+import { SelectDisciplinesComponent } from './components/common/select-disciplines/select-disciplines.component';
 import { SearchResultsState } from './state/search-results.state';
 import { SearchResultsComponent } from './components/client/search-results/search-results.component';
 import { CalendarComponent as CalendarComponentClient } from './components/client/calendar/calendar.component';

@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ModalComponent } from '../../app/components/components.common/modal/modal.component';
+import { ModalComponent } from '../../app/components/common/modal/modal.component';
 
 describe('ModalComponent', () => {
   let component: ModalComponent;
