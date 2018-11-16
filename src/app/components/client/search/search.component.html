@@ -5,7 +5,7 @@
   <div class="col">
     <h3>Znajdź wydarzenie</h3>
 
-    <form (ngSubmit)="searchForEvents()" >
+    <form (ngSubmit)="searchForEvents()" novalidate>
       <app-select-disciplines [label]="'Dyscyplina'" [disciplinesFormControl]="disciplines">
       </app-select-disciplines>
 
@@ -54,27 +54,31 @@
       </div>
 
       <div class="form-group">
-        <label>Lokalizacja <small class="text-muted">(pole opcjonalne)</small></label>
+        <label>Lokalizacja</label>
         <div class="input-group">
-          <input [formControl]="location" type="text" name="location"
+          <input (change)="manualEdition()" [formControl]="location" type="text" name="location"
+                 [class.is-invalid]="isLocationInvalid()"
                  class="form-control" />
           <div class="input-group-append">
-            <button [disabled]="isCurrentLocationButtonDisabled" (click)="fetchCurrentLocation()" class="btn btn-outline-secondary" type="button">
+            <button (click)="fetchCurrentLocation()" class="btn btn-outline-secondary" type="button">
               <fa-icon [icon]="currentLocationIcon"></fa-icon>
             </button>
           </div>
+          <div class="invalid-feedback" *ngIf ="isTouchedOrDirty(location)">
+            Podaj lokalizację
+          </div>
         </div>
-        <small *ngIf="isEditTextVisible" class="form-text text-muted">
-          Wykryto złą lokalizacje? <span (click)="editLocation()" class="clickable-text">Edytuj</span>
-        </small>
       </div>
 
        <div class="form-group">
-         <label>Promień poszukiwań <small class="text-muted">(pole opcjonalne)</small></label>
+         <label>Promień poszukiwań</label>
          <div class="input-group">
-           <input type="number" min="0" max="50" step="0.1" class="form-control" />
+           <input [formControl]="radius" [class.is-invalid]="radius.invalid" type="number" min="0.1" max="15" step="0.1" class="form-control" />
            <div class="input-group-append">
              <div class="input-group-text">km</div>
+           </div>
+           <div class="invalid-feedback">
+             Podaj promień poszukiwań (minimalnie: 0,1)
            </div>
          </div>
        </div>

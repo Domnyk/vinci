@@ -26,8 +26,7 @@ export class SearchComponent implements OnInit {
   readonly lastDayOfMonth: number;
   readonly currentLocationIcon: IconDefinition = faMapMarkerAlt;
 
-  isEditTextVisible = false;
-  isCurrentLocationButtonDisabled = false;
+  fullLocation: FullLocation = { readableAddress: '', coords: null, wasEditedByUser: true };
 
   disciplines: FormControl;
   price: FormControl;
@@ -36,6 +35,7 @@ export class SearchComponent implements OnInit {
   month: FormControl;
   day: FormControl;
   location: FormControl;
+  radius: FormControl;
 
   constructor(private store: Store, private router: Router, private currentLocationService: CurrentLocationService,
               private geocoderService: GeocoderService) {
@@ -58,45 +58,68 @@ export class SearchComponent implements OnInit {
     this.month = new FormControl(this.months[this.currentDate.month], [Validators.required]);
     this.day = new FormControl(this.currentDate.day, [Validators.required]);
     this.disciplines = new FormControl([], [Validators.required]);
-    this.location = new FormControl({ value: '', disabled: false });
+    this.location = new FormControl({ value: this.fullLocation.readableAddress, disabled: false }, [Validators.required]);
+    this.location.valueChanges.subscribe((newValue: string) => {
+      this.fullLocation.readableAddress = newValue;
+    });
+
+    this.radius = new FormControl(0.1, [Validators.required, Validators.min(0.1)]);
   }
 
   ngOnInit() {
     this.store.dispatch(new FetchSportDisciplines());
   }
 
+  fetchCurrentLocation() {
+    this.location.disable();
+    this.location.setValue('Proszę czekać...');
+    this.currentLocationService.fetch({ fallbackLocation: warsaw })
+      .pipe(
+        tap( (coords: Coords) => this.fullLocation.coords = coords),
+        flatMap( (coords: Coords) => this.geocoderService.reverseGeocode(coords)),
+      )
+      .subscribe(this.onSuccessfulLocationFetchHandleControls.bind(this));
+  }
+
+  manualEdition() {
+    this.fullLocation.wasEditedByUser = true;
+  }
+
+  isTouchedOrDirty(control: FormControl) {
+    return control.touched || control.dirty;
+  }
+
+  isLocationInvalid() {
+    return this.location.invalid && this.isTouchedOrDirty(this.location);
+  }
+
   searchForEvents() {
     this.disciplines.markAsTouched({ onlySelf: true });
 
+    const isGeocodingNeeded = this.fullLocation.wasEditedByUser === true;
+    if (isGeocodingNeeded) {
+      this.geocoderService.geocodeString(this.fullLocation.readableAddress)
+        .pipe(tap( (coords: Coords) => this.fullLocation.coords = coords))
+        .subscribe(() => this.search());
+    }
+
+    this.search();
+  }
+
+  private search() {
     const day = this.day.value < 10 ? '0' + this.day.value : this.day.value,
-          date = [this.year.value, this.month.value.value, day].join('-'),
-          params = new SearchParams(this.disciplines.value, this.price.value, date);
+      date = [this.year.value, this.month.value.value, day].join('-'),
+      params = new SearchParams(this.disciplines.value, this.price.value, date, this.fullLocation.coords);
 
     this.store.dispatch(new Search(params));
     this.router.navigate(['search_results']);
   }
 
-  fetchCurrentLocation() {
-    this.isCurrentLocationButtonDisabled = true;
-    this.location.disable();
-    this.location.setValue('Proszę czekać...');
-    this.currentLocationService.fetch({ fallbackLocation: warsaw })
-      .pipe(
-        flatMap( (coords: Coords) => this.geocoderService.reverseGeocode(coords))
-      )
-      .subscribe(this.onSuccessfulLocationFetchHandleControls.bind(this));
-  }
-
-  editLocation() {
-    this.location.setValue('');
-    this.location.enable();
-    this.isEditTextVisible = false;
-  }
-
   private onSuccessfulLocationFetchHandleControls(readableAddress: string) {
+    this.fullLocation.readableAddress = readableAddress;
+    this.fullLocation.wasEditedByUser = false;
     this.location.setValue(readableAddress);
-    this.isCurrentLocationButtonDisabled = false;
-    this.isEditTextVisible = true;
+    this.location.enable();
   }
 }
 
@@ -104,4 +127,10 @@ interface CurrentDate {
   readonly year: number;
   readonly month: number;
   readonly day: number;
+}
+
+interface FullLocation {
+  readableAddress: string;
+  coords: Coords;
+  wasEditedByUser: boolean;
 }

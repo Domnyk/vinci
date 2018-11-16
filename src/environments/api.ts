@@ -70,6 +70,10 @@ export class API {
     return geocoderURL;
   }
 
+  geocoderAddressString(address: string, apiKey: string): string {
+      return `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${apiKey}`;
+  }
+
   reverseGeocoderAddress({ latitude, longitude }: Coords, apiKey: string): string {
     return `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${apiKey}&` +
            'language=pl';

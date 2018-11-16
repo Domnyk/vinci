@@ -1,11 +1,12 @@
 import { DTO } from './dto';
+import { Coords } from './sport-object';
 
 export class SearchParams implements DTO {
   constructor(
     public disciplines: Array<number>,
     public price: number,
     public date: string,
-    public location?: any,
+    public location: Coords,
     public searchRadius?: number
   ) { }
 
@@ -14,12 +15,12 @@ export class SearchParams implements DTO {
       search_params: {
         disciplines: this.disciplines,
         price: this.price,
-        date: this.date
+        date: this.date,
+        location: { latitude: this.location.latitude, longitude: this.location.longitude }
       }
     };
 
-    if (!!this.location && !!this.searchRadius) {
-      dto.search_params.location = this.location;
+    if (!!this.searchRadius) {
       dto.search_params.search_radius = this.searchRadius;
     }
 
@@ -32,7 +33,7 @@ interface SearchParamsDTO {
     disciplines: Array<number>;
     price: number;
     date: string;
-    location?: any;
+    location: { latitude: number, longitude: number };
     search_radius?: number;
   };
 }

@@ -3,11 +3,10 @@ import { environment } from '../../environments/environment.generated.dev';
 import { BuildingAddress, UnescapedBuildingAddress } from '../models/building-address';
 import { HttpClient } from '@angular/common/http';
 import { flatMap } from 'rxjs/operators';
-import GeocoderStatus = google.maps.GeocoderStatus;
-import GeocoderResult = google.maps.GeocoderResult;
 import { Observable, of, throwError } from 'rxjs';
 import { Coords } from '../models/sport-object';
 import LatLngLiteral = google.maps.LatLngLiteral;
+import { AddressService } from './address.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +22,18 @@ export class GeocoderService {
           adjustLocationFormat = (latLng: LatLngLiteral): Coords => {
             return new Coords(latLng.lat, latLng.lng);
           };
+
+    return this.http.get(geocoderURL)
+      .pipe(
+        flatMap((response: any) => of(adjustLocationFormat(response.results[0].geometry.location)))
+      );
+  }
+
+  geocodeString(address: string): Observable<Coords> {
+    const geocoderURL = environment.api.geocoderAddressString(AddressService.replaceReservedCharacters(address), environment.googleMapsApiKey),
+      adjustLocationFormat = (latLng: LatLngLiteral): Coords => {
+        return new Coords(latLng.lat, latLng.lng);
+      };
 
     return this.http.get(geocoderURL)
       .pipe(
