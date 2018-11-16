@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subscriber } from 'rxjs';
-import { Coords } from '../models/sport-object';
+import LatLngLiteral = google.maps.LatLngLiteral;
 
 @Injectable({
   providedIn: 'root'
@@ -9,15 +9,15 @@ export class CurrentLocationService {
 
   constructor() {}
 
-  fetch(options?: FetchOptions): Observable<Coords> {
-    const subscribe = (subject: Subscriber<Coords>) => {
+  fetch(options?: FetchOptions): Observable<LatLngLiteral> {
+    const subscribe = (subject: Subscriber<LatLngLiteral>) => {
       const isGeoLocationNotSupported: boolean = !('geolocation' in navigator);
       if (isGeoLocationNotSupported) {
         subject.error('Location api not supported');
       }
 
       const handleSuccess = ({ coords: { latitude, longitude } }: Position) => {
-        subject.next(new Coords(latitude, longitude));
+        subject.next({ lat: latitude, lng: longitude });
       }, handleError = (error: PositionError) => {
           console.debug('Error in navigator.geolocation.getCurrentPosition: ', error);
           subject.next(options.fallbackLocation);
@@ -31,5 +31,5 @@ export class CurrentLocationService {
 }
 
 interface FetchOptions {
-  fallbackLocation: Coords;
+  fallbackLocation: LatLngLiteral;
 }

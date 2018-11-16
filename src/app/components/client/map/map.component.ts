@@ -1,14 +1,15 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
-import {Coords, SportObject} from '../../../models/sport-object';
+import { Component, OnInit } from '@angular/core';
+import { SportObject} from '../../../models/sport-object';
 
 import { CurrentLocationService } from '../../../services/current-location.service';
 import { MarkerService } from '../../../services/marker.service';
 import { Observable, zip } from 'rxjs';
-import {EntityService} from '../../../services/entity.service';
+import { EntityService } from '../../../services/entity.service';
 import { Router } from '@angular/router';
 import { FetchAllObjects } from './map.actions';
 import { Select, Store } from '@ngxs/store';
 import { warsaw } from '../../../locations';
+import LatLngLiteral = google.maps.LatLngLiteral;
 
 @Component({
   selector: 'app-map',
@@ -41,8 +42,8 @@ export class MapComponent implements OnInit {
     this.router.navigate([`/objects/${sportObjectId}`]);
   }
 
-  private createMap(currentLocation: Coords) {
-    this.map = new google.maps.Map(document.getElementById('map'), { center: currentLocation.asGoogleCoords, zoom: 15 });
+  private createMap(currentLocation: LatLngLiteral) {
+    this.map = new google.maps.Map(document.getElementById('map'), { center: currentLocation, zoom: 15 });
 
     this.sportObjects$.subscribe((sportObjects: SportObject[]) => {
       sportObjects.forEach(sportObject => this.markerService.addMarker(sportObject, this.map));

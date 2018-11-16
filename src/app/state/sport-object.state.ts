@@ -1,5 +1,5 @@
 import { _ } from 'underscore';
-import { Coords, SportObject } from '../models/sport-object';
+import { SportObject } from '../models/sport-object';
 import { Action, createSelector, Selector, State, StateContext, Store } from '@ngxs/store';
 import { CreateNewSportObject } from '../components/owner/object/new/new-sport-object.actions';
 import { GeocoderService } from '../services/geocoder.service';
@@ -17,6 +17,7 @@ import { ErrorResponse, Response } from '../models/api-response';
 import { BuildingAddress } from '../models/building-address';
 import { FetchAllObjects } from '../components/client/map/map.actions';
 import { InsertArenas } from '../actions/sport-arena.actions';
+import LatLngLiteral = google.maps.LatLngLiteral;
 
 
 type SportObjects = Array<SportObject>;
@@ -87,7 +88,7 @@ export class SportObjectState {
 
     return this.geoCoder.geocode(sportObject.address)
       .pipe(
-        flatMap((coords: Coords) => {
+        flatMap((coords: LatLngLiteral) => {
           sportObject.geoCoordinates = coords;
           return this.http.post(url, sportObject.dto());
         }),
@@ -123,7 +124,7 @@ export class SportObjectState {
       console.debug('Calling geocoder');
       call = this.geoCoder.geocode(sportObjectToUpdate.address)
         .pipe(
-          flatMap((coords: Coords) => {
+          flatMap((coords: LatLngLiteral) => {
             sportObjectToUpdate.geoCoordinates = coords;
             return this.http.put(url, sportObjectToUpdate.dto());
           }),

@@ -12,8 +12,8 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { CurrentLocationService } from '../../../services/current-location.service';
 import { warsaw } from '../../../locations';
 import { flatMap, tap } from 'rxjs/operators';
-import { Coords } from '../../../models/sport-object';
 import { GeocoderService } from '../../../services/geocoder.service';
+import LatLngLiteral = google.maps.LatLngLiteral;
 
 @Component({
   selector: 'app-search',
@@ -75,8 +75,8 @@ export class SearchComponent implements OnInit {
     this.location.setValue('Proszę czekać...');
     this.currentLocationService.fetch({ fallbackLocation: warsaw })
       .pipe(
-        tap( (coords: Coords) => this.fullLocation.coords = coords),
-        flatMap( (coords: Coords) => this.geocoderService.reverseGeocode(coords)),
+        tap( (coords: LatLngLiteral) => this.fullLocation.coords = coords),
+        flatMap( (coords: LatLngLiteral) => this.geocoderService.reverseGeocode(coords)),
       )
       .subscribe(this.onSuccessfulLocationFetchHandleControls.bind(this));
   }
@@ -99,7 +99,7 @@ export class SearchComponent implements OnInit {
     const isGeocodingNeeded = this.fullLocation.wasEditedByUser === true;
     if (isGeocodingNeeded) {
       this.geocoderService.geocodeString(this.fullLocation.readableAddress)
-        .pipe(tap( (coords: Coords) => this.fullLocation.coords = coords))
+        .pipe(tap( (coords: LatLngLiteral) => this.fullLocation.coords = coords))
         .subscribe(() => this.search());
     }
 
@@ -109,7 +109,7 @@ export class SearchComponent implements OnInit {
   private search() {
     const day = this.day.value < 10 ? '0' + this.day.value : this.day.value,
       date = [this.year.value, this.month.value.value, day].join('-'),
-      params = new SearchParams(this.disciplines.value, this.price.value, date, this.fullLocation.coords);
+      params = new SearchParams(this.disciplines.value, this.price.value, date, this.fullLocation.coords, this.radius.value);
 
     this.store.dispatch(new Search(params));
     this.router.navigate(['search_results']);
@@ -131,6 +131,6 @@ interface CurrentDate {
 
 interface FullLocation {
   readableAddress: string;
-  coords: Coords;
+  coords: LatLngLiteral;
   wasEditedByUser: boolean;
 }

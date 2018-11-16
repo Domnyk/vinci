@@ -3,10 +3,11 @@ import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { SearchResults } from '../../../state/search-results.state';
 import { CurrentLocationService } from '../../../services/current-location.service';
-import { Coords, SportObject } from '../../../models/sport-object';
 import { MarkerService } from '../../../services/marker.service';
 import { Router } from '@angular/router';
 import { SportArena } from '../../../models/sport-arena';
+import { warsaw } from '../../../locations';
+import LatLngLiteral = google.maps.LatLngLiteral;
 
 @Component({
   selector: 'app-search-results',
@@ -14,8 +15,6 @@ import { SportArena } from '../../../models/sport-arena';
   styleUrls: ['./search-results.component.css']
 })
 export class SearchResultsComponent implements OnInit {
-  readonly warsaw: Coords;
-
   @Select(state => state.searchResults) searchResults$: Observable<SearchResults>;
   arenas: SportArena[];
   map: google.maps.Map;
@@ -23,12 +22,11 @@ export class SearchResultsComponent implements OnInit {
   constructor(private currentLocationService: CurrentLocationService,
               private markerService: MarkerService,
               private router: Router) {
-    this.warsaw = new Coords(52.22977, 21.01178);
   }
 
   ngOnInit() {
-    this.currentLocationService.fetch({ fallbackLocation: this.warsaw })
-      .subscribe((currentLocation: Coords) => this.createMap(currentLocation));
+    this.currentLocationService.fetch({ fallbackLocation: warsaw })
+      .subscribe((currentLocation: LatLngLiteral) => this.createMap(currentLocation));
   }
 
   handleClick(event) {
@@ -46,8 +44,8 @@ export class SearchResultsComponent implements OnInit {
     this.router.navigate([`/objects/${sportObjectId}`, { found: foundArenasIds }]);
   }
 
-  private createMap(currentLocation: Coords) {
-    this.map = new google.maps.Map(document.getElementById('map'), { center: currentLocation.asGoogleCoords, zoom: 15 });
+  private createMap(currentLocation: LatLngLiteral) {
+    this.map = new google.maps.Map(document.getElementById('map'), { center: currentLocation, zoom: 15 });
 
     this.searchResults$.subscribe(({ objects, arenas }) => {
       this.arenas = arenas;

@@ -1,12 +1,13 @@
 import { UnescapedBuildingAddress } from './building-address';
 import { DTO } from './dto';
+import LatLngLiteral = google.maps.LatLngLiteral;
 
 export class SportObject implements DTO {
    constructor(
      public id: number,
      public name: string,
       public address: UnescapedBuildingAddress,
-      public geoCoordinates: Coords,
+      public geoCoordinates: LatLngLiteral,
       public bookingMargin: BookingMargin,
       public sportComplexId?: number
    ) { }
@@ -18,7 +19,7 @@ export class SportObject implements DTO {
              postalCode: dto.address.postal_code,
              city: dto.address.city
            },
-           geoCoordinates = new Coords(dto.geo_coordinates.latitude, dto.geo_coordinates.longitude);
+           geoCoordinates = { lat: dto.geo_coordinates.latitude, lng: dto.geo_coordinates.longitude };
 
      return new SportObject(dto.id, dto.name, address, geoCoordinates, dto.booking_margin, dto.sport_complex_id);
    }
@@ -29,7 +30,7 @@ export class SportObject implements DTO {
         sport_object: {
           id: this.id,
           name: this.name,
-          geo_coordinates: this.geoCoordinates,
+          geo_coordinates: { latitude: this.geoCoordinates.lat, longitude: this.geoCoordinates.lng },
           booking_margin: {
             months: this.bookingMargin.months,
             days: this.bookingMargin.days,
@@ -60,7 +61,7 @@ interface SportObjectDTO {
     sport_object: {
       id: number;
       name: string;
-      geo_coordinates: Coords;
+      geo_coordinates: HadrianGeoLocation;
       booking_margin: {
         months: number;
         days: number;
@@ -77,15 +78,9 @@ interface SportObjectDTO {
   };
 }
 
-export class Coords implements Coords {
-  constructor(
-    public latitude: number,
-    public longitude: number
-  ) { }
-
-  get asGoogleCoords(): google.maps.LatLng {
-    return new google.maps.LatLng(this.latitude, this.longitude);
-  }
+interface HadrianGeoLocation {
+  latitude: number;
+  longitude: number;
 }
 
 export interface BookingMargin {

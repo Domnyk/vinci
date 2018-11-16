@@ -1,3 +1,3 @@
-import { Coords } from './models/sport-object';
+import LatLngLiteral = google.maps.LatLngLiteral;
 
-export const warsaw: Coords = new Coords(52.22977, 21.01178);
+export const warsaw: LatLngLiteral = { lat: 52.22977, lng: 21.01178 };

@@ -1,5 +1,5 @@
 import { EscapedBuildingAddress } from '../app/models/building-address';
-import { Coords } from '../app/models/sport-object';
+import LatLngLiteral = google.maps.LatLngLiteral;
 
 /**
  * @deprecated Use @class API2<T>
@@ -74,8 +74,8 @@ export class API {
       return `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${apiKey}`;
   }
 
-  reverseGeocoderAddress({ latitude, longitude }: Coords, apiKey: string): string {
-    return `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${apiKey}&` +
+  reverseGeocoderAddress({ lat, lng }: LatLngLiteral, apiKey: string): string {
+    return `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}&` +
            'language=pl';
   }
 }

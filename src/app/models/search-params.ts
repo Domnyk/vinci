@@ -1,30 +1,25 @@
 import { DTO } from './dto';
-import { Coords } from './sport-object';
+import LatLngLiteral = google.maps.LatLngLiteral;
 
 export class SearchParams implements DTO {
   constructor(
     public disciplines: Array<number>,
     public price: number,
     public date: string,
-    public location: Coords,
-    public searchRadius?: number
+    public geoLocation: LatLngLiteral,
+    public radius: number
   ) { }
 
   dto(): SearchParamsDTO {
-    const dto: SearchParamsDTO = {
+    return {
       search_params: {
         disciplines: this.disciplines,
         price: this.price,
         date: this.date,
-        location: { latitude: this.location.latitude, longitude: this.location.longitude }
+        geo_location: this.geoLocation,
+        radius: this.radius
       }
     };
-
-    if (!!this.searchRadius) {
-      dto.search_params.search_radius = this.searchRadius;
-    }
-
-    return dto;
   }
 }
 
@@ -33,7 +28,7 @@ interface SearchParamsDTO {
     disciplines: Array<number>;
     price: number;
     date: string;
-    location: { latitude: number, longitude: number };
-    search_radius?: number;
+    geo_location: LatLngLiteral;
+    radius: number;
   };
 }

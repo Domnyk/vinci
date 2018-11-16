@@ -4,7 +4,6 @@ import { BuildingAddress, UnescapedBuildingAddress } from '../models/building-ad
 import { HttpClient } from '@angular/common/http';
 import { flatMap } from 'rxjs/operators';
 import { Observable, of, throwError } from 'rxjs';
-import { Coords } from '../models/sport-object';
 import LatLngLiteral = google.maps.LatLngLiteral;
 import { AddressService } from './address.service';
 
@@ -16,32 +15,26 @@ export class GeocoderService {
     private http: HttpClient
   ) { }
 
-  geocode(address: UnescapedBuildingAddress): Observable<Coords> {
+  geocode(address: UnescapedBuildingAddress): Observable<LatLngLiteral> {
     const buildingAddress = new BuildingAddress(address),
-          geocoderURL = environment.api.geocoderAddress(buildingAddress.escaped, environment.googleMapsApiKey),
-          adjustLocationFormat = (latLng: LatLngLiteral): Coords => {
-            return new Coords(latLng.lat, latLng.lng);
-          };
+          geocoderURL = environment.api.geocoderAddress(buildingAddress.escaped, environment.googleMapsApiKey);
 
     return this.http.get(geocoderURL)
       .pipe(
-        flatMap((response: any) => of(adjustLocationFormat(response.results[0].geometry.location)))
+        flatMap((response: any) => of(response.results[0].geometry.location))
       );
   }
 
-  geocodeString(address: string): Observable<Coords> {
-    const geocoderURL = environment.api.geocoderAddressString(AddressService.replaceReservedCharacters(address), environment.googleMapsApiKey),
-      adjustLocationFormat = (latLng: LatLngLiteral): Coords => {
-        return new Coords(latLng.lat, latLng.lng);
-      };
+  geocodeString(address: string): Observable<LatLngLiteral> {
+    const geocoderURL = environment.api.geocoderAddressString(AddressService.replaceReservedCharacters(address), environment.googleMapsApiKey);
 
     return this.http.get(geocoderURL)
       .pipe(
-        flatMap((response: any) => of(adjustLocationFormat(response.results[0].geometry.location)))
+        flatMap((response: any) => of(response.results[0].geometry.location))
       );
   }
 
-  reverseGeocode(coords: Coords): Observable<string> {
+  reverseGeocode(coords: LatLngLiteral): Observable<string> {
     const url = environment.api.reverseGeocoderAddress(coords, environment.googleMapsApiKey);
 
     return this.http.get(url)
@@ -52,7 +45,7 @@ export class GeocoderService {
 }
 
 /*
-  TODO: Fix error in typing file. results.geometry.location is LatLngLiteral not LatLng. This is commented until typing error will be fixed
+  TODO: Fix error in typing file. results.geometry.geo_location is LatLngLiteral not LatLng. This is commented until typing error will be fixed
 */
 /* interface GoogleGeocoderResponse {
   results: GeocoderResult[];

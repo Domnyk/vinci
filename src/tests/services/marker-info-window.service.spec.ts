@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
 import { MarkerInfoWindowService } from '../../app/services/marker-info-window.service';
-import { Coords, SportObject } from '../../app/models/sport-object';
 
 describe('MarkerInfoWindowService', () => {
   let service: MarkerInfoWindowService = null;
@@ -19,7 +18,7 @@ describe('MarkerInfoWindowService', () => {
   });
 
   xit('should have proper content', () => {
-    /* const sportObject: sportObject = new sportObject(1, 'Pływalnia Polonez', new Coords(52.299046, 21.033690)),
+    /* const sportObject: sportObject = new sportObject(1, 'Pływalnia Polonez', { lat: 52.299046, lng: 21.033690 }),
           actualContent = service.generateInfoWindowContent(sportObject),
           expectedContent = `<div>` +
                             `<p class="lead">${sportObject.name}</p>` +

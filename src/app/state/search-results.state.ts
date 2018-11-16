@@ -1,4 +1,4 @@
-import { Coords, SportObject } from '../models/sport-object';
+import { SportObject } from '../models/sport-object';
 import { SportArena } from '../models/sport-arena';
 import { Action, State, StateContext } from '@ngxs/store';
 import { Search } from '../components/client/search/search.actions';
@@ -10,7 +10,7 @@ export interface SearchResults {
 
 const object = new SportObject(1, 'Obiekt na potrzeby testów',
   { street: 'Szkolna', postalCode: '05-270', city: 'Marki', buildingNumber: '9' },
-  new Coords(52.317367, 21.103514), { days: 1, seconds: 1, months: 1 });
+  { lat: 52.317367, lng: 21.103514 }, { days: 1, seconds: 1, months: 1 });
 
 @State<SearchResults>({
   name: 'searchResults',
