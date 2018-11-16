@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.generated.dev';
-import { BuildingAddress, UnescapedBuildingAddress } from '../models/building-address';
+import { BuildingAddress, BuildingAddressLiteral } from '../models/building-address';
 import { HttpClient } from '@angular/common/http';
 import { flatMap } from 'rxjs/operators';
 import { Observable, of, throwError } from 'rxjs';
@@ -15,9 +15,9 @@ export class GeocoderService {
     private http: HttpClient
   ) { }
 
-  geocode(address: UnescapedBuildingAddress): Observable<LatLngLiteral> {
-    const buildingAddress = new BuildingAddress(address),
-          geocoderURL = environment.api.geocoderAddress(buildingAddress.escaped, environment.googleMapsApiKey);
+  geocode({ street, buildingNumber, city, postalCode }: BuildingAddressLiteral): Observable<LatLngLiteral> {
+    const buildingAddress = new BuildingAddress(street, buildingNumber, city, postalCode),
+          geocoderURL = environment.api.geocoderAddress(buildingAddress.asString);
 
     return this.http.get(geocoderURL)
       .pipe(
@@ -26,7 +26,7 @@ export class GeocoderService {
   }
 
   geocodeString(address: string): Observable<LatLngLiteral> {
-    const geocoderURL = environment.api.geocoderAddressString(AddressService.replaceReservedCharacters(address), environment.googleMapsApiKey);
+    const geocoderURL = environment.api.geocoderAddressString(AddressService.replaceReservedCharacters(address));
 
     return this.http.get(geocoderURL)
       .pipe(
@@ -35,7 +35,7 @@ export class GeocoderService {
   }
 
   reverseGeocode(coords: LatLngLiteral): Observable<string> {
-    const url = environment.api.reverseGeocoderAddress(coords, environment.googleMapsApiKey);
+    const url = environment.api.reverseGeocoderAddress(coords);
 
     return this.http.get(url)
       .pipe(

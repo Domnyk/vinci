@@ -20,6 +20,8 @@ export class MarkerService {
   }
 
   public addMarker(sportObject: SportObject, map: google.maps.Map): Marker {
+    console.debug('sportObject is: ', sportObject);
+
     const marker = new google.maps.Marker({
       position: sportObject.geoCoordinates,
       map: map

@@ -6,7 +6,7 @@
  * @member {string} city
  */
 export class BuildingAddress {
-  static equals(address1: UnescapedBuildingAddress, address2: UnescapedBuildingAddress) {
+  static equals(address1: BuildingAddressLiteral, address2: BuildingAddressLiteral) {
     const isStreetSame = address1.street === address2.street,
           isBuldingNumberSame = address1.buildingNumber === address2.buildingNumber,
           isCitySame = address1.city === address2.city,
@@ -16,23 +16,15 @@ export class BuildingAddress {
   }
 
   constructor(
-    private unescapedBuildingAddress: UnescapedBuildingAddress
+    private street: string,
+    private buildingNumber: string,
+    private city: string,
+    private postalCode: string
   ) { }
 
-  get escaped(): EscapedBuildingAddress {
-    const unescapedAddress = {
-      street: this.unescapedBuildingAddress.street,
-      city: this.unescapedBuildingAddress.city
-    }, escapedAddress = {};
-
-    Object.entries(unescapedAddress).forEach(([key, value]) => {
-      escapedAddress[key] = this.replaceReservedCharacters(value);
-    });
-
-    escapedAddress['buildingNumber'] = this.unescapedBuildingAddress.buildingNumber;
-    escapedAddress['postalCode'] = this.unescapedBuildingAddress.postalCode;
-
-    return (escapedAddress as EscapedBuildingAddress);
+  get asString(): string {
+    return [`${this.street} `, `${this.buildingNumber}, `, `${this.postalCode} `, `${this.city}`]
+      .reduce((prev: string, curr: string) => prev.concat(this.replaceReservedCharacters(curr), ''));
   }
 
   private replaceReservedCharacters(field: string): string {
@@ -50,22 +42,9 @@ export class BuildingAddress {
   }
 }
 
-/**
- * Interface to represent data from BuildingAddress class with all fields escaped so that they could be placed in URL query string
- */
-export interface EscapedBuildingAddress {
+export interface BuildingAddressLiteral {
   street: string;
   buildingNumber: string;
-  postalCode: string;
   city: string;
-}
-
-/**
- * Interface to represent data with unescaped characters
- */
-export interface UnescapedBuildingAddress {
-  street: string;
-  buildingNumber: string;
   postalCode: string;
-  city: string;
 }

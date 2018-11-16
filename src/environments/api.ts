@@ -1,11 +1,8 @@
 import { EscapedBuildingAddress } from '../app/models/building-address';
 import LatLngLiteral = google.maps.LatLngLiteral;
 
-/**
- * @deprecated Use @class API2<T>
- */
 export class API {
-  constructor(private domain: string) { }
+  constructor(private domain: string, private googleMapsApiKey: string) { }
 
   get signUpURL() {
     return this.domain + '/users';
@@ -62,20 +59,16 @@ export class API {
    * @returns {string} geocoderURL - Note that this URL contains comma character. Comma character is reserved character but official google
    *                                 maps API is using it without escaping.
    */
-  geocoderAddress(address: EscapedBuildingAddress, apiKey: string): string {
-    const { street, buildingNumber, postalCode, city } = address,
-          geocoderURL = `https://maps.googleapis.com/maps/api/geocode/json?address=${street}+${buildingNumber},+${postalCode}+${city}`
-                        + `&key=${apiKey}`;
-
-    return geocoderURL;
+  geocoderAddress(address: string): string {
+    return `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${this.googleMapsApiKey}`;
   }
 
-  geocoderAddressString(address: string, apiKey: string): string {
-      return `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${apiKey}`;
+  geocoderAddressString(address: string): string {
+      return `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${this.googleMapsApiKey}`;
   }
 
-  reverseGeocoderAddress({ lat, lng }: LatLngLiteral, apiKey: string): string {
-    return `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}&` +
+  reverseGeocoderAddress({ lat, lng }: LatLngLiteral): string {
+    return `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${this.googleMapsApiKey}&` +
            'language=pl';
   }
 }
