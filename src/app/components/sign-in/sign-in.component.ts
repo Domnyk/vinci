@@ -13,7 +13,7 @@ import { environment } from '../../../environments/environment.generated.dev';
 })
 export class SignInComponent implements OnInit {
   user: User = new User(null, null);
-  backendSignInAddress: string = environment.api.signInURL;
+  backendSignInAddress: string = environment.api.urls.signIn;
 
   constructor(
     private router: Router,

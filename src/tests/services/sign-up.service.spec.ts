@@ -39,7 +39,7 @@ describe('SignUpService', () => {
       );
 
       http
-        .expectOne(environment.api.signUpURL)
+        .expectOne(environment.api.urls.signUp)
         .flush(apiResponse);
 
       http.verify();

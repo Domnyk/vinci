@@ -27,6 +27,6 @@ export class AuthenticationService {
       }
     };
 
-    return this.http.post(environment.api.signInURL, payload);
+    return this.http.post(environment.api.urls.signIn, payload);
   }
 }

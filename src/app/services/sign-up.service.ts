@@ -14,6 +14,6 @@ export class SignUpService {
 
   // TODO: This function should do more i.e: return Observable with new user data and return error when user registration fails
   signUp(model: User): Observable<Object> {
-    return this.http.post(environment.api.signUpURL, model);
+    return this.http.post(environment.api.urls.signUp, model);
   }
 }

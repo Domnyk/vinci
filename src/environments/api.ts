@@ -3,29 +3,13 @@ import LatLngLiteral = google.maps.LatLngLiteral;
 export class API {
   constructor(private domain: string, private googleMapsApiKey: string) { }
 
-  get signUpURL() {
-    return this.domain + '/users';
-  }
-
-  get signInURL() {
-    return this.domain + '/token/new';
-  }
-
-  rest(entityName: string, entityId: number, nestedEntity: string) {
-    if ( (!!entityId) && (!!nestedEntity) ) {
-      const baseURL = `${this.domain}/${entityName}/${entityId}/${nestedEntity}`,
-        nestedEntityURLs = {
-          index: baseURL
-        };
-
-      return nestedEntityURLs;
-    }
-
-    const entityURLs = {
-      index: `${this.domain}/${entityName}`,
+  get urls() {
+    return {
+      signUp: this.domain + '/users',
+      signIn: this.domain + '/token/new',
+      geocoder: this.calculateGeocoderAddress.bind(this),
+      reverseGeocoder: this.calculateReverseGeocoderAddress.bind(this)
     };
-
-    return entityURLs;
   }
 
   resource(resourceName: string, resourceId?: number, nestedResourceName?: string, nestedResourceId?: number): string {
@@ -43,17 +27,18 @@ export class API {
 
     return `${this.domain}/${resourceName}`;
   }
+
   /**
    * Returns URL which allows to translate address to geographic coordinates
    *
    * @returns {string} geocoderURL - Note that this URL contains comma character. Comma character is reserved character but official google
    *                                 maps API is using it without escaping.
    */
-  geocoderAddress(address: string): string {
+  private calculateGeocoderAddress(address: string): string {
     return `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${this.googleMapsApiKey}`;
   }
 
-  reverseGeocoderAddress({ lat, lng }: LatLngLiteral): string {
+  private calculateReverseGeocoderAddress({ lat, lng }: LatLngLiteral): string {
     return `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${this.googleMapsApiKey}&` +
            'language=pl';
   }
