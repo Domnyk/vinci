@@ -1,11 +1,10 @@
 import { _ } from 'underscore';
 import { SportObject } from '../models/sport-object';
-import { Action, createSelector, Selector, State, StateContext, Store } from '@ngxs/store';
+import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { CreateNewSportObject } from '../components/owner/object/new/new-sport-object.actions';
 import { GeocoderService } from '../services/geocoder.service';
 import { flatMap } from 'rxjs/operators';
 import { catchError, map, tap } from 'rxjs/internal/operators';
-import { EntityService } from '../services/entity.service';
 import { FetchSportObjectsInSportComplex } from '../components/owner/complex/show/sport-complex-dashboard.actions';
 import { environment } from '../../environments/environment.generated.dev';
 import { HttpClient } from '@angular/common/http';
@@ -31,7 +30,6 @@ export class SportObjectState {
 
   constructor(
     private geoCoder: GeocoderService,
-    private entityServiceForSportObject: EntityService<SportObject>,
     private http: HttpClient,
     private store: Store
   ) { }

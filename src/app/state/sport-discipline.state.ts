@@ -1,6 +1,5 @@
 
 import { Action, State, StateContext, Store } from '@ngxs/store';
-import { EntityService } from '../services/entity.service';
 import { FetchSportDisciplines } from '../components/owner/complex-owner-dashboard/complex-owner-dasboard.actions';
 import { tap } from 'rxjs/operators';
 import { SportDiscipline } from '../models/sport-discipline';
@@ -20,7 +19,6 @@ export class SportDisciplineState {
   static readonly resourceName: string = 'sport_disciplines';
 
   constructor(
-    private sportDisciplineService: EntityService<SportDiscipline>,
     private http: HttpClient,
     private store: Store
   ) { }

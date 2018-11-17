@@ -11,15 +11,6 @@ export class API {
     return this.domain + '/token/new';
   }
 
-  entityURLs(entityURL: string, childrenURL?: string) {
-    return {
-      fetchAll: `${this.domain}/${entityURL}`,
-      fetchAllChildren: (id: number) => `${this.domain}/${entityURL}/${id}/${childrenURL}`,
-      create: `${this.domain}/${entityURL}`,
-      delete: (id: number) => `${this.domain}/${entityURL}/${id}`,
-    };
-  }
-
   rest(entityName: string, entityId: number, nestedEntity: string) {
     if ( (!!entityId) && (!!nestedEntity) ) {
       const baseURL = `${this.domain}/${entityName}/${entityId}/${nestedEntity}`,

@@ -5,7 +5,6 @@ import { SportComplex } from '../models/sport-complex';
 import { FetchAllSportComplexes } from '../components/owner/complex-owner-dashboard/complex-owner-dasboard.actions';
 import { CreateNewSportComplex } from '../components/owner/complex/new/new-sport-complex.actions';
 import { DeleteSportComplex } from '../components/owner/complex/delete/delete-sport-complex.actions';
-import { EntityService } from '../services/entity.service';
 import { _ } from 'underscore';
 
 import { environment } from '../../environments/environment.generated.dev';
@@ -29,7 +28,6 @@ export class SportComplexState {
   static readonly resourceName: string = 'sport_complexes';
 
   constructor(
-    private sportComplexService: EntityService<SportComplex>,
     private http: HttpClient,
     private store: Store
   ) { }
@@ -43,12 +41,18 @@ export class SportComplexState {
 
   @Action(FetchAllSportComplexes)
   fetchAllSportComplexesHandler({ setState }: StateContext<SportComplexes>) {
-    type StateUpdaterType = (SportComplexes) => void;
-    const stateUpdater: StateUpdaterType = (sportComplexes) => {
-      setState([...sportComplexes.sport_complexes]);
-    };
+    type StateUpdaterType = (response: Response & ErrorResponse) => void;
+    const url = environment.api.resource(SportComplexState.resourceName),
+          stateUpdater: StateUpdaterType = (response) => {
+            if (response.status === 'error') {
+              this.store.dispatch(new ShowFlashMessage('Wystąpił błąd w czasie pobierania listy kompleksów sportowych'));
+              return;
+            }
 
-    return this.sportComplexService.fetchAll('sport_complexes')
+            setState([...response.data.sport_complexes]);
+          };
+
+    return this.http.get(url)
       .pipe(
         tap(stateUpdater)
       );

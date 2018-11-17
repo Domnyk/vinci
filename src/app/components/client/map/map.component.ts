@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { SportObject} from '../../../models/sport-object';
+import { SportObject } from '../../../models/sport-object';
 
 import { CurrentLocationService } from '../../../services/current-location.service';
 import { MarkerService } from '../../../services/marker.service';
-import { Observable, zip } from 'rxjs';
-import { EntityService } from '../../../services/entity.service';
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { FetchAllObjects } from './map.actions';
 import { Select, Store } from '@ngxs/store';
@@ -20,8 +19,8 @@ export class MapComponent implements OnInit {
   @Select(state => state.SportObjects) sportObjects$: Observable<SportObject[]>;
   map: google.maps.Map;
 
-  constructor(private sportObjectService: EntityService<SportObject>, private currentLocationService: CurrentLocationService,
-              private markerService: MarkerService, private router: Router, private store: Store) {}
+  constructor(private currentLocationService: CurrentLocationService, private markerService: MarkerService,
+              private router: Router, private store: Store) {}
 
   ngOnInit() {
     this.store.dispatch(new FetchAllObjects);
