@@ -14,32 +14,6 @@ export interface SignUpResponse {
  display_name?: string;
 }
 
-export interface EntityList<T> {
-  status: string;
-  data: Array<T>;
-}
-
-
-export interface NewEntity<T> {
-  status: string;
-  data: T;
-}
-
-export interface NewEntityError {
-  status: string;
-  errors: any;
-}
-
-export interface DeleteEntityError {
-  status: string;
-  errors: any;
-}
-
-export interface DeletedEntity {
-  status: string;
-  data: any;
-}
-
 export interface Response {
   status: string;
   data: any;

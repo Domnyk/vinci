@@ -1,5 +1,4 @@
 import { DTO } from './dto';
-import { SportObject, SportObjectBasicInformation } from './sport-object';
 
 export class SportComplex implements DTO {
   constructor(
