@@ -84,7 +84,7 @@ export class SportObjectState {
             this.store.dispatch(new ShowFlashMessage('Obiekt sportowy został pomyślnie zaktualizowany'));
           };
 
-    return this.geoCoder.geocode(sportObject.address)
+    return this.geoCoder.geocode(BuildingAddressUtils.asString(sportObject.address))
       .pipe(
         flatMap((coords: LatLngLiteral) => {
           sportObject.geoCoordinates = coords;
@@ -120,7 +120,7 @@ export class SportObjectState {
         .pipe(tap(stateUpdater));
     } else {
       console.debug('Calling geocoder');
-      call = this.geoCoder.geocode(sportObjectToUpdate.address)
+      call = this.geoCoder.geocode(BuildingAddressUtils.asString(sportObjectToUpdate.address))
         .pipe(
           flatMap((coords: LatLngLiteral) => {
             sportObjectToUpdate.geoCoordinates = coords;

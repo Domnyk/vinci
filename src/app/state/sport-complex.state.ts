@@ -58,7 +58,6 @@ export class SportComplexState {
       );
   }
 
-  // TODO: Replace any with something more appropriate
   @Action(CreateNewSportComplex)
   newSportComplex({ getState, setState }: StateContext<SportComplexes>, { sportComplex }: CreateNewSportComplex) {
     type stateUpdaterType = (response: Response) => void;

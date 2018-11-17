@@ -98,7 +98,7 @@ export class SearchComponent implements OnInit {
 
     const isGeocodingNeeded = this.fullLocation.wasEditedByUser === true;
     if (isGeocodingNeeded) {
-      this.geocoderService.geocodeString(this.fullLocation.readableAddress)
+      this.geocoderService.geocode(this.fullLocation.readableAddress)
         .pipe(tap( (coords: LatLngLiteral) => this.fullLocation.coords = coords))
         .subscribe(() => this.search());
     }

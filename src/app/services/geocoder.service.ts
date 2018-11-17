@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.generated.dev';
-import { BuildingAddressLiteral } from '../models/building-address-literal';
 import { HttpClient } from '@angular/common/http';
-import { flatMap, tap } from 'rxjs/operators';
+import { flatMap } from 'rxjs/operators';
 import { Observable, of, throwError } from 'rxjs';
 import LatLngLiteral = google.maps.LatLngLiteral;
 import { BuildingAddressUtils } from './building-address-utils.service';
+import GeocoderResult = google.maps.GeocoderResult;
 
 @Injectable({
   providedIn: 'root'
@@ -15,23 +15,12 @@ export class GeocoderService {
     private http: HttpClient
   ) { }
 
-  geocode(buildingAddress: BuildingAddressLiteral): Observable<LatLngLiteral> {
-    console.debug('buildingAddress: ', buildingAddress);
-    const geocoderURL = environment.api.urls.geocoder(BuildingAddressUtils.asString(buildingAddress));
-
-    return this.http.get(geocoderURL)
-      .pipe(
-        tap(console.log),
-        flatMap((response: any) => of(response.results[0].geometry.location))
-      );
-  }
-
-  geocodeString(address: string): Observable<LatLngLiteral> {
+  geocode(address: string): Observable<LatLngLiteral> {
     const geocoderURL = environment.api.urls.geocoder(BuildingAddressUtils.replaceReservedCharacters(address));
 
     return this.http.get(geocoderURL)
       .pipe(
-        flatMap((response: any) => of(response.results[0].geometry.location))
+        flatMap((response: { results: GeocoderResult[] }) => of(response.results[0].geometry.location))
       );
   }
 
@@ -44,11 +33,3 @@ export class GeocoderService {
       );
   }
 }
-
-/*
-  TODO: Fix error in typing file. results.geometry.geo_location is LatLngLiteral not LatLng. This is commented until typing error will be fixed
-*/
-/* interface GoogleGeocoderResponse {
-  results: GeocoderResult[];
-  status: GeocoderStatus;
-} */
