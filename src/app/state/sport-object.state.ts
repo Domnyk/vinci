@@ -14,10 +14,10 @@ import { DeleteSportObject } from '../components/owner/object/delete/delete-spor
 import { Observable, throwError } from 'rxjs';
 import { UpdateSportObject } from '../components/owner/object/edit/edit-sport-object.actions';
 import { ErrorResponse, Response } from '../models/api-response';
-import { BuildingAddress } from '../models/building-address';
 import { FetchAllObjects } from '../components/client/map/map.actions';
 import { InsertArenas } from '../actions/sport-arena.actions';
 import LatLngLiteral = google.maps.LatLngLiteral;
+import { BuildingAddressUtils } from '../services/building-address-utils.service';
 
 
 type SportObjects = Array<SportObject>;
@@ -116,7 +116,7 @@ export class SportObjectState {
           };
     let call: Observable<any> = null;
 
-    if (BuildingAddress.equals(oldSportObject.address, sportObjectToUpdate.address)) {
+    if (BuildingAddressUtils.areEqual(oldSportObject.address, sportObjectToUpdate.address)) {
       console.debug('Not calling geocoder');
       call = this.http.put(url, sportObjectToUpdate.dto())
         .pipe(tap(stateUpdater));

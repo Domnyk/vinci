@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BookingMargin, SportObject } from '../models/sport-object';
 import { SportDiscipline } from '../models/sport-discipline';
-import { BuildingAddressLiteral } from '../models/building-address';
+import { BuildingAddressLiteral } from '../models/building-address-literal';
 
 @Injectable({
   providedIn: 'root'

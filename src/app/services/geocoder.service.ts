@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.generated.dev';
-import { BuildingAddress, BuildingAddressLiteral } from '../models/building-address';
+import { BuildingAddressLiteral } from '../models/building-address-literal';
 import { HttpClient } from '@angular/common/http';
 import { flatMap } from 'rxjs/operators';
 import { Observable, of, throwError } from 'rxjs';
 import LatLngLiteral = google.maps.LatLngLiteral;
-import { AddressService } from './address.service';
+import { BuildingAddressUtils } from './building-address-utils.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +15,8 @@ export class GeocoderService {
     private http: HttpClient
   ) { }
 
-  geocode({ street, buildingNumber, city, postalCode }: BuildingAddressLiteral): Observable<LatLngLiteral> {
-    const buildingAddress = new BuildingAddress(street, buildingNumber, city, postalCode),
-          geocoderURL = environment.api.geocoderAddress(buildingAddress.asString);
+  geocode(buildingAddress: BuildingAddressLiteral): Observable<LatLngLiteral> {
+    const geocoderURL = environment.api.geocoderAddress(BuildingAddressUtils.asString(buildingAddress));
 
     return this.http.get(geocoderURL)
       .pipe(
@@ -26,7 +25,7 @@ export class GeocoderService {
   }
 
   geocodeString(address: string): Observable<LatLngLiteral> {
-    const geocoderURL = environment.api.geocoderAddress(AddressService.replaceReservedCharacters(address));
+    const geocoderURL = environment.api.geocoderAddress(BuildingAddressUtils.replaceReservedCharacters(address));
 
     return this.http.get(geocoderURL)
       .pipe(
