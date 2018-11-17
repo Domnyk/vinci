@@ -153,34 +153,6 @@ export class SportObjectState {
     return this.http.get(url).pipe(tap(stateUpdater));
   }
 
-  // @Action(SelectObject)
-  // selectObject({ getState, setState }: StateContext<SportObjects>, { id }: SelectObject) {
-  //   const url = environment.api.resource('sport_objects', id),
-  //         isObjectAlreadyInState = getState().find((sportObject: SportObject) => sportObject.id === id) !== undefined,
-  //         stateUpdater = (resposnse: Response) => {
-  //           if (resposnse.status === 'error') {
-  //             this.store.dispatch(new ShowFlashMessage('Wystąpił błąd w czasie pobierania danych obiektu sportowego'));
-  //             return;
-  //           }
-  //
-  //           const sportObject = SportObject.fromDTO(resposnse.data.sport_object);
-  //           let newState = null;
-  //           if (isObjectAlreadyInState) {
-  //             newState = getState().map((sportObject: SportObject) => sportObject.id === id ? )
-  //
-  //               _.uniq([...getState(), sportObject]);
-  //           } else {
-  //             newState = ([...getState(), sportObject]);
-  //           }
-  //
-  //           setState(newState);
-  //         };
-  //
-  //   return this.http.get(url)
-  //     .pipe(tap(stateUpdater))
-  //     .subscribe(() => {}, (error) => this.handleError(error));
-  // }
-
   @Action(DeleteSportObject)
   deleteSportObject({ getState, setState }: StateContext<SportObjects>, { id }: DeleteSportObject) {
     const url = environment.api.resource('sport_objects', id),

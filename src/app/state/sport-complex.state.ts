@@ -1,4 +1,4 @@
-import { State, Action, StateContext, createSelector, Selector, Store } from '@ngxs/store';
+import { State, Action, StateContext, Selector, Store } from '@ngxs/store';
 import { tap } from 'rxjs/operators';
 
 import { SportComplex } from '../models/sport-complex';
@@ -13,7 +13,7 @@ import { HttpClient } from '@angular/common/http';
 import { UpdateSportComplex } from '../components/owner/complex/edit/edit-sport-complex.actions';
 import { ShowFlashMessage } from '../actions/flash-message.actions';
 import { catchError, map } from 'rxjs/operators';
-import { Observable, of, throwError } from 'rxjs/index';
+import { throwError } from 'rxjs';
 import { ErrorResponse, Response } from '../models/api-response';
 
 type SportComplexes = Array<SportComplex>;

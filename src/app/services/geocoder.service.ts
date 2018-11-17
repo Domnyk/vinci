@@ -26,7 +26,7 @@ export class GeocoderService {
   }
 
   geocodeString(address: string): Observable<LatLngLiteral> {
-    const geocoderURL = environment.api.geocoderAddressString(AddressService.replaceReservedCharacters(address));
+    const geocoderURL = environment.api.geocoderAddress(AddressService.replaceReservedCharacters(address));
 
     return this.http.get(geocoderURL)
       .pipe(

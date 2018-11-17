@@ -1,12 +1,12 @@
-import { UnescapedBuildingAddress } from './building-address';
 import { DTO } from './dto';
 import LatLngLiteral = google.maps.LatLngLiteral;
+import { BuildingAddressLiteral } from './building-address';
 
 export class SportObject implements DTO {
    constructor(
      public id: number,
      public name: string,
-      public address: UnescapedBuildingAddress,
+      public address: BuildingAddressLiteral,
       public geoCoordinates: LatLngLiteral,
       public bookingMargin: BookingMargin,
       public sportComplexId?: number

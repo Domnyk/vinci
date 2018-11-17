@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BookingMargin, SportObject } from '../models/sport-object';
-import { UnescapedBuildingAddress } from '../models/building-address';
 import { SportDiscipline } from '../models/sport-discipline';
+import { BuildingAddressLiteral } from '../models/building-address';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ class SportObjectFactory {
   static get sportObject(): SportObject {
     const id: number = null,
           name = '',
-          address: UnescapedBuildingAddress = { street: '', buildingNumber: null, postalCode: '', city: '' },
+          address: BuildingAddressLiteral = { street: '', buildingNumber: null, postalCode: '', city: '' },
           geoCoordinates = { lat: null, lng: null },
           bookingMargin: BookingMargin = { months: null, days: null, seconds: 0 };
 

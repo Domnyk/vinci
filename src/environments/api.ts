@@ -1,4 +1,3 @@
-import { EscapedBuildingAddress } from '../app/models/building-address';
 import LatLngLiteral = google.maps.LatLngLiteral;
 
 export class API {
@@ -61,10 +60,6 @@ export class API {
    */
   geocoderAddress(address: string): string {
     return `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${this.googleMapsApiKey}`;
-  }
-
-  geocoderAddressString(address: string): string {
-      return `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${this.googleMapsApiKey}`;
   }
 
   reverseGeocoderAddress({ lat, lng }: LatLngLiteral): string {
