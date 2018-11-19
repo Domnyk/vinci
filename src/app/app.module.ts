@@ -64,6 +64,7 @@ import { SelectDisciplinesComponent } from './components/common/select-disciplin
 import { SearchResultsState } from './state/search-results.state';
 import { SearchResultsComponent } from './components/client/search-results/search-results.component';
 import { CalendarComponent as CalendarComponentClient } from './components/client/calendar/calendar.component';
+import { AddEventFormComponent } from './components/client/add-event-form/add-event-form.component';
 
 registerLocaleData(localePl);
 
@@ -102,6 +103,7 @@ registerLocaleData(localePl);
     SelectDisciplinesComponent,
     SearchResultsComponent,
     CalendarComponentClient,
+    AddEventFormComponent,
   ],
   imports: [
     RouterModule.forRoot(

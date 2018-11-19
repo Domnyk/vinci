@@ -30,68 +30,7 @@
   </div>
 </ng-template>
 
-<div class="modal fade" id="createEventModal" role="form">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5>Dodaj nowe wydarzenie</h5>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label>Nazwa</label>
-            <input class="form-control" type="text">
-          </div>
-          <div class="form-row">
-            <div class="col form-group">
-              <label>Godzina rozpoczęcia</label>
-              <input class="form-control" type="time" min="00:00" />
-            </div>
-            <div class="col form-group">
-              <label>Godzina zakończenia</label>
-              <input class="form-control" type="time" min="00:00" />
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="col form-group">
-              <label>Minimalna liczba osób</label>
-              <input class="form-control" type="number" min="1" value="1" />
-            </div>
-            <div class="col form-group">
-              <label>Maksymalna liczba osób</label>
-              <input class="form-control" type="number" min="1" value="1" />
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="col form-group">
-              <label>Czas na dołączenie <small class="text-muted">(w dniach)</small></label>
-              <input class="form-control" type="number" min="1" value="1" />
-            </div>
-            <div class="col form-group">
-              <label>Czas na płatność <small class="text-muted">(w dniach)</small></label>
-              <input class="form-control" type="number" min="1" value="1" />
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label>Całkowita cena</label>
-            <div class="input-group">
-              <input class="form-control" type="number" min="0" readonly />
-              <div class="input-group-append">
-                <span class="input-group-text">PLN</span>
-              </div>
-            </div>
-          </div>
-
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-success">Dodaj</button>
-        <button class="btn btn-danger" data-dismiss="modal">Zamknij</button>
-      </div>
-    </div>
-  </div>
-</div>
+<app-add-event-form [modalId]="'createEventModal'"></app-add-event-form>
 
 <div class="row text-center">
   <div class="col">

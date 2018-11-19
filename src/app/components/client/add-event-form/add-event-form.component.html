@@ -1,0 +1,88 @@
+<div class="modal fade" [id]="modalId" role="form">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5>Dodaj nowe wydarzenie</h5>
+      </div>
+      <div class="modal-body">
+        <form novalidate>
+          <div class="form-group">
+            <label>Nazwa</label>
+            <input [formControl]="name" [class.is-invalid]="name.invalid && (name.touched || name.dirty)"
+                   class="form-control" type="text">
+            <div class="invalid-feedback">
+              Podaj nazwę
+            </div>
+          </div>
+          <div [formGroup]="timeFrame" class="form-row">
+            <div class="col form-group">
+              <label>Godzina rozpoczęcia</label>
+              <input [class.is-invalid]="timeFrame.errors?.startLaterThanEnd || startTime.invalid" formControlName="start"
+                     class="form-control" type="time" step="1800" min="00:00" />
+              <div *ngIf="timeFrame.errors?.startLaterThanEnd" class="invalid-feedback">
+                Godzina zakończenia musi być później niż godzina rozpoczęcia
+              </div>
+              <div *ngIf="startTime.invalid" class="invalid-feedback">
+                Pole wymagane
+              </div>
+            </div>
+            <div class="col form-group">
+              <label>Godzina zakończenia</label>
+              <input [class.is-invalid]="timeFrame.errors?.startLaterThanEnd" formControlName="end"
+                     class="form-control" type="time" min="00:00" />
+              <div *ngIf="timeFrame.errors?.startLaterThanEnd" class="invalid-feedback">
+                Godzina zakończenia musi być później niż godzina rozpoczęcia
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col form-group">
+              <label>Minimalna liczba osób</label>
+              <input [formControl]="minPeople" [class.is-invalid]="minPeople.invalid"
+                     class="form-control" type="number" min="1" value="1" />
+              <div class="invalid-feedback">
+                Podaj poprawną wartość
+              </div>
+            </div>
+            <div class="col form-group">
+              <label>Maksymalna liczba osób</label>
+              <input class="form-control" type="number" min="1" value="1" />
+              <div class="invalid-feedback">
+                Podaj poprawną wartość
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col form-group">
+              <label>Czas na dołączenie <small class="text-muted">(w dniach)</small></label>
+              <input class="form-control" type="number" min="1" value="1" />
+            </div>
+            <div class="col form-group">
+              <label>Czas na płatność <small class="text-muted">(w dniach)</small></label>
+              <input [formControl]="paymentPhaseDuration" [class.is-invalid]="paymentPhaseDuration.invalid"
+                     class="form-control" type="number" min="1" value="1" />
+              <div class="invalid-feedback">
+                Podaj poprawną wartość
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Całkowita cena</label>
+            <div class="input-group">
+              <input class="form-control" type="number" min="0" readonly />
+              <div class="input-group-append">
+                <span class="input-group-text">PLN</span>
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success">Dodaj</button>
+        <button class="btn btn-danger" data-dismiss="modal">Zamknij</button>
+      </div>
+    </div>
+  </div>
+</div>
