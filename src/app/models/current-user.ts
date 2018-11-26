@@ -1,6 +1,10 @@
 export interface CurrentUser {
   email: string;
-  accessType: string;
-  token: string;
-  login?: string;
+  type: UserType;
+  displayName?: string;
+}
+
+export enum UserType {
+  Regular,
+  ComplexesOwner
 }

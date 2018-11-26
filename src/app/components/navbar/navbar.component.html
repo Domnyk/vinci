@@ -5,21 +5,43 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a routerLink="/sign_in" class="nav-link">Zaloguj</a>
-        </li>
-        <li class="nav-item">
-          <a routerLink="/sign_up" class="nav-link">Zarejestruj</a>
-        </li>
-        <li class="nav-item">
           <a routerLink="/map" class="nav-link">Mapa</a>
         </li>
         <li class="nav-item">
           <a routerLink="/search" class="nav-link">Szukaj</a>
         </li>
-        <li *ngIf="isAdmin" class="nav-item">
-          <a routerLink="/admin_dashboard" class="nav-link">Zarządzaj kompleksami</a>
+      </ul>
+      <ul *ngIf="(currentUser$ | async) === null; else signedIn" class="navbar-nav d-flex justify-content-end" >
+        <li class="nav-item">
+          <a routerLink="/sign_in" class="nav-link">Zaloguj</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/sign_up" class="nav-link">Zarejestruj</a>
         </li>
       </ul>
+      <ng-template #signedIn>
+        <div [ngSwitch]="(currentUser$ | async).type">
+          <ul *ngSwitchCase="UserType.ComplexesOwner" class="navbar-nav d-flex justify-content-end">
+            <li class="nav-item">
+              <span class="nav-link">{{ (currentUser$ | async).email }}</span>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/admin_dashboard" class="nav-link">Zarządzaj kompleksami</a>
+            </li>
+          </ul>
+          <ul *ngSwitchCase="UserType.Regular" class="navbar-nav d-flex justify-content-end">
+            <li class="nav-item">
+              <a routerLink="/profile" class="nav-link">{{ (currentUser$ | async).displayName }}</a>
+            </li>
+          </ul>
+          <ul *ngSwitchDefault class="navbar-nav d-flex justify-content-end">
+            <li class="nav-item">
+              <a routerLink="/profile" class="nav-link">{{ (currentUser$ | async).email }}</a>
+            </li>
+          </ul>
+        </div>
+      </ng-template>
+
     </div>
   </nav>
 </div>

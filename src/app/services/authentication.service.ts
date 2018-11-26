@@ -20,13 +20,10 @@ export class AuthenticationService {
 
   private makeAuthenticationReq(userData: Object): Observable<Object> {
     const payload = {
-      auth_method: 'in_app',
-      user: {
-        email: userData['email'],
-        password: userData['password']
-      }
+      email: userData['email'],
+      password: userData['password']
     };
 
-    return this.http.post(environment.api.urls.signIn, payload);
+    return this.http.post(environment.api.urls.signIn(), payload);
   }
 }

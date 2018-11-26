@@ -5,3 +5,9 @@ export class SignInWithPassword {
 
   constructor(public user: User) { }
 }
+
+export class UserHasSignedIn {
+  static readonly type = `[] User has signed in`;
+
+  constructor(public email: string, public displayName: string) { }
+}

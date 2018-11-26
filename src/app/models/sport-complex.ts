@@ -3,7 +3,7 @@ import { DTO } from './dto';
 export class SportComplex implements DTO {
   constructor(
     public name: string,
-    public id?: number
+    public id?: number,
   ) { }
 
   dto(): SportComplexDTO {

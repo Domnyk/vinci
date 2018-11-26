@@ -5,6 +5,8 @@ import { SignInWithPassword } from '../../actions/sign-in.actions';
 
 import { User } from '../../models/user';
 import { environment } from '../../../environments/environment.generated.dev';
+import { FormControl, Validators } from '@angular/forms';
+import { FormHelper } from '../../helpers/form.helper';
 
 @Component({
   selector: 'app-sign-in',
@@ -12,18 +14,28 @@ import { environment } from '../../../environments/environment.generated.dev';
   styleUrls: ['./sign-in.component.css']
 })
 export class SignInComponent implements OnInit {
-  user: User = new User(null, null);
-  backendSignInAddress: string = environment.api.urls.signIn;
+  backendSignInAddress = environment.api.urls.signIn();
+  FormHelper = FormHelper;
+  email: FormControl;
+  password: FormControl;
 
-  constructor(
-    private router: Router,
-    private store: Store) { }
+  constructor(private router: Router, private store: Store) {
+    this.email = new FormControl('', [Validators.required, Validators.email]);
+    this.password = new FormControl('', [Validators.required]);
+  }
 
   ngOnInit() {}
 
   onSubmit(): void {
-    this.store.dispatch(new SignInWithPassword(this.user))
+    const user: User = { email: this.email.value, password: this.password.value };
+
+    this.store.dispatch(new SignInWithPassword(user))
       .subscribe(() => this.router.navigate(['/admin_dashboard']));
   }
+
+  isSubmitDisabled(): boolean {
+    return this.email.invalid || this.password.invalid;
+  }
+
 
 }

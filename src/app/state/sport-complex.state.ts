@@ -72,7 +72,7 @@ export class SportComplexState {
             this.store.dispatch(new ShowFlashMessage('Pomyślnie stworzono kompleks sportowy'));
           };
 
-    return this.http.post(url, sportComplex.dto())
+    return this.http.post(url, sportComplex.dto(), { withCredentials: true })
       .pipe(tap(stateUpdater))
       .subscribe(() => {}, (error) => this.handleError(error));
   }

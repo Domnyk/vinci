@@ -6,7 +6,7 @@ export class API {
   get urls() {
     return {
       signUp: this.domain + '/users',
-      signIn: this.domain + '/token/new',
+      signIn: this.calculateSignInAddress.bind(this),
       geocoder: this.calculateGeocoderAddress.bind(this),
       reverseGeocoder: this.calculateReverseGeocoderAddress.bind(this)
     };
@@ -26,6 +26,11 @@ export class API {
     }
 
     return `${this.domain}/${resourceName}`;
+  }
+
+  private calculateSignInAddress(): string {
+    const redirectURL = 'https://localhost:8080';
+    return this.domain + `/session/new?redirect_url=${redirectURL}`;
   }
 
   /**

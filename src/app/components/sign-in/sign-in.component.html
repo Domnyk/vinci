@@ -1,33 +1,36 @@
-<section class="row mt-sm-3">
-    <div class="col-sm d-flex justify-content-center">
-        <h1 class="display-3"> Choose sign in method</h1>
-    </div>
-</section>
+<div class="row">
+  <div class="col">
+  </div>
 
-<section class="row align-items-center mt-sm-3"> 
-    <section id="in-app-sign-in" class="col-sm d-flex justify-content-center">
-        <form (ngSubmit)="onSubmit()">
-            <div class="form-group">
-                <label for="email">Email address</label>
-                <input [(ngModel)]="user.email" name="email" type="email" class="form-control" aria-describedby="email" 
-                    placeholder="Enter email" required>
-            </div>
-        
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input [(ngModel)]="user.password" name="password" type="password" class="form-control" 
-                    placeholder="Password" id="password" required>
-            </div>
-        
-            <button type="submit" class="btn btn-primary">Sign in</button>
-        </form>
-    </section>
+  <div class="col">
+    <form (ngSubmit)="onSubmit()" novalidate>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input [formControl]="email" [class.is-invalid]="FormHelper.isFormControlInvalid(email)" name="email"
+               type="email" class="form-control" aria-describedby="email">
+        <div class="invalid-feedback">
+          Podaj prawidłowy adres email
+        </div>
+      </div>
 
-    <section class="col-sm d-flex justify-content-center">
-        <h1 class="display-3"> or </h1>
-    </section>
+      <div class="form-group">
+        <label for="password">Hasło</label>
+        <input [formControl]="password" [class.is-invalid]="FormHelper.isFormControlInvalid(password)" name="password"
+               type="password" class="form-control" autocomplete="off">
+        <div class="invalid-feedback">
+          Podaj hasło
+        </div>
+      </div>
 
-    <section id="facebook-login" class="col-sm d-flex justify-content-center">
-      <a href="{{backendSignInAddress}}"> Zaloguj się przez Facebooka </a>
-    </section>
-</section>
+      <button [disabled]="isSubmitDisabled()" type="submit" class="btn btn-primary">Zaloguj się</button>
+    </form>
+
+    <hr />
+
+    <a [href]="backendSignInAddress" class="btn btn-primary btn-block">Zaloguj się przez Facebooka</a>
+
+  </div>
+  <div class="col">
+  </div>
+</div>
+

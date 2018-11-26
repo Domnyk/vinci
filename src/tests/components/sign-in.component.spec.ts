@@ -32,7 +32,7 @@ xdescribe('SignInComponent', () => {
   });
 
   it('should containe password input', () => {
-    const passwordInput: HTMLInputElement = fixture.nativeElement.querySelector('input[type="passowrd"]');
+    const passwordInput: HTMLInputElement = fixture.nativeElement.querySelector('input[type="password"]');
 
     expect(passwordInput).toBeTruthy();
   });

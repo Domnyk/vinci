@@ -1,8 +1,5 @@
-export interface SignInResponse {
-  status: string;
+export interface ComplexesOwnerSignInResponse {
   email: string;
-  access_type: string;
-  token: string;
 }
 
 // TODO: This interface should stick to convention { status: string, data: Object }

@@ -1,40 +1,44 @@
-<section>
+<div class="row">
+  <div class="col"></div>
 
-    <h1 class="display-3">Sign up</h1>
-
-    {{ debugModel }}
-
-    <form (ngSubmit)="onSubmit()">
-        <div class="form-group">
-            <label for="email">Email address</label>
-            <input [(ngModel)]="model.email" name="email" type="email" class="form-control" aria-describedby="email" 
-                placeholder="Enter email" required>
+  <main class="col">
+    <form (ngSubmit)="onSubmit()" novalidate>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input [formControl]="email" [class.is-invalid]="FormHelper.isFormControlInvalid(email)" name="email"
+               type="email" class="form-control" aria-describedby="email">
+        <div class="invalid-feedback">
+          Podaj prawidłowy adres email
         </div>
+      </div>
 
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input [(ngModel)]="model.password" name="password" type="password" class="form-control" 
-                placeholder="Password" id="password" required>
+      <div class="form-group">
+        <label for="password">Hasło</label>
+        <input [formControl]="password" [class.is-invalid]="FormHelper.isFormControlInvalid(password)" name="password"
+               type="password" class="form-control" id="password" autocomplete="off">
+        <div class="invalid-feedback">
+          Podaj hasło
         </div>
+      </div>
 
-        <div class="form-group">
-            <label for="password">Password confirmation</label>
-            <input [(ngModel)]="model.password_confirmation" name="password_confirmation" type="password" 
-                class="form-control" placeholder="Password confirmation" id="password-confirmation" required>
+      <div class="form-group">
+        <label for="password">Powtórz hasło</label>
+        <input [formControl]="passwordConfirmation" [class.is-invalid]="FormHelper.isFormControlInvalid(passwordConfirmation)"
+               name="password_confirmation" type="password" class="form-control" id="password-confirmation"
+               autocomplete="off">
+        <div *ngIf="passwordGroup.errors?.passwordDoesNotMatchConfirmation && (passwordGroup.touched || passwordGroup.dirty)"
+             class="password-mismatch">
+          Hasła nie zgadzają się
         </div>
-
-        <div class="form-group">
-            <label for="login">Login</label>
-            <input [(ngModel)]="model.login" name="login" type="text" class="form-control" aria-describedby="login" 
-                placeholder="Enter login" id="login">
+        <div class="invalid-feedback">
+          Podaj hasło
         </div>
+      </div>
 
-        <div class="form-group">
-            <label for="display-name">Display name</label>
-            <input [(ngModel)]="model.display_name" name="display_name" type="text" class="form-control" 
-                aria-describedby="Display name" placeholder="Enter display name" id="display-name">
-        </div>
-
-        <button type="submit" class="btn btn-primary">Submit</button>
+      <button [disabled]="isSubmitDisabled()" type="submit" class="btn btn-primary">Załóż konto</button>
     </form>
-</section>
+  </main>
+
+  <div class="col"></div>
+</div>
+

@@ -1,11 +1,7 @@
-export class SignUpUser {
-  static readonly type = '[USER] Sign up'
+import { ComplexesOwner } from '../models/complexes-owner';
 
-  constructor(public payload: any) { }
-}
+export class SignUpComplexesOwner {
+  static readonly type = '[USER] Sign up complexes owner'
 
-export class FetchUserTokenFromStorage {
-  static readonly type = '[Any component] Fetch user token from HTML5 Storage';
-
-  constructor() { }
+  constructor(public complexesOwner: ComplexesOwner) { }
 }
