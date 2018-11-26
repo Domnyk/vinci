@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { startLaterThanEndValidator } from './start-later-than-end.directive';
+import { Event } from '../../../models/event';
 
 @Component({
   selector: 'app-add-event-form',
@@ -26,11 +27,9 @@ export class AddEventFormComponent implements OnInit {
     this.startTime = new FormControl('', [Validators.required]);
     this.endTime = new FormControl('', [Validators.required]);
 
+    // TODO: Add cross validation to check maxPeople > minPeople
     this.minPeople = new FormControl(1, [Validators.required, Validators.min(1)]);
-
-    // maxPeople is more complex - custom validator required to check that maxPeople > minPeople
-    // Maybe use Validators.min ?
-    // this.maxPeople = new FormControl(1, [Validators.required, Validators.min(this.minPeople.value)]);
+    this.maxPeople = new FormControl(1, [Validators.required, Validators.min(this.minPeople.value)]);
 
     this.joinPhaseDuration = new FormControl(1, [Validators.required, Validators.min(1)]);
     this.paymentPhaseDuration = new FormControl(1, [Validators.required, Validators.min(1)]);
@@ -43,6 +42,15 @@ export class AddEventFormComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  createEvent() {
+    const day = new Date();
+
+    const event = new Event(day, this.minPeople.value, this.maxPeople.value, this.startTime.value, this.endTime.value,
+      this.joinPhaseDuration.value, this.paymentPhaseDuration.value, this.name.value);
+
+    console.debug('Event: ', event.dto());
   }
 
 }

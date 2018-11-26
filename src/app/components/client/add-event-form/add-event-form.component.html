@@ -46,7 +46,8 @@
             </div>
             <div class="col form-group">
               <label>Maksymalna liczba osób</label>
-              <input class="form-control" type="number" min="1" value="1" />
+              <input [formControl]="maxPeople" [class.is-invalid]="maxPeople.invalid" class="form-control"
+                     type="number" min="1" value="1" />
               <div class="invalid-feedback">
                 Podaj poprawną wartość
               </div>
@@ -55,7 +56,11 @@
           <div class="form-row">
             <div class="col form-group">
               <label>Czas na dołączenie <small class="text-muted">(w dniach)</small></label>
-              <input class="form-control" type="number" min="1" value="1" />
+              <input [formControl]="joinPhaseDuration" [class.is-invalid]="joinPhaseDuration.invalid"
+                     class="form-control" type="number" min="1" value="1" />
+              <div class="invalid-feedback">
+                Podaj poprawną wartość
+              </div>
             </div>
             <div class="col form-group">
               <label>Czas na płatność <small class="text-muted">(w dniach)</small></label>
@@ -80,7 +85,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-success">Dodaj</button>
+        <button (click)="createEvent()" type="submit" class="btn btn-success">Dodaj</button>
         <button class="btn btn-danger" data-dismiss="modal">Zamknij</button>
       </div>
     </div>
