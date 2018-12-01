@@ -6,6 +6,7 @@ import { SportObject } from '../../../../models/sport-object';
 import { catchError, map } from 'rxjs/operators';
 import { SportArenaState } from '../../../../state/sport-arena.state';
 import { SportArena } from '../../../../models/sport-arena';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-object',
@@ -13,26 +14,19 @@ import { SportArena } from '../../../../models/sport-arena';
   styleUrls: ['./object.component.css']
 })
 export class ObjectComponent implements OnInit {
-  @Select(state => state.router.state.params.id) objectId$: Observable<string>;
-  foundArenasIds$: Observable<number[]>;
   arenas$: Observable<SportArena[]>;
   object$: Observable<SportObject>;
 
-  constructor(private store: Store) { }
+  constructor(private store: Store, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.objectId$.subscribe((id: string) => {
+    this.activatedRoute.params.subscribe(({ id }: Params) => {
       this.object$ = this.store.select(SportObjectState.sportObject).pipe(map(filterFn => filterFn(+id)));
 
       this.arenas$ = this.store.select(SportArenaState.sportArenasInSportObject).pipe(
         map(filterFn => filterFn(+id))
       );
     });
-
-    this.foundArenasIds$ = this.store.select(state => state.router.state.params.found).pipe(
-      map((ids: string) => ids.split(',').map(id => +id)),
-      catchError(() => of([]))
-    );
   }
 
 }

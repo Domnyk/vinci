@@ -27,10 +27,9 @@ export class SignInComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit(): void {
-    const user: Credentials = new Credentials(this.email.value, this.password.value);
+    const credentials: Credentials = new Credentials(this.email.value, this.password.value);
 
-    this.store.dispatch(new SignInWithPassword(user))
-      .subscribe(() => this.router.navigate(['/owner']));
+    this.store.dispatch(new SignInWithPassword(credentials));
   }
 
   isSubmitDisabled(): boolean {

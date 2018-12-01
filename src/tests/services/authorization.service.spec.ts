@@ -23,7 +23,7 @@ xdescribe('AuthorizationService', () => {
   });
 
   describe('isAdmin', () => {
-    it('should return true when user is signed up and has admin access type', (done: DoneFn) => {
+    it('should return true when credentials is signed up and has admin access type', (done: DoneFn) => {
       const initialCurenntUserState = {
         email: 'john@test.com',
         token: 'jwt token',
@@ -36,7 +36,7 @@ xdescribe('AuthorizationService', () => {
       );
     });
 
-    it('should return when false when user is not signed up or has not admin access type', () => {
+    it('should return when false when credentials is not signed up or has not admin access type', () => {
 
     });
   });

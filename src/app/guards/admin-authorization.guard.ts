@@ -2,7 +2,7 @@ import { Observable, of } from 'rxjs';
 import { CanActivate, Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { Injectable } from '@angular/core';
-import { flatMap } from 'rxjs/operators';
+import { flatMap, tap } from 'rxjs/operators';
 import { UserType } from '../models/current-user';
 
 @Injectable({
@@ -18,7 +18,8 @@ export class AdminAuthorizationGuard implements CanActivate {
   canActivate(): Observable<boolean> {
     return this.store.select(state => state.currentUser.type)
       .pipe(
-        flatMap((userType: UserType) => of(userType === UserType.ComplexesOwner))
+        flatMap((userType: UserType) => of(userType === UserType.ComplexesOwner)),
+        tap(console.log)
       );
   }
 }

@@ -24,7 +24,7 @@
 </div>
 
 <ng-template #signedIn>
-  <ul [ngSwitch]="(currentUser$ | async).type" class="navbar-nav d-flex justify-content-end">
+  <ul [ngSwitch]="(currentUser$ | async)?.type" class="navbar-nav d-flex justify-content-end">
     <ng-container *ngSwitchCase="UserType.ComplexesOwner">
       <li class="nav-item">
         <span class="nav-link">{{ (currentUser$ | async).email }}</span>

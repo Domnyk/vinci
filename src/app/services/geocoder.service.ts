@@ -6,6 +6,7 @@ import { Observable, of, throwError } from 'rxjs';
 import LatLngLiteral = google.maps.LatLngLiteral;
 import { BuildingAddressUtils } from './building-address-utils.service';
 import GeocoderResult = google.maps.GeocoderResult;
+import LatLng = google.maps.LatLng;
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,8 @@ export class GeocoderService {
 
     return this.http.get(geocoderURL)
       .pipe(
-        flatMap((response: { results: GeocoderResult[] }) => of(response.results[0].geometry.location))
+        flatMap((response: { results: GeocoderResult[] }) => of(response.results[0].geometry.location)),
+        flatMap((latlng: LatLng) => of({ lat: latlng.lng(), lng: latlng.lng() }))
       );
   }
 

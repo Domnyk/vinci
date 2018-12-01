@@ -2,7 +2,7 @@ import { RouterStateSerializer } from '@ngxs/router-plugin';
 import { Params, RouterStateSnapshot } from '@angular/router';
 
 export interface RouterStateParams {
-  url: string;
+  // url: string;
   params: Params;
   queryParams: Params;
 }
@@ -18,6 +18,6 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
 
     const { params } = route;
 
-    return { url, params, queryParams };
+    return { params, queryParams };
   }
 }

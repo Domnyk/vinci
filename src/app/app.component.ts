@@ -12,8 +12,6 @@ import { UserHasSignedIn } from './actions/sign-in.actions';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  @Select(state => state.router) router$: Observable<RouterStateParams>;
-
   title = 'Vinci';
 
   constructor(private store: Store, private router: Router, private route: ActivatedRoute) { }

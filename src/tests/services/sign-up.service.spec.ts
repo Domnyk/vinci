@@ -28,7 +28,7 @@ describe('SignUpService', () => {
   });
 
   describe('signUp', () => {
-    it('should return response with new user data when registration was successful', () => {
+    it('should return response with new credentials data when registration was successful', () => {
       const newUserData = new Credentials('john@test.com', 'This is my very strong password'),
         apiResponse: SignUpResponse = { status: 'ok', email: newUserData.email, id: 1 },
         functionResponse: SignUpResponse = apiResponse;

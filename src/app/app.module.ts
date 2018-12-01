@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { NgxsModule } from '@ngxs/store';
+import { NGXS_PLUGINS, NgxsModule } from '@ngxs/store';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 
@@ -65,6 +65,8 @@ import { SearchResultsState } from './state/search-results.state';
 import { SearchResultsComponent } from './components/client/search-results/search-results.component';
 import { CalendarComponent as CalendarComponentClient } from './components/client/calendar/calendar.component';
 import { AddEventFormComponent } from './components/client/add-event-form/add-event-form.component';
+import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
+import { initStateFromStorage } from './plugins/init-state-from-storage.plugin';
 
 registerLocaleData(localePl);
 
@@ -125,9 +127,9 @@ registerLocaleData(localePl);
       EventState,
       SearchResultsState,
     ]),
+    NgxsStoragePluginModule.forRoot(),
     NgxsLoggerPluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot(),
-    NgxsRouterPluginModule.forRoot(),
     FontAwesomeModule,
     CalendarModule.forRoot({
       provide: DateAdapter,
@@ -140,7 +142,7 @@ registerLocaleData(localePl);
     })
   ],
   providers: [
-    { provide: RouterStateSerializer, useClass: CustomRouterStateSerializer },
+    { provide: NGXS_PLUGINS, useValue: initStateFromStorage, multi: true }
   ],
   bootstrap: [AppComponent]
 })

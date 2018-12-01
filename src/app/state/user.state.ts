@@ -49,9 +49,12 @@ export class CurrentUserState {
   }
 
   @Action(SignInWithPassword)
-  signInWithPassword({ patchState }: StateContext<CurrentUser>, { user }: SignInWithPassword) {
-    this.http.post(environment.api.urls.signIn(UserType.ComplexesOwner), user.dto(), { withCredentials: true })
-      .pipe(tap(() => patchState({ email: user.email, type: UserType.ComplexesOwner })))
+  signInWithPassword({ patchState }: StateContext<CurrentUser>, { credentials }: SignInWithPassword) {
+    return this.http.post(environment.api.urls.signIn(UserType.ComplexesOwner), credentials.dto(), { withCredentials: true })
+      .pipe(
+        tap(() => console.log(credentials)),
+        tap(() => patchState({ email: credentials.email, type: UserType.ComplexesOwner }))
+      )
       .subscribe(() => {}, (error) => this.handleError(error));
   }
 
