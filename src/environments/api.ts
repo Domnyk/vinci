@@ -1,4 +1,5 @@
 import LatLngLiteral = google.maps.LatLngLiteral;
+import { UserType } from '../app/models/current-user';
 
 export class API {
   constructor(private domain: string, private googleMapsApiKey: string) { }
@@ -7,6 +8,7 @@ export class API {
     return {
       signUp: this.domain + '/users',
       signIn: this.calculateSignInAddress.bind(this),
+      signOut: this.domain + '/session',
       geocoder: this.calculateGeocoderAddress.bind(this),
       reverseGeocoder: this.calculateReverseGeocoderAddress.bind(this)
     };
@@ -28,9 +30,13 @@ export class API {
     return `${this.domain}/${resourceName}`;
   }
 
-  private calculateSignInAddress(): string {
-    const redirectURL = 'https://localhost:8080';
-    return this.domain + `/session/new?redirect_url=${redirectURL}`;
+  private calculateSignInAddress(userType: UserType = UserType.Regular): string {
+    if (userType === UserType.Regular) {
+      const redirectURL = 'https://localhost:8080';
+      return this.domain + `/session/new?redirect_url=${redirectURL}`;
+    }
+
+    return this.domain + '/session';
   }
 
   /**

@@ -19,29 +19,27 @@
           <a routerLink="/sign_up" class="nav-link">Zarejestruj</a>
         </li>
       </ul>
-      <ng-template #signedIn>
-        <div [ngSwitch]="(currentUser$ | async).type">
-          <ul *ngSwitchCase="UserType.ComplexesOwner" class="navbar-nav d-flex justify-content-end">
-            <li class="nav-item">
-              <span class="nav-link">{{ (currentUser$ | async).email }}</span>
-            </li>
-            <li class="nav-item">
-              <a routerLink="/admin_dashboard" class="nav-link">Zarządzaj kompleksami</a>
-            </li>
-          </ul>
-          <ul *ngSwitchCase="UserType.Regular" class="navbar-nav d-flex justify-content-end">
-            <li class="nav-item">
-              <a routerLink="/profile" class="nav-link">{{ (currentUser$ | async).displayName }}</a>
-            </li>
-          </ul>
-          <ul *ngSwitchDefault class="navbar-nav d-flex justify-content-end">
-            <li class="nav-item">
-              <a routerLink="/profile" class="nav-link">{{ (currentUser$ | async).email }}</a>
-            </li>
-          </ul>
-        </div>
-      </ng-template>
-
     </div>
   </nav>
 </div>
+
+<ng-template #signedIn>
+  <ul [ngSwitch]="(currentUser$ | async).type" class="navbar-nav d-flex justify-content-end">
+    <ng-container *ngSwitchCase="UserType.ComplexesOwner">
+      <li class="nav-item">
+        <span class="nav-link">{{ (currentUser$ | async).email }}</span>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/owner" class="nav-link">Zarządzaj kompleksami</a>
+      </li>
+    </ng-container>
+    <ng-container *ngSwitchCase="UserType.Regular">
+      <li class="nav-item">
+        <a routerLink="/profile" class="nav-link">{{ (currentUser$ | async).displayName }}</a>
+      </li>
+    </ng-container>
+    <li class="nav-item">
+      <button type="button" class="btn btn-link nav-link" (click)="signOut()">Wyloguj</button>
+    </li>
+  </ul>
+</ng-template>

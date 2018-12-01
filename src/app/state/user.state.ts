@@ -1,8 +1,8 @@
 import { Action, State, StateContext, Store } from '@ngxs/store';
 
-import { UserHasSignedIn } from '../actions/sign-in.actions';
+import { SignInWithPassword, UserHasSignedIn } from '../actions/sign-in.actions';
 import { CurrentUser, UserType } from '../models/current-user';
-import { SignUpComplexesOwner } from '../actions/user.actions';
+import { SignOut, SignUpComplexesOwner } from '../actions/user.actions';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment.generated.dev';
 import { tap } from 'rxjs/operators';
@@ -36,6 +36,23 @@ export class CurrentUserState {
   @Action(UserHasSignedIn)
   userHasSignedIn({ patchState }: StateContext<CurrentUser>, { email, displayName }: UserHasSignedIn) {
     patchState({ email, displayName, type: UserType.Regular });
+  }
+
+  @Action(SignOut)
+  signOut({ setState }: StateContext<CurrentUser>, {}: SignOut) {
+    this.http.delete(environment.api.urls.signOut, { withCredentials: true })
+      .pipe(
+        tap(() => setState(null)),
+        tap(() => this.router.navigate(['/']))
+      )
+      .subscribe(() => {}, (error) => this.handleError(error));
+  }
+
+  @Action(SignInWithPassword)
+  signInWithPassword({ patchState }: StateContext<CurrentUser>, { user }: SignInWithPassword) {
+    this.http.post(environment.api.urls.signIn(UserType.ComplexesOwner), user.dto(), { withCredentials: true })
+      .pipe(tap(() => patchState({ email: user.email, type: UserType.ComplexesOwner })))
+      .subscribe(() => {}, (error) => this.handleError(error));
   }
 
   private handleError(errorResponse: ErrorResponse) {

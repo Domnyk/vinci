@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { User } from '../models/user';
+import { Credentials } from '../models/credentials';
 
 import { environment } from '../../environments/environment.generated.dev';
 
@@ -14,7 +14,7 @@ export class AuthenticationService {
     private http: HttpClient
   ) { }
 
-  signIn(user: User): Observable<any> {
+  signIn(user: Credentials): Observable<any> {
     return this.makeAuthenticationReq(user);
   }
 

@@ -31,7 +31,7 @@ export class Event implements DTO {
         end_of_joining_phase: endOfJoiningPhase,
         end_of_paying_phase: endOfPayingPhase,
         start_time: this.startTime,
-        end_time: this.endTime;
+        end_time: this.endTime
       }
     };
 

@@ -5,3 +5,9 @@ export class SignUpComplexesOwner {
 
   constructor(public complexesOwner: ComplexesOwner) { }
 }
+
+export class SignOut {
+  static readonly type = '[USER] Sign out'
+
+  constructor() { }
+}

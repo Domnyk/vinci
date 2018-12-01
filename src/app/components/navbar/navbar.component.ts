@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AuthorizationService } from '../../services/authorization.service';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { CurrentUser, UserType } from '../../models/current-user';
+import { SignOut } from '../../actions/user.actions';
 
 @Component({
   selector: 'app-navbar',
@@ -17,11 +17,12 @@ export class NavbarComponent implements OnInit {
 
   UserType = UserType;
 
-  constructor(private authorizationService: AuthorizationService, private store: Store) { }
+  constructor(private store: Store) { }
 
-  ngOnInit() {
-    this.authorizationService.isAdmin(this.store)
-      .subscribe(isAdmin => this.isAdmin = isAdmin);
+  ngOnInit() { }
+
+  signOut() {
+    this.store.dispatch(new SignOut());
   }
 
 }

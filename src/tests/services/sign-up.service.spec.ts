@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { SignUpService } from '../../app/services/sign-up.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { environment } from '../../environments/environment.generated.dev';
-import { User } from '../../app/models/user';
+import { Credentials } from '../../app/models/credentials';
 import { SignUpResponse } from '../../app/models/api-response';
 
 describe('SignUpService', () => {
@@ -29,7 +29,7 @@ describe('SignUpService', () => {
 
   describe('signUp', () => {
     it('should return response with new user data when registration was successful', () => {
-      const newUserData = new User('john@test.com', 'This is my very strong password'),
+      const newUserData = new Credentials('john@test.com', 'This is my very strong password'),
         apiResponse: SignUpResponse = { status: 'ok', email: newUserData.email, id: 1 },
         functionResponse: SignUpResponse = apiResponse;
 

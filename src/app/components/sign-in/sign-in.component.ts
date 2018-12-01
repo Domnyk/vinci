@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { SignInWithPassword } from '../../actions/sign-in.actions';
 
-import { User } from '../../models/user';
+import { Credentials } from '../../models/credentials';
 import { environment } from '../../../environments/environment.generated.dev';
 import { FormControl, Validators } from '@angular/forms';
 import { FormHelper } from '../../helpers/form.helper';
@@ -27,10 +27,10 @@ export class SignInComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit(): void {
-    const user: User = { email: this.email.value, password: this.password.value };
+    const user: Credentials = new Credentials(this.email.value, this.password.value);
 
     this.store.dispatch(new SignInWithPassword(user))
-      .subscribe(() => this.router.navigate(['/admin_dashboard']));
+      .subscribe(() => this.router.navigate(['/owner']));
   }
 
   isSubmitDisabled(): boolean {
