@@ -131,7 +131,7 @@ registerLocaleData(localePl);
       EventState,
       SearchResultsState,
     ]),
-    NgxsStoragePluginModule.forRoot(),
+    NgxsStoragePluginModule.forRoot({ key: 'currentUser' }),
     NgxsLoggerPluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     FontAwesomeModule,
