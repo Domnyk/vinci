@@ -1,0 +1,35 @@
+<div *ngIf="event">
+  <div class="modal fade" [id]="modalId">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5>{{event.title}}</h5>
+        </div>
+        <div class="modal-body">
+          <p>
+            Początek: {{ event.start.getHours() }}:{{ event.start.getMinutes() }}
+          </p>
+          <p>
+            Koniec: {{ event.end.getHours() }}:{{ event.end.getMinutes() }}
+          </p>
+          <p>
+            Minimalna liczba osób: {{ event.minParticipants }}
+          </p>
+          <p>
+            Maksymalna liczba osób: {{ event.maxParticipants }}
+          </p>
+          <div>
+            <span>Zapisani (łącznie: {{ event.users.length }}):</span>
+            <ul>
+              <li *ngFor="let user of event.users">{{ user.displayName }}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Dołącz</button>
+          <button class="btn btn-danger" data-dismiss="modal">Zamknij</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

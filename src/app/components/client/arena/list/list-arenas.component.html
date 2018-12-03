@@ -1,8 +1,8 @@
-<ul class="list-group">
-  <li class="list-group-item" *ngFor="let arena of (arenas$ | async)">
-    {{ arena.name }}
-    <button class="btn btn-outline-secondary btn-sm discipline-btn" *ngFor="let discipline of arena.sportDisciplines">
+<ul>
+  <li *ngFor="let arena of (arenas$ | async)">
+    <a routerLink="/arenas/{{arena.id}}">{{ arena.name }}</a>
+    <span class="badge badge-light" *ngFor="let discipline of arena.sportDisciplines">
       {{ discipline.name }}
-    </button>
+    </span>
   </li>
 </ul>

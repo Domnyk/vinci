@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CalendarView, CalendarEvent, collapseAnimation } from 'angular-calendar';
 import { Select, Store } from '@ngxs/store';
 import { FetchEvents } from '../../owner/calendar/calendar.actions';
-import { Observable, Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { Event } from '../../../models/event';
 import { isEqual, startOfDay } from 'date-fns';
+import { flatMap, tap } from 'rxjs/operators';
+import { CustomEventView } from '../../../models/custom-event-view';
 
 @Component({
   selector: 'app-calendar-client',
@@ -13,19 +15,25 @@ import { isEqual, startOfDay } from 'date-fns';
   animations: [collapseAnimation]
 })
 export class CalendarComponent implements OnInit {
-  @Select(state => state.Events) events$: Observable<Array<Event>>;
+  @Input() arenaId$: Observable<number>;
+  public events$: Observable<Array<CalendarEvent>>;
 
+  createEventModalName = 'createEvent';
+  showEventModalName = 'showEvent';
   view: CalendarView = CalendarView.Month;
   viewDate: Date = startOfDay(new Date());
   isTodayViewActive = true;
   activeDayIsOpen = true;
+  clickedEvent: CustomEventView = null;
 
   // This is necessary to use CalendarView in html template
   CalendarView = CalendarView;
 
   constructor(private store: Store) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.events$ = this.store.select(state => state.Events);
+  }
 
   getTodayButtonClass(): string {
     if (this.isTodayViewActive) {
@@ -44,7 +52,6 @@ export class CalendarComponent implements OnInit {
   }
 
   dayClicked({ date }: { date: Date }): void {
-
     const dayWasOpenNowOtherClicked = !isEqual(this.viewDate, date) && this.activeDayIsOpen;
     if (dayWasOpenNowOtherClicked) {
       console.log('Day was open and other day was clicked');
@@ -54,6 +61,8 @@ export class CalendarComponent implements OnInit {
     this.activeDayIsOpen = !this.activeDayIsOpen;
   }
 
-  show
+  eventClicked(event: CustomEventView) {
+    this.clickedEvent = event;
+  }
 
 }

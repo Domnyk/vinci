@@ -4,7 +4,7 @@
   let-eventClicked="eventClicked"
   let-isOpen="isOpen">
   <div class="cal-open-day-events" [@collapse] *ngIf="isOpen">
-    <button class="btn btn-link" id="add-event-btn" data-toggle="modal" data-target="#createEventModal" >Dodaj wydarzenie</button>
+    <button class="btn btn-link" id="add-event-btn" data-toggle="modal" [attr.data-target]="'#' + createEventModalName" >Dodaj wydarzenie</button>
     <div
       *ngFor="let event of events; trackBy:trackByEventId"
       [ngClass]="event?.cssClass"
@@ -19,6 +19,8 @@
           </span>
       &ngsp;
       <mwl-calendar-event-title
+        [attr.data-toggle] = "'modal'"
+        [attr.data-target] = "'#' + showEventModalName"
         [event]="event"
         view="month"
         (mwlClick)="eventClicked.emit({event: event})">
@@ -29,8 +31,6 @@
     </div>
   </div>
 </ng-template>
-
-<app-add-event-form [modalId]="'createEventModal'"></app-add-event-form>
 
 <div class="row text-center">
   <div class="col">
@@ -84,13 +84,18 @@
                            [weekStartsOn]="1"
                            [activeDayIsOpen]="activeDayIsOpen"
                            [openDayEventsTemplate]="openDayTemplate"
-                           (dayClicked)="dayClicked($event.day)">
+                           (dayClicked)="dayClicked($event.day)"
+                           (eventClicked)="eventClicked($event.event)">
   </mwl-calendar-month-view>
   <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week"
                           [viewDate]="viewDate" [events]="(events$ | async)"
                           [locale]="'pl'"
                           [weekStartsOn]="1"
                           [hourSegments]="1"
-                          [dayStartHour]="6">
+                          [dayStartHour]="6"
+                          (eventClicked)="eventClicked($event.event)">
   </mwl-calendar-week-view>
 </div>
+
+<app-show-event [modalId]="showEventModalName" [event]="clickedEvent" ></app-show-event>
+<app-add-event-form [arenaId]="(arenaId$ | async)" [eventDay]="viewDate" [modalId]="createEventModalName"></app-add-event-form>

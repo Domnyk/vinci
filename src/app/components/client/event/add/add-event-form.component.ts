@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { startLaterThanEndValidator } from './start-later-than-end.directive';
-import { Event } from '../../../models/event';
+import { Event } from '../../../../models/event';
+import { Store } from '@ngxs/store';
+import { CreateEvent } from './add-event-form.actions';
 
 @Component({
   selector: 'app-add-event-form',
@@ -9,7 +11,9 @@ import { Event } from '../../../models/event';
   styleUrls: ['./add-event-form.component.css']
 })
 export class AddEventFormComponent implements OnInit {
+  @Input() arenaId: number;
   @Input() modalId: string;
+  @Input() eventDay: Date;
 
   name: FormControl;
   startTime: FormControl;
@@ -22,7 +26,7 @@ export class AddEventFormComponent implements OnInit {
   timeFrame: FormGroup;
 
 
-  constructor() {
+  constructor(private store: Store) {
     this.name = new FormControl('', [Validators.required]);
     this.startTime = new FormControl('', [Validators.required]);
     this.endTime = new FormControl('', [Validators.required]);
@@ -45,12 +49,11 @@ export class AddEventFormComponent implements OnInit {
   }
 
   createEvent() {
-    const day = new Date();
-
-    const event = new Event(day, this.minPeople.value, this.maxPeople.value, this.startTime.value, this.endTime.value,
-      this.joinPhaseDuration.value, this.paymentPhaseDuration.value, this.name.value);
+    const event = new Event(this.name.value, this.eventDay, this.minPeople.value, this.maxPeople.value, this.startTime.value, this.endTime.value,
+      this.joinPhaseDuration.value, this.paymentPhaseDuration.value);
 
     console.debug('Event: ', event.dto());
+    this.store.dispatch(new CreateEvent(this.arenaId, event));
   }
 
 }

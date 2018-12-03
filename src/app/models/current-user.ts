@@ -1,7 +1,10 @@
 export interface CurrentUser {
-  email: string;
-  type: UserType;
-  displayName?: string;
+  isSignedIn: boolean;
+  data: {
+    email: string;
+    type: UserType;
+    displayName?: string;
+  };
 }
 
 export enum UserType {

@@ -11,7 +11,7 @@
           <a routerLink="/search" class="nav-link">Szukaj</a>
         </li>
       </ul>
-      <ul *ngIf="(currentUser$ | async) === null; else signedIn" class="navbar-nav d-flex justify-content-end" >
+      <ul *ngIf="(currentUser$ | async).isSignedIn === false; else signedIn" class="navbar-nav d-flex justify-content-end" >
         <li class="nav-item">
           <a routerLink="/sign_in" class="nav-link">Zaloguj</a>
         </li>
@@ -24,10 +24,10 @@
 </div>
 
 <ng-template #signedIn>
-  <ul [ngSwitch]="(currentUser$ | async)?.type" class="navbar-nav d-flex justify-content-end">
+  <ul [ngSwitch]="(currentUser$ | async)?.data?.type" class="navbar-nav d-flex justify-content-end">
     <ng-container *ngSwitchCase="UserType.ComplexesOwner">
       <li class="nav-item">
-        <span class="nav-link">{{ (currentUser$ | async).email }}</span>
+        <span class="nav-link">{{ (currentUser$ | async).data.email }}</span>
       </li>
       <li class="nav-item">
         <a routerLink="/owner" class="nav-link">Zarządzaj kompleksami</a>
@@ -35,7 +35,7 @@
     </ng-container>
     <ng-container *ngSwitchCase="UserType.Regular">
       <li class="nav-item">
-        <a routerLink="/profile" class="nav-link">{{ (currentUser$ | async).displayName }}</a>
+        <a routerLink="/profile" class="nav-link">{{ (currentUser$ | async).data.displayName }}</a>
       </li>
     </ng-container>
     <li class="nav-item">

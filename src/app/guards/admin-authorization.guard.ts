@@ -16,7 +16,7 @@ export class AdminAuthorizationGuard implements CanActivate {
   ) { }
 
   canActivate(): Observable<boolean> {
-    return this.store.select(state => state.currentUser.type)
+    return this.store.select(state => state.currentUser.data.type)
       .pipe(
         flatMap((userType: UserType) => of(userType === UserType.ComplexesOwner)),
         tap(console.log)

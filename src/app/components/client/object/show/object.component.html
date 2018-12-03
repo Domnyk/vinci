@@ -1,21 +1,31 @@
-<div class="row">
-  <div class="col">
-    <h3>Podstawowe informacje</h3>
-    <p>Lokalizacja</p>
-    <ul>
-      <li>{{ (object$ | async)?.address.street }} {{ (object$ | async)?.address.buildingNumber}}</li>
-    </ul>
-  </div>
-  <div class="col">
-    <h3> Areny </h3>
-    <app-list-arenas [arenas$]="arenas$"></app-list-arenas>
-  </div>
-</div>
+<!--<div class="row">-->
+  <!--<div class="col">-->
+    <!--<h3> Kalendarz </h3>-->
+    <!--<app-calendar-client></app-calendar-client>-->
+  <!--</div>-->
+<!--</div>-->
 
 <div class="row">
   <div class="col">
-    <h3> Kalendarz </h3>
-    <app-calendar-client></app-calendar-client>
+
+  </div>
+
+  <div class="col">
+    <h3>{{ (object$ | async)?.name }}</h3>
+    <ul>
+      <li>
+        <!--Adres: {{ AddressHelper.printAddress(object$) | async }}-->
+      </li>
+      <li>
+        Margines rezerwacji: {{ (object$ | async)?.bookingMargin.days }} {{ (object$ | async)?.bookingMargin.days }}
+      </li>
+    </ul>
+    <p> Dostępne areny</p>
+    <app-list-arenas [arenas$]="arenas$"></app-list-arenas>
+  </div>
+
+  <div class="col">
+
   </div>
 </div>
 

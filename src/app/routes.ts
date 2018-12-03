@@ -16,6 +16,7 @@ import { SportArenaComponent } from './components/owner/arena/show/sport-arena.c
 import { ObjectComponent } from './components/client/object/show/object.component';
 import { SearchComponent } from './components/client/search/search.component';
 import { SearchResultsComponent } from './components/client/search-results/search-results.component';
+import { ArenaComponent } from './components/client/arena/show/arena.component';
 
 
 
@@ -26,6 +27,7 @@ export const routes: Routes = [
   { path : 'search', component: SearchComponent },
   { path: 'search_results', component: SearchResultsComponent },
   { path: 'objects/:id', component: ObjectComponent },
+  { path: 'arenas/:id', component: ArenaComponent },
   { path: 'owner', component: ComplexOwnerDashboardComponent, canActivate: [AdminAuthorizationGuard],
     children: [
       { path: '', component: WelcomeToDashboardComponent },

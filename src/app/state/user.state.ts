@@ -5,7 +5,7 @@ import { CurrentUser, UserType } from '../models/current-user';
 import { SignOut, SignUpComplexesOwner } from '../actions/user.actions';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment.generated.dev';
-import { tap } from 'rxjs/operators';
+import { take, tap } from 'rxjs/operators';
 import { ErrorResponse } from '../models/api-response';
 import { ShowFlashMessage } from '../actions/flash-message.actions';
 import { Router } from '@angular/router';
@@ -13,7 +13,10 @@ import { Router } from '@angular/router';
 
 @State<CurrentUser>({
   name: 'currentUser',
-  defaults: null
+  defaults: {
+    isSignedIn: false,
+    data: null
+  }
 })
 
 export class CurrentUserState {
@@ -23,7 +26,7 @@ export class CurrentUserState {
   signUpComplexesOwner({ patchState }: StateContext<CurrentUser>, { complexesOwner }: SignUpComplexesOwner) {
     const stateUpdater = (response) => {
       const { email } = response;
-      patchState({ email, type: UserType.ComplexesOwner });
+      patchState( { isSignedIn: true, data: { email, type: UserType.ComplexesOwner } });
       this.store.dispatch(new ShowFlashMessage('Pomyślnie zarejestrowano'));
       this.router.navigate(['/owner']);
     };
@@ -35,27 +38,24 @@ export class CurrentUserState {
 
   @Action(UserHasSignedIn)
   userHasSignedIn({ patchState }: StateContext<CurrentUser>, { email, displayName }: UserHasSignedIn) {
-    patchState({ email, displayName, type: UserType.Regular });
+    patchState({ isSignedIn: true, data: { email, displayName, type: UserType.Regular } });
   }
 
   @Action(SignOut)
   signOut({ setState }: StateContext<CurrentUser>, {}: SignOut) {
-    this.http.delete(environment.api.urls.signOut, { withCredentials: true })
+    return this.http.delete(environment.api.urls.signOut, { withCredentials: true })
       .pipe(
-        tap(() => setState(null)),
-        tap(() => this.router.navigate(['/']))
-      )
-      .subscribe(() => {}, (error) => this.handleError(error));
+        tap(() => setState({ isSignedIn: false, data: null })),
+      );
   }
 
   @Action(SignInWithPassword)
   signInWithPassword({ patchState }: StateContext<CurrentUser>, { credentials }: SignInWithPassword) {
     return this.http.post(environment.api.urls.signIn(UserType.ComplexesOwner), credentials.dto(), { withCredentials: true })
       .pipe(
-        tap(() => console.log(credentials)),
-        tap(() => patchState({ email: credentials.email, type: UserType.ComplexesOwner }))
-      )
-      .subscribe(() => {}, (error) => this.handleError(error));
+        tap(() => patchState({ isSignedIn: true, data: { email: credentials.email, type: UserType.ComplexesOwner } })),
+        tap(() => this.router.navigate(['/owner']))
+      );
   }
 
   private handleError(errorResponse: ErrorResponse) {

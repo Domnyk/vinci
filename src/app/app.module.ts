@@ -64,9 +64,11 @@ import { SelectDisciplinesComponent } from './components/common/select-disciplin
 import { SearchResultsState } from './state/search-results.state';
 import { SearchResultsComponent } from './components/client/search-results/search-results.component';
 import { CalendarComponent as CalendarComponentClient } from './components/client/calendar/calendar.component';
-import { AddEventFormComponent } from './components/client/add-event-form/add-event-form.component';
+import { AddEventFormComponent } from './components/client/event/add/add-event-form.component';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { initStateFromStorage } from './plugins/init-state-from-storage.plugin';
+import { ArenaComponent } from './components/client/arena/show/arena.component';
+import { ShowEventComponent } from './components/client/event/show/show-event.component';
 
 registerLocaleData(localePl);
 
@@ -106,6 +108,8 @@ registerLocaleData(localePl);
     SearchResultsComponent,
     CalendarComponentClient,
     AddEventFormComponent,
+    ArenaComponent,
+    ShowEventComponent,
   ],
   imports: [
     RouterModule.forRoot(
