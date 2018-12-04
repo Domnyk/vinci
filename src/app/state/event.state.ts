@@ -8,6 +8,7 @@ import { ShowFlashMessage } from '../actions/flash-message.actions';
 import { of } from 'rxjs';
 import { CustomEventView } from '../models/custom-event-view';
 import { addDays, addHours } from 'date-fns';
+import { CreateEvent } from '../components/client/event/add/add-event-form.actions';
 
 type Events = Array<CustomEventView>;
 

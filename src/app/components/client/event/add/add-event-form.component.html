@@ -8,29 +8,29 @@
         <form novalidate>
           <div class="form-group">
             <label>Nazwa</label>
-            <input [formControl]="name" [class.is-invalid]="name.invalid && (name.touched || name.dirty)"
+            <input [formControl]="event.name" [class.is-invalid]="event.name.invalid && (event.name.touched || event.name.dirty)"
                    class="form-control" type="text">
             <div class="invalid-feedback">
               Podaj nazwę
             </div>
           </div>
-          <div [formGroup]="timeFrame" class="form-row">
+          <div [formGroup]="event.timeFrame" class="form-row">
             <div class="col form-group">
               <label>Godzina rozpoczęcia</label>
-              <input [class.is-invalid]="timeFrame.errors?.startLaterThanEnd || startTime.invalid" formControlName="start"
+              <input [class.is-invalid]="event.timeFrame.errors?.startLaterThanEnd || event.startTime.invalid" formControlName="start"
                      class="form-control" type="time" step="1800" min="00:00" />
-              <div *ngIf="timeFrame.errors?.startLaterThanEnd" class="invalid-feedback">
+              <div *ngIf="event.timeFrame.errors?.startLaterThanEnd" class="invalid-feedback">
                 Godzina zakończenia musi być później niż godzina rozpoczęcia
               </div>
-              <div *ngIf="startTime.invalid" class="invalid-feedback">
+              <div *ngIf="event.startTime.invalid" class="invalid-feedback">
                 Pole wymagane
               </div>
             </div>
             <div class="col form-group">
               <label>Godzina zakończenia</label>
-              <input [class.is-invalid]="timeFrame.errors?.startLaterThanEnd" formControlName="end"
+              <input [class.is-invalid]="event.timeFrame.errors?.startLaterThanEnd" formControlName="end"
                      class="form-control" type="time" min="00:00" />
-              <div *ngIf="timeFrame.errors?.startLaterThanEnd" class="invalid-feedback">
+              <div *ngIf="event.timeFrame.errors?.startLaterThanEnd" class="invalid-feedback">
                 Godzina zakończenia musi być później niż godzina rozpoczęcia
               </div>
             </div>
@@ -38,7 +38,7 @@
           <div class="form-row">
             <div class="col form-group">
               <label>Minimalna liczba osób</label>
-              <input [formControl]="minPeople" [class.is-invalid]="minPeople.invalid"
+              <input [formControl]="event.minParticipants" [class.is-invalid]="event.minParticipants.invalid"
                      class="form-control" type="number" min="1" value="1" />
               <div class="invalid-feedback">
                 Podaj poprawną wartość
@@ -46,7 +46,7 @@
             </div>
             <div class="col form-group">
               <label>Maksymalna liczba osób</label>
-              <input [formControl]="maxPeople" [class.is-invalid]="maxPeople.invalid" class="form-control"
+              <input [formControl]="event.maxParticipants" [class.is-invalid]="event.maxParticipants.invalid" class="form-control"
                      type="number" min="1" value="1" />
               <div class="invalid-feedback">
                 Podaj poprawną wartość
@@ -56,7 +56,7 @@
           <div class="form-row">
             <div class="col form-group">
               <label>Czas na dołączenie <small class="text-muted">(w dniach)</small></label>
-              <input [formControl]="joinPhaseDuration" [class.is-invalid]="joinPhaseDuration.invalid"
+              <input [formControl]="event.joinPhaseDuration" [class.is-invalid]="event.joinPhaseDuration.invalid"
                      class="form-control" type="number" min="1" value="1" />
               <div class="invalid-feedback">
                 Podaj poprawną wartość
@@ -64,7 +64,7 @@
             </div>
             <div class="col form-group">
               <label>Czas na płatność <small class="text-muted">(w dniach)</small></label>
-              <input [formControl]="paymentPhaseDuration" [class.is-invalid]="paymentPhaseDuration.invalid"
+              <input [formControl]="event.paymentPhaseDuration" [class.is-invalid]="event.paymentPhaseDuration.invalid"
                      class="form-control" type="number" min="1" value="1" />
               <div class="invalid-feedback">
                 Podaj poprawną wartość
@@ -85,7 +85,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button (click)="createEvent()" type="submit" class="btn btn-success">Dodaj</button>
+        <button (click)="createEvent()" [disabled]="!event.isValid" type="submit" class="btn btn-success">Dodaj</button>
         <button class="btn btn-danger" data-dismiss="modal">Zamknij</button>
       </div>
     </div>

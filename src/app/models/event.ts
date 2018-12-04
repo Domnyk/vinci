@@ -1,5 +1,8 @@
 import { DTO } from './dto';
 import { addDays } from 'date-fns';
+import { CustomTime } from './custom-time';
+import { DateHelper } from '../helpers/date.helper';
+
 
 export class Event implements DTO {
   private startTime: CustomTime;
@@ -22,59 +25,24 @@ export class Event implements DTO {
     this.endTime = { hour: endHour, minute: endMinute };
   }
 
-  public dto(): EventDTO {
+  public dto(): any {
+    console.warn('Data type returned by Event.dto() is any!');
+
     const endOfJoiningPhase: Date = addDays(new Date(), this.daysForJoining),
           endOfPayingPhase: Date = addDays(endOfJoiningPhase, this.daysForPaying);
 
     return {
       event: {
         name: this.name,
-        event_day: toCustomDate(this.day),
+        event_day: DateHelper.toCustomDate(this.day),
         min_num_of_participants: this.minParticipants,
         max_num_of_participants: this.maxParticipants,
-        end_of_joining_phase: toCustomDate(endOfJoiningPhase),
-        end_of_paying_phase: toCustomDate(endOfPayingPhase),
+        end_of_joining_phase: DateHelper.toCustomDate(endOfJoiningPhase),
+        end_of_paying_phase: DateHelper.toCustomDate(endOfPayingPhase),
         start_time: this.startTime,
         end_time: this.endTime
       }
     };
 
   }
-}
-
-function toCustomDate(date: Date): CustomDate {
-  return {
-    year: date.getFullYear(),
-    month: date.getMonth() + 1,
-    day: date.getDate()
-  };
-}
-
-
-interface EventDTO {
-  event: {
-    name: string;
-    event_day: CustomDate
-    min_num_of_participants: number;
-    max_num_of_participants: number;
-    end_of_joining_phase: CustomDate;
-    end_of_paying_phase: CustomDate;
-    start_time: CustomTime;
-    end_time: CustomTime;
-  };
-}
-
-export interface CustomTime {
-  hour: number;
-  minute: number;
-}
-
-/*
- * First day's number: 1
- * First month's number: 1
- */
-interface CustomDate {
-  year: number;
-  month: number;
-  day: number;
 }
