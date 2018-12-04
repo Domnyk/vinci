@@ -7,7 +7,7 @@
     <h3>{{ (object$ | async)?.name }}</h3>
     <ul>
       <li>
-        <!--Adres: {{ AddressHelper.printAddress(object$) | async }}-->
+        Adres: {{ AddressHelper.printAddress(object$ | async) }}
       </li>
       <li>
         Margines rezerwacji: {{ (object$ | async)?.bookingMargin.days }} {{ (object$ | async)?.bookingMargin.days }}
