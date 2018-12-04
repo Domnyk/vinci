@@ -53,7 +53,7 @@ export class NewEvent implements DTO {
   }
 
   dto(): NewEventDTO {
-    const endOfJoiningPhase: Date = addDays(this.eventDay, this.joinPhaseDuration.value),
+    const endOfJoiningPhase: Date = addDays(new Date(), this.joinPhaseDuration.value),
       endOfPayingPhase: Date = addDays(endOfJoiningPhase, this.paymentPhaseDuration.value);
 
     return {

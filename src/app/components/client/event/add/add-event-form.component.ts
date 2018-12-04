@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { NewEvent } from '../../../../models/new-event';
 import { Store } from '@ngxs/store';
 import { CreateEvent } from './add-event-form.actions';
@@ -8,7 +8,7 @@ import { CreateEvent } from './add-event-form.actions';
   templateUrl: './add-event-form.component.html',
   styleUrls: ['./add-event-form.component.css']
 })
-export class AddEventFormComponent implements OnInit {
+export class AddEventFormComponent implements OnChanges {
   @Input() arenaId: number;
   @Input() modalId: string;
   @Input() eventDay: Date;
@@ -19,8 +19,10 @@ export class AddEventFormComponent implements OnInit {
     this.event = new NewEvent();
   }
 
-  ngOnInit() {
-    this.event.eventDay = this.eventDay;
+  ngOnChanges(changes: SimpleChanges) {
+    if (!!changes.eventDay) {
+      this.event.eventDay = changes.eventDay.currentValue;
+    }
   }
 
   createEvent() {

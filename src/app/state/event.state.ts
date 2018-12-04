@@ -53,21 +53,23 @@ export class EventState {
       );
   }
 
-  // @Action(CreateEvent)
-  // createEvent({ getState, setState }: StateContext<Events>, { arenaId, event }: CreateEvent) {
-  //   const stateUpdater = (newEvent: CustomEventView) => {
-  //     const oldState = getState(),
-  //           newState = [...oldState, newEvent];
-  //
-  //     setState(newState);
-  //   };
-  //
-  //   return this.http.post(environment.api.resource('/sport_arenas', arenaId, 'events'), event.dto(), { withCredentials: true })
-  //     .pipe(
-  //       tap(() => stateUpdater(event))
-  //     )
-  //     .subscribe(() => {}, (error) => this.handleError(error));
-  // }
+  @Action(CreateEvent)
+  createEvent({ getState, setState }: StateContext<Events>, { arenaId, event }: CreateEvent) {
+    const stateUpdater = (response: any) => {
+      const oldState = getState(),
+            newState = [...oldState];
+
+      console.warn('State updater in createEvents does nothing!');
+
+      setState(newState);
+    };
+
+    return this.http.post(environment.api.resource('/sport_arenas', arenaId, 'events'), event.dto(), { withCredentials: true })
+      .pipe(
+        tap((response) => stateUpdater(response))
+      )
+      .subscribe(() => {}, (error) => this.handleError(error));
+  }
 
   private handleError(errorResponse: ErrorResponse) {
     console.debug('Error response: ', errorResponse);
