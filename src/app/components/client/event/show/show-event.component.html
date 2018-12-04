@@ -6,27 +6,35 @@
           <h5>{{event.title}}</h5>
         </div>
         <div class="modal-body">
-          <p>
-            Początek: {{ event.start.getHours() }}:{{ event.start.getMinutes() }}
-          </p>
-          <p>
-            Koniec: {{ event.end.getHours() }}:{{ event.end.getMinutes() }}
-          </p>
-          <p>
-            Minimalna liczba osób: {{ event.minParticipants }}
-          </p>
-          <p>
-            Maksymalna liczba osób: {{ event.maxParticipants }}
-          </p>
-          <div>
-            <span>Zapisani (łącznie: {{ event.users.length }}):</span>
-            <ul>
-              <li *ngFor="let user of event.users">{{ user.displayName }}</li>
-            </ul>
+          <div class="container-fluid">
+            <div class="row mt-2 mb-2">
+              <div class="col">
+                Początek: {{ event.start.getHours() }}:{{ event.start.getMinutes() }}
+              </div>
+              <div class="col">
+                Koniec: {{ event.end.getHours() }}:{{ event.end.getMinutes() }}
+              </div>
+            </div>
+            <div class="row mt-2 mb-2">
+              <div class="col">
+                Minimalna liczba osób: {{ event.minParticipants }}
+              </div>
+              <div class="col">
+                Maksymalna liczba osób: {{ event.maxParticipants }}
+              </div>
+            </div>
+            <div class="row mt-2 mb-2">
+              <div class="col">
+                <span>Zapisani (łącznie: {{ event.users.length }}):</span>
+                <ul>
+                  <li *ngFor="let user of event.users" class="mt-2">{{ user.displayName }}</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-success">Dołącz</button>
+          <button type="submit" data-dismiss="modal" class="btn btn-success">Dołącz</button>
           <button class="btn btn-danger" data-dismiss="modal">Zamknij</button>
         </div>
       </div>
