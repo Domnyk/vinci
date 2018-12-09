@@ -28,9 +28,9 @@ export class SignInComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit(): void {
-    // const credentials: Credentials = new Credentials(this.email.value, this.password.value);
-    //
-    // this.store.dispatch(new SignInWithPassword(credentials));
+    const credentials: Credentials = new Credentials(this.email.value, this.password.value);
+
+    this.store.dispatch(new SignInWithPassword(credentials));
   }
 
   isSubmitDisabled(): boolean {

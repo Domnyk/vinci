@@ -22,7 +22,7 @@
         </div>
       </div>
 
-      <button [disabled]="isSubmitDisabled()" type="submit" class="btn btn-primary">Zaloguj się</button>
+      <button (click)="onSubmit()" [disabled]="isSubmitDisabled()" type="submit" class="btn btn-primary">Zaloguj się</button>
     </form>
 
     <hr />
