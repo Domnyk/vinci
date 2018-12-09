@@ -22,8 +22,6 @@ export class CalendarComponent implements OnInit {
   // This is necessary to use CalendarView in html template
   CalendarView = CalendarView;
 
-  x: CalendarNativeDateFormatter
-
   constructor(private store: Store) { }
 
   ngOnInit() {

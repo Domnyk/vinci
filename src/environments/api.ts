@@ -30,7 +30,12 @@ export class API {
     return `${this.domain}/${resourceName}`;
   }
 
-  private calculateSignInAddress(userType: UserType = UserType.Regular): string {
+  private calculateSignInAddress(userType: UserType = UserType.Regular, id?: number): string {
+    if (!!id) {
+      const redirectURL = 'https://localhost:8080';
+      return this.domain + `/session/new?id=${id}&redirect_url=${redirectURL}`;
+    }
+
     if (userType === UserType.Regular) {
       const redirectURL = 'https://localhost:8080';
       return this.domain + `/session/new?redirect_url=${redirectURL}`;

@@ -25,17 +25,22 @@
             </div>
             <div class="row mt-2 mb-2">
               <div class="col">
-                <span>Zapisani (łącznie: {{ event.users.length }}):</span>
+                <span>Zapisani (łącznie: {{ event.participators.length }}):</span>
                 <ul>
-                  <li *ngFor="let user of event.users" class="mt-2">{{ user.displayName }}</li>
+                  <li *ngFor="let user of event.participators" class="mt-2">{{ user.displayName }}</li>
                 </ul>
               </div>
             </div>
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="submit" data-dismiss="modal" class="btn btn-success">Dołącz</button>
-          <button class="btn btn-danger" data-dismiss="modal">Zamknij</button>
+        <div class="modal-footer" [ngSwitch]="(participationStatus | async)">
+          <ng-container *ngSwitchCase="ParticipationStatus.DID_NOT_JOIN">
+            <button (click)="joinEvent()" type="submit" data-dismiss="modal" class="btn btn-success">Dołącz</button>
+          </ng-container>
+          <ng-container *ngSwitchCase="ParticipationStatus.JOINED">
+            <button type="submit" data-dismiss="modal" class="btn btn-success">Zapłać</button>
+            <button class="btn btn-danger" data-dismiss="modal">Zrezygnuj</button>
+          </ng-container>
         </div>
       </div>
     </div>

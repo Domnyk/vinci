@@ -29,6 +29,16 @@
 
     <a [href]="backendSignInAddress" class="btn btn-primary btn-block">Zaloguj się przez Facebooka</a>
 
+    <hr />
+
+    <form (ngSubmit)="onSubmitTest()">
+      <div class="form-group">
+        <input [formControl]="testId" name="id" type="number" class="form-control" autocomplete="off">
+      </div>
+
+      <button type="submit" class="btn btn-primary">Zaloguj się testowo</button>
+    </form>
+
   </div>
   <div class="col">
   </div>

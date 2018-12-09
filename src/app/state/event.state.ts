@@ -6,65 +6,55 @@ import { flatMap, tap } from 'rxjs/operators';
 import { ErrorResponse } from '../models/api-response';
 import { ShowFlashMessage } from '../actions/flash-message.actions';
 import { of } from 'rxjs';
-import { CustomEventView } from '../models/custom-event-view';
-import { addDays, addHours } from 'date-fns';
+import { Event } from '../models/event';
 import { CreateEvent } from '../components/client/event/add/add-event-form.actions';
+import { JoinEvent } from '../components/client/event/show/join-event.actions';
 
-type Events = Array<CustomEventView>;
-
-const now: Date = new Date();
-const mockEvents: Events = [{
-  start: now,
-  end: addHours(now, 2),
-  title: 'Wydarzenie 1',
-  minParticipants: 2,
-  maxParticipants: 5,
-  users: [{ displayName: 'Stephen' }, { displayName: 'Joshua' }, { displayName: 'Bob' }]
-}, {
-  start: addDays(now, 1),
-  end: addHours(addDays(now, 1), 2),
-  title: 'Wydarzenie 1',
-  minParticipants: 4,
-  maxParticipants: 6,
-  users: [{ displayName: 'Mathew' }, { displayName: 'Colin' }, { displayName: 'Patrick' }]
-}];
+type Events = Array<Event>;
 
 @State<Events>({
   name: 'Events',
-  defaults: mockEvents
+  defaults: []
 })
 export class EventState {
   constructor(private http: HttpClient, private store: Store) { }
 
   @Action(FetchEvents)
   fetchEvents({ getState, setState }: StateContext<Events>, { sportArenaId }: FetchEvents) {
-    const stateUpdater = (events: CustomEventView[]) => {
-      const oldState = getState(),
-            newState = [...oldState, ...events];
-
-      setState(newState);
+    const stateUpdater = (events: Event[]) => {
+      setState(events);
     };
 
     return this.http.get(environment.api.resource('sport_arenas', sportArenaId, 'events'), { withCredentials: true })
       .pipe(
-        flatMap((response: any) => of(response.data)),
-        flatMap((data: any[]) => of(data.map(dto => CustomEventView.fromDTO(dto)))),
+        flatMap((response: any[]) => of(response.map(dto => Event.fromDTO(dto)))),
         tap(stateUpdater)
       );
   }
 
   @Action(CreateEvent)
-  createEvent({ getState, setState }: StateContext<Events>, { arenaId, event }: CreateEvent) {
+  createEvent({ dispatch }: StateContext<Events>, { arenaId, event }: CreateEvent) {
     const stateUpdater = (response: any) => {
-      const oldState = getState(),
-            newState = [...oldState];
-
-      console.warn('State updater in createEvents does nothing!');
-
-      setState(newState);
+      return dispatch([
+        new ShowFlashMessage('Utworzono nowe wydarzenie'),
+        new FetchEvents(response.sport_arena_id)
+      ]);
     };
 
-    return this.http.post(environment.api.resource('/sport_arenas', arenaId, 'events'), event.dto(), { withCredentials: true })
+    return this.http.post(environment.api.resource('sport_arenas', arenaId, 'events'), event.dto(), { withCredentials: true })
+      .pipe(
+        tap((response) => stateUpdater(response))
+      )
+      .subscribe(() => {}, (error) => this.handleError(error));
+  }
+
+  @Action(JoinEvent)
+  joinEvent({ dispatch }: StateContext<Events>, { eventId }: JoinEvent) {
+    const stateUpdater = (response: any) => {
+      return dispatch(new ShowFlashMessage('Dołączono do wydarzenia'));
+    };
+
+    return this.http.post(environment.api.resource('events', eventId, 'participations'), {} , { withCredentials: true })
       .pipe(
         tap((response) => stateUpdater(response))
       )

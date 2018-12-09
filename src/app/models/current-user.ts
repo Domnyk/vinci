@@ -11,3 +11,9 @@ export enum UserType {
   Regular,
   ComplexesOwner
 }
+
+export enum ParticipationStatus {
+  DID_NOT_JOIN,
+  JOINED,
+  PAYED
+}

@@ -3,10 +3,9 @@ import { CalendarView, CalendarEvent, collapseAnimation } from 'angular-calendar
 import { Select, Store } from '@ngxs/store';
 import { FetchEvents } from '../../owner/calendar/calendar.actions';
 import { Observable, of, Subject } from 'rxjs';
-import { Event } from '../../../models/event';
 import { isEqual, startOfDay } from 'date-fns';
 import { flatMap, tap } from 'rxjs/operators';
-import { CustomEventView } from '../../../models/custom-event-view';
+import { Event } from '../../../models/event';
 
 @Component({
   selector: 'app-calendar-client',
@@ -24,7 +23,7 @@ export class CalendarComponent implements OnInit {
   viewDate: Date = startOfDay(new Date());
   isTodayViewActive = true;
   activeDayIsOpen = true;
-  clickedEvent: CustomEventView = null;
+  clickedEvent: Event = null;
 
   // This is necessary to use CalendarView in html template
   CalendarView = CalendarView;
@@ -61,7 +60,7 @@ export class CalendarComponent implements OnInit {
     this.activeDayIsOpen = !this.activeDayIsOpen;
   }
 
-  eventClicked(event: CustomEventView) {
+  eventClicked(event: Event) {
     this.clickedEvent = event;
   }
 

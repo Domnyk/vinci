@@ -7,6 +7,7 @@ import { Credentials } from '../../models/credentials';
 import { environment } from '../../../environments/environment.generated.dev';
 import { FormControl, Validators } from '@angular/forms';
 import { FormHelper } from '../../helpers/form.helper';
+import { UserType } from '../../models/current-user';
 
 @Component({
   selector: 'app-sign-in',
@@ -27,13 +28,22 @@ export class SignInComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit(): void {
-    const credentials: Credentials = new Credentials(this.email.value, this.password.value);
-
-    this.store.dispatch(new SignInWithPassword(credentials));
+    // const credentials: Credentials = new Credentials(this.email.value, this.password.value);
+    //
+    // this.store.dispatch(new SignInWithPassword(credentials));
   }
 
   isSubmitDisabled(): boolean {
     return this.email.invalid || this.password.invalid;
+  }
+
+  // Test
+
+  testId: FormControl = new FormControl(0);
+  onSubmitTest() {
+    console.log(this.testId.value);
+    const url = environment.api.urls.signIn(UserType.Regular, this.testId.value);
+    window.location.href = url;
   }
 
 

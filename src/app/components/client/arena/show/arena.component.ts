@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Event } from '../../../../models/event';
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngxs/store';
 import { flatMap, tap } from 'rxjs/operators';
 import { FetchEvents } from '../../../owner/calendar/calendar.actions';
+import { Event } from '../../../../models/event';
 
 @Component({
   selector: 'app-arena',
@@ -20,7 +20,7 @@ export class ArenaComponent implements OnInit {
   ngOnInit() {
     this.arenaId$ = this.activatedRoute.params.pipe(
       flatMap(({ id }: Params) => of(+id)),
-      // tap((id: number) => this.store.dispatch(new FetchEvents(id)))
+      tap((id: number) => this.store.dispatch(new FetchEvents(id)))
     );
   }
 
