@@ -33,12 +33,13 @@ export class EventState {
   }
 
   @Action(CreateEvent)
-  createEvent({ dispatch }: StateContext<Events>, { arenaId, event }: CreateEvent) {
+  createEvent({ dispatch, getState, setState }: StateContext<Events>, { arenaId, event }: CreateEvent) {
     const stateUpdater = (response: any) => {
-      return dispatch([
-        new ShowFlashMessage('Utworzono nowe wydarzenie'),
-        new FetchEvents(response.sport_arena_id)
-      ]);
+      const oldState = getState(),
+            newState = [...oldState, Event.fromDTO(response)];
+
+      setState(newState);
+      return dispatch(new ShowFlashMessage('Utworzono nowe wydarzenie'));
     };
 
     return this.http.post(environment.api.resource('sport_arenas', arenaId, 'events'), event.dto(), { withCredentials: true })
