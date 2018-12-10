@@ -4,6 +4,7 @@ export interface CurrentUser {
     email: string;
     type: UserType;
     displayName?: string;
+    id?: number;
   };
 }
 

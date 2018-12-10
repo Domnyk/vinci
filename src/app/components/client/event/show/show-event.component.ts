@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import { JoinEvent } from './join-event.actions';
+import { JoinEvent, ResignFromEvent } from './show-event.actions';
 import { Event, Participator } from '../../../../models/event';
 import { Observable, of } from 'rxjs';
 import { CurrentUser, ParticipationStatus } from '../../../../models/current-user';
@@ -27,6 +27,10 @@ export class ShowEventComponent implements OnInit {
     this.store.dispatch(new JoinEvent(this.event.id));
   }
 
+  resignFromEvent() {
+    this.store.dispatch(new ResignFromEvent(this.event.id));
+  }
+
   get participationStatus(): Observable<ParticipationStatus> {
     return this.currentUser$.pipe(
       flatMap((currentUser: CurrentUser) => of(this.defineParticipationStatus(currentUser, this.event.participators))
@@ -35,7 +39,7 @@ export class ShowEventComponent implements OnInit {
   }
 
   private defineParticipationStatus(currentUser: CurrentUser, participators: Participator[]): ParticipationStatus {
-    if (currentUser.isSignedIn && this.isUserAParticipator(currentUser, participators)) {
+    if (currentUser.isSignedIn && participators.length !== 0 && this.isUserAParticipator(currentUser, participators)) {
       if (this.hasUserPayed(currentUser, participators)) {
         return ParticipationStatus.PAYED;
       } else {

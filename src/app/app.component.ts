@@ -33,12 +33,12 @@ export class AppComponent implements OnInit {
                   return Object.assign(prev, { [current.key]: current.value });
                 }, { });
 
-      const { display_name: displayName, email } = <UserInfo>userInfo;
+      const { display_name: displayName, email, id } = <UserInfo>userInfo;
       if (!email || !displayName) {
         return;
       }
 
-      this.store.dispatch(new UserHasSignedIn(email, displayName));
+      this.store.dispatch(new UserHasSignedIn(+id, email, displayName));
     });
   }
 }
@@ -46,4 +46,5 @@ export class AppComponent implements OnInit {
 interface UserInfo {
   display_name: string;
   email: string;
+  id: string;
 }

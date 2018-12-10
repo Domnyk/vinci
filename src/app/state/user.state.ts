@@ -37,8 +37,8 @@ export class CurrentUserState {
   }
 
   @Action(UserHasSignedIn)
-  userHasSignedIn({ patchState }: StateContext<CurrentUser>, { email, displayName }: UserHasSignedIn) {
-    patchState({ isSignedIn: true, data: { email, displayName, type: UserType.Regular } });
+  userHasSignedIn({ patchState }: StateContext<CurrentUser>, { id, email, displayName }: UserHasSignedIn) {
+    patchState({ isSignedIn: true, data: { id, email, displayName, type: UserType.Regular } });
   }
 
   @Action(SignOut)

@@ -6,9 +6,10 @@ import { flatMap, tap } from 'rxjs/operators';
 import { ErrorResponse } from '../models/api-response';
 import { ShowFlashMessage } from '../actions/flash-message.actions';
 import { of } from 'rxjs';
-import { Event } from '../models/event';
+import { Event, Participator } from '../models/event';
 import { CreateEvent } from '../components/client/event/add/add-event-form.actions';
-import { JoinEvent } from '../components/client/event/show/join-event.actions';
+import { JoinEvent, ResignFromEvent } from '../components/client/event/show/show-event.actions';
+import { CurrentUser } from '../models/current-user';
 
 type Events = Array<Event>;
 
@@ -50,9 +51,20 @@ export class EventState {
   }
 
   @Action(JoinEvent)
-  joinEvent({ dispatch }: StateContext<Events>, { eventId }: JoinEvent) {
+  joinEvent({ dispatch, getState, setState }: StateContext<Events>, { eventId }: JoinEvent) {
     const stateUpdater = (response: any) => {
-      return dispatch(new ShowFlashMessage('Dołączono do wydarzenia'));
+      this.store.select(state => state.currentUser).subscribe((currentUser: CurrentUser) => {
+        const oldEvents = getState().filter(event => event.id !== eventId),
+              [eventToModification] = getState().filter(event => event.id === eventId),
+              participators = eventToModification.participators,
+              newParticipator: Participator = { displayName: currentUser.data.displayName, email: currentUser.data.email,
+                                                hasPaid: false, isEventOwner: false, id: currentUser.data.id },
+              newParticipators = [...participators, newParticipator];
+
+        eventToModification.participators = newParticipators;
+        setState([...oldEvents, eventToModification]);
+        return dispatch(new ShowFlashMessage('Dołączono do wydarzenia'));
+      });
     };
 
     return this.http.post(environment.api.resource('events', eventId, 'participations'), {} , { withCredentials: true })
@@ -60,6 +72,25 @@ export class EventState {
         tap((response) => stateUpdater(response))
       )
       .subscribe(() => {}, (error) => this.handleError(error));
+  }
+
+  @Action(ResignFromEvent)
+  resignFromEvent({ dispatch, getState, setState }: StateContext<Events>, { eventId }: ResignFromEvent) {
+    const stateUpdater = (response: any) => {
+      const oldEvents = getState().filter(event => event.id !== eventId),
+            [eventToUpdate] = getState().filter(event => event.id === eventId),
+            newParticipators = eventToUpdate.participators.filter(participator => participator.id !== response.user_id);
+
+      eventToUpdate.participators = newParticipators;
+      setState([...oldEvents, eventToUpdate]);
+      dispatch(new ShowFlashMessage('Zrezygnowano z uczestnictwa'));
+    };
+
+
+    return this.http.delete(environment.api.resource('events', eventId, 'participations'), { withCredentials: true})
+      .pipe(
+        tap(stateUpdater)
+      );
   }
 
   private handleError(errorResponse: ErrorResponse) {
