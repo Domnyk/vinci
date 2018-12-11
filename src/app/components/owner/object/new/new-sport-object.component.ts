@@ -39,11 +39,11 @@ export class NewSportObjectComponent implements OnInit {
       Validators.required
     ]);
 
-    this.bookingMarginInMonths = new FormControl('', [
+    this.bookingMarginInMonths = new FormControl(0, [
       Validators.required
     ]);
 
-    this.bookingMarginInDays = new FormControl('', [
+    this.bookingMarginInDays = new FormControl(0, [
       Validators.required
     ]);
 
@@ -72,8 +72,8 @@ export class NewSportObjectComponent implements OnInit {
     this.sportObject.sportComplexId = this.sportComplexId;
     this.sportObject.name = this.name.value;
     this.sportObject.bookingMargin = {
-      months: this.bookingMarginInMonths.value,
-      days: this.bookingMarginInDays.value,
+      months: +this.bookingMarginInMonths.value,
+      days: +this.bookingMarginInDays.value,
       seconds: 0
     };
     this.sportObject.address = {
