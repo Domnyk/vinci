@@ -1,0 +1,6 @@
+<div [ngClass]="_class">
+  <label [attr.label]="label">{{ label }}</label>
+  <input [formControl]="control" [class.is-invalid]="isInvalid(control)" [attr.type]="type" class="form-control"
+         [attr.aria-describedby]="label">
+  <div class="invalid-feedback">{{ invalidFeedback }}</div>
+</div>

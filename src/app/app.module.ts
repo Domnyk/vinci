@@ -69,6 +69,9 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { initStateFromStorage } from './plugins/init-state-from-storage.plugin';
 import { ArenaComponent } from './components/client/arena/show/arena.component';
 import { ShowEventComponent } from './components/client/event/show/show-event.component';
+import { FormFieldComponent } from './components/common/form-field/form-field.component';
+import { FormRowComponent } from './components/common/form-row/form-row.component';
+import { FormSubmitButtonComponent } from './components/common/form-submit-button/form-submit-button.component';
 
 registerLocaleData(localePl);
 
@@ -110,6 +113,9 @@ registerLocaleData(localePl);
     AddEventFormComponent,
     ArenaComponent,
     ShowEventComponent,
+    FormFieldComponent,
+    FormRowComponent,
+    FormSubmitButtonComponent,
   ],
   imports: [
     RouterModule.forRoot(
