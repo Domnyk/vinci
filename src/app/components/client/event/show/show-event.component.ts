@@ -57,6 +57,6 @@ export class ShowEventComponent implements OnInit {
   private hasUserPayed(user: CurrentUser, participators: Participator[]): boolean {
     const [currentUser] = participators.filter(participator => participator.email === user.data.email);
 
-    return currentUser.hasPaid;
+    return !!currentUser && currentUser.hasPaid;
   }
 }
