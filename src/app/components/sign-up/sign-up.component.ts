@@ -6,6 +6,7 @@ import { passwordMatchConfirmationValidator } from './password-match-confirmatio
 import { Store } from '@ngxs/store';
 import { SignUpComplexesOwner } from '../../actions/user.actions';
 import { ComplexesOwner } from '../../models/complexes-owner';
+import { FormSubmitType } from '../common/form-submit-button/form-submit-type';
 
 @Component({
   selector: 'app-sign-up',
@@ -14,6 +15,7 @@ import { ComplexesOwner } from '../../models/complexes-owner';
 })
 export class SignUpComponent implements OnInit {
   FormHelper = FormHelper;
+  FormSubmitType = FormSubmitType;
   email: FormControl;
   password: FormControl;
   passwordConfirmation: FormControl;
@@ -36,8 +38,8 @@ export class SignUpComponent implements OnInit {
     this.store.dispatch(new SignUpComplexesOwner(newComplexesOwner));
   }
 
-  isSubmitDisabled(): boolean {
-    return this.email.invalid || this.password.invalid || this.passwordConfirmation.invalid
-      || this.passwordGroup.invalid;
+  isFormValid(): boolean {
+    return this.email.valid && this.password.valid && this.passwordConfirmation.valid
+      && this.passwordGroup.valid;
   }
 }

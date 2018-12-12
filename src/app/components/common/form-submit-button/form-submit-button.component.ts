@@ -35,9 +35,7 @@ export class FormSubmitButtonComponent implements OnInit {
   }
 
   get isDisabled(): boolean {
-    // return !this.isValid;
-    // TODO: Delete line below and uncommnet line above when component is finished
-    return false;
+    return !this.isValid;
   }
 
 }
