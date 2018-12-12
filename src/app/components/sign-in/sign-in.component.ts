@@ -8,6 +8,7 @@ import { environment } from '../../../environments/environment.generated.dev';
 import { FormControl, Validators } from '@angular/forms';
 import { FormHelper } from '../../helpers/form.helper';
 import { UserType } from '../../models/current-user';
+import { FormSubmitType } from '../common/form-submit-button/form-submit-type';
 
 @Component({
   selector: 'app-sign-in',
@@ -16,7 +17,7 @@ import { UserType } from '../../models/current-user';
 })
 export class SignInComponent implements OnInit {
   backendSignInAddress = environment.api.urls.signIn();
-  FormHelper = FormHelper;
+  FormSubmitType = FormSubmitType;
   email: FormControl;
   password: FormControl;
 
@@ -33,8 +34,8 @@ export class SignInComponent implements OnInit {
     this.store.dispatch(new SignInWithPassword(credentials));
   }
 
-  isSubmitDisabled(): boolean {
-    return this.email.invalid || this.password.invalid;
+  isFormValid(): boolean {
+    return this.email.valid && this.password.valid;
   }
 
   // Test

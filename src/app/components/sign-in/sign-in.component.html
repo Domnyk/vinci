@@ -4,25 +4,14 @@
 
   <div class="col">
     <form (ngSubmit)="onSubmit()" novalidate>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input [formControl]="email" [class.is-invalid]="FormHelper.isFormControlInvalid(email)" name="email"
-               type="email" class="form-control" aria-describedby="email">
-        <div class="invalid-feedback">
-          Podaj prawidłowy adres email
-        </div>
-      </div>
+      <app-form-field [label]="'Email'" [control]="email" [type]="'email'"
+                      [invalidFeedback]="'Podaj prawidłowy adres email'" ></app-form-field>
 
-      <div class="form-group">
-        <label for="password">Hasło</label>
-        <input [formControl]="password" [class.is-invalid]="FormHelper.isFormControlInvalid(password)" name="password"
-               type="password" class="form-control" autocomplete="off">
-        <div class="invalid-feedback">
-          Podaj hasło
-        </div>
-      </div>
+      <app-form-field [label]="'Hasło'" [control]="password" [type]="'password'"
+                      [invalidFeedback]="'Podaj hasło'" ></app-form-field>
 
-      <button (click)="onSubmit()" [disabled]="isSubmitDisabled()" type="submit" class="btn btn-primary">Zaloguj się</button>
+      <app-form-submit-button [isValid]="isFormValid()" [text]="'Zaloguj się'" [submitType]="FormSubmitType.OTHER">
+      </app-form-submit-button>
     </form>
 
     <hr />
@@ -32,11 +21,11 @@
     <hr />
 
     <form (ngSubmit)="onSubmitTest()">
-      <div class="form-group">
-        <input [formControl]="testId" name="id" type="number" class="form-control" autocomplete="off">
-      </div>
+      <app-form-field [label]="'ID'" [control]="testId" [type]="'number'" [invalidFeedback]="'Podaj ID'">
+      </app-form-field>
 
-      <button type="submit" class="btn btn-primary">Zaloguj się testowo</button>
+      <app-form-submit-button [text]="'Zaloguj się testowo'" [submitType]="FormSubmitType.OTHER">
+      </app-form-submit-button>
     </form>
 
   </div>
