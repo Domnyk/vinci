@@ -3,6 +3,7 @@ import { SportComplex } from '../../../../models/sport-complex';
 import { Store } from '@ngxs/store';
 import { CreateNewSportComplex } from './new-sport-complex.actions';
 import { FormControl, Validators } from '@angular/forms';
+import { FormSubmitType } from '../../../common/form-submit-button/form-submit-type';
 
 @Component({
   selector: 'app-new-sport-complex',
@@ -15,6 +16,8 @@ export class NewSportComplexComponent implements OnInit {
 
   sportComplex: SportComplex;
   sportComplexNameFormControl: FormControl;
+
+  FormSubmitType = FormSubmitType;
 
   constructor(
     private store: Store,

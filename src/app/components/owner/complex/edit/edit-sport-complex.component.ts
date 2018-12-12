@@ -3,6 +3,7 @@ import { SportComplex } from '../../../../models/sport-complex';
 import { Store } from '@ngxs/store';
 import { FormControl, Validators } from '@angular/forms';
 import { UpdateSportComplex } from './edit-sport-complex.actions';
+import { FormSubmitType } from '../../../common/form-submit-button/form-submit-type';
 
 @Component({
   selector: 'app-edit-sport-complex',
@@ -11,6 +12,8 @@ import { UpdateSportComplex } from './edit-sport-complex.actions';
 })
 export class EditSportComplexComponent implements OnChanges {
   @Input() sportComplexInput: SportComplex;
+
+  FormSubmitType = FormSubmitType;
 
   name: FormControl;
   id: FormControl;

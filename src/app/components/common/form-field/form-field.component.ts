@@ -1,6 +1,7 @@
 import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { FormHelper } from '../../../helpers/form.helper';
+import { SelectParams } from './select-params';
 
 @Component({
   selector: 'app-form-field',
@@ -15,6 +16,7 @@ export class FormFieldComponent implements OnInit {
   @Input() type: string;
   @Input() invalidFeedback: string;
   @Input() rootClass?: string;
+  @Input() selectParams?: SelectParams;
 
   /*
     This binding solves problem of .row and .col relationship
@@ -26,6 +28,7 @@ export class FormFieldComponent implements OnInit {
 
   isInvalid = FormHelper.isFormControlInvalid;
   _class: string = null;
+  _isSelect: boolean = null;
 
   constructor() { }
 
@@ -36,5 +39,7 @@ export class FormFieldComponent implements OnInit {
     } else {
       this._class = !!this.rootClass ? this.rootClass : FormFieldComponent.DEFAULT_ROOT_CLASS;
     }
+
+    this._isSelect = this.type === 'select';
   }
 }

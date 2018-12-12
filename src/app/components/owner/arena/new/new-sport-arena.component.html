@@ -1,22 +1,11 @@
 <section>
   <form (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label>Nazwa areny sportowej</label>
-      <input type="text" [formControl]="name" class="form-control" placeholder="Podaj nazwę areny sportowej">
-    </div>
+    <app-form-field [label]="'Nazwa areny sportowej'" [control]="name" [type]="'text'"
+                    [invalidFeedback]="'Podaj nazwę areny sportowej'"></app-form-field>
+    <app-form-field [label]="'Dyscypliny sportowe'" [control]="sportDisciplines" [type]="'select'"
+                    [selectParams]="(selectParams | async)" [invalidFeedback]="'Wybierz przynajmniej jedną'">
+    </app-form-field>
 
-    <div class="form-group">
-      <label>Dostępne dyscypliny sportowe</label>
-      <select multiple class="form-control" aria-describedby="sport-discipline-help-block" [formControl]="sportDisciplines">
-        <option *ngFor="let sportDiscipline of (sportDisciplines$ | async)" value="{{sportDiscipline.id}}">
-          {{sportDiscipline.name}}
-        </option>
-      </select>
-      <small id="sport-discipline-help-block" class="form-text text-muted">
-        Aby zaznaczyć kilka opcji użyć klawiasza Shift lub przeciągnij myszką (na komputerze) lub przeciągnij palcem (na smartphonie)
-      </small>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Dodaj</button>
+    <app-form-submit-button [text]="'Stwórz arenę'" [submitType]="FormSubmitType.OTHER" ></app-form-submit-button>
   </form>
 </section>

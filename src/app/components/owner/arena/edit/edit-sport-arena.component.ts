@@ -2,9 +2,12 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { SportArena } from '../../../../models/sport-arena';
 import { FormControl, Validators } from '@angular/forms';
 import { Select, Store } from '@ngxs/store';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { SportDiscipline } from '../../../../models/sport-discipline';
 import { UpdateSportArena } from './edit-sport-arena.actions';
+import { SelectParams } from '../../../common/form-field/select-params';
+import { flatMap } from 'rxjs/operators';
+import { FormSubmitType } from '../../../common/form-submit-button/form-submit-type';
 
 @Component({
   selector: 'app-edit-sport-arena',
@@ -14,6 +17,8 @@ import { UpdateSportArena } from './edit-sport-arena.actions';
 export class EditSportArenaComponent implements OnInit, OnChanges {
   @Input() sportArena: SportArena;
   @Select(state => state.sportDisciplines) allSportDisciplines$: Observable<SportDiscipline[]>;
+
+  FormSubmitType = FormSubmitType;
 
   name: FormControl;
   sportDisciplines: FormControl;
@@ -45,6 +50,14 @@ export class EditSportArenaComponent implements OnInit, OnChanges {
                                                   this.sportArena.sportObjectId);
 
     this.store.dispatch(new UpdateSportArena(sportArena));
+  }
+
+  public get selectParams(): Observable<SelectParams> {
+    return this.allSportDisciplines$.pipe(
+      flatMap((sportDisciplines: SportDiscipline[]) => of(
+        sportDisciplines.map(sd => ({ label: sd.name, value: sd.id }))
+      )),
+      flatMap((selectOptions) => of({ isMultiple: true, id: 'test', options: selectOptions })));
   }
 
 }

@@ -5,6 +5,7 @@ import { Store } from '@ngxs/store';
 import { DeleteSportComplex } from './delete-sport-complex.actions';
 import { SportComplex } from '../../../../models/sport-complex';
 import { ShowFlashMessage } from '../../../../actions/flash-message.actions';
+import { FormSubmitType } from '../../../common/form-submit-button/form-submit-type';
 
 @Component({
   selector: 'app-delete-sport-complex',
@@ -14,6 +15,8 @@ import { ShowFlashMessage } from '../../../../actions/flash-message.actions';
 export class DeleteSportComplexComponent implements OnInit {
   @Input() sportComplex: SportComplex;
 
+  FormSubmitType = FormSubmitType;
+
   sportComplexNameFormControl = new FormControl('');
 
   constructor(private router: Router, private store: Store) { }
@@ -21,8 +24,8 @@ export class DeleteSportComplexComponent implements OnInit {
   ngOnInit() {
   }
 
-  isInputDifferentFromSportComplexName(): boolean {
-    return this.sportComplexNameFormControl.value !== this.sportComplex.name;
+  isValid(): boolean {
+    return this.doesInputMatch();
   }
 
   onSubmit() {
@@ -36,6 +39,10 @@ export class DeleteSportComplexComponent implements OnInit {
         successfulDeletion,
         () => this.store.dispatch(new ShowFlashMessage('Nie można usunąć tego kompleksu sportowego'))
       );
+  }
+
+  private doesInputMatch(): boolean {
+    return this.sportComplexNameFormControl.value === this.sportComplex.name;
   }
 
 }

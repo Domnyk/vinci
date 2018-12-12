@@ -5,6 +5,7 @@ import { Store } from '@ngxs/store';
 import { DeleteSportObject } from './delete-sport-object.actions';
 import { SportObject } from '../../../../models/sport-object';
 import { ShowFlashMessage } from '../../../../actions/flash-message.actions';
+import { FormSubmitType } from '../../../common/form-submit-button/form-submit-type';
 
 @Component({
   selector: 'app-delete-sport-object',
@@ -16,10 +17,12 @@ export class DeleteSportObjectComponent {
 
   name = new FormControl('');
 
+  FormSubmitType = FormSubmitType;
+
   constructor(private router: Router, private store: Store) { }
 
-  isInputDifferentFromSportObjectName(): boolean {
-    return this.name.value !== this.sportObject.name;
+  isFormValid(): boolean {
+    return this.doesInputMatch();
   }
 
   onSubmit() {
@@ -33,6 +36,10 @@ export class DeleteSportObjectComponent {
         successfulDeletion,
         () => this.store.dispatch(new ShowFlashMessage('Nie można usunąć tego obiektu sportowego'))
       );
+  }
+
+  private doesInputMatch(): boolean {
+    return this.name.value === this.sportObject.name;
   }
 
 }

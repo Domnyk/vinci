@@ -5,6 +5,7 @@ import { ShowFlashMessage } from '../../../../actions/flash-message.actions';
 import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { DeleteSportArena } from './delete-sport-arena.actions';
+import { FormSubmitType } from '../../../common/form-submit-button/form-submit-type';
 
 @Component({
   selector: 'app-delete-sport-arena',
@@ -16,6 +17,8 @@ export class DeleteSportArenaComponent implements OnInit {
 
   name: FormControl;
 
+  FormSubmitType = FormSubmitType;
+
   constructor(private router: Router, private store: Store) {
     this.name = new FormControl('', [
       Validators.required
@@ -25,9 +28,10 @@ export class DeleteSportArenaComponent implements OnInit {
   ngOnInit() {
   }
 
-  isInputDifferentFromSportArenaName(): boolean {
-    return this.name.value !== this.sportArena.name;
+  isFormValid(): boolean {
+    return this.doesInputMatch();
   }
+
 
   onSubmit() {
     const successfulDeletion = () => {
@@ -40,5 +44,9 @@ export class DeleteSportArenaComponent implements OnInit {
         successfulDeletion,
         () => this.store.dispatch(new ShowFlashMessage('Nie można usunąć tej areny sportowej'))
       );
+  }
+
+  private doesInputMatch(): boolean {
+    return this.name.value === this.sportArena.name;
   }
 }

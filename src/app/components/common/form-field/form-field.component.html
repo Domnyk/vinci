@@ -1,6 +1,21 @@
 <div [ngClass]="_class">
   <label [attr.label]="label">{{ label }}</label>
-  <input [formControl]="control" [class.is-invalid]="isInvalid(control)" [attr.type]="type" class="form-control"
-         [attr.aria-describedby]="label">
+  <div *ngIf="_isSelect; then select; else input"></div>
   <div class="invalid-feedback">{{ invalidFeedback }}</div>
 </div>
+
+<ng-template #input>
+  <input [formControl]="control" [class.is-invalid]="isInvalid(control)" [attr.type]="type" class="form-control"
+         [attr.aria-describedby]="label">
+</ng-template>
+
+<ng-template #select>
+  <select [class.is-invalid]="isInvalid(control)" [attr.aria-describedby]="label"  [formControl]="control"
+          [id]="selectParams.id" multiple class="form-control">
+    <option *ngFor="let option of selectParams.options" value="{{option.value}}">{{option.label}}</option>
+  </select>
+  <small [id]="selectParams.id" class="form-text text-muted"  >
+    Aby zaznaczyć kilka opcji użyć klawiasza Shift lub przeciągnij myszką (na komputerze) lub przeciągnij palcem
+    (na smartphonie)
+  </small>
+</ng-template>

@@ -5,6 +5,7 @@ import { CreateNewSportObject } from './new-sport-object.actions';
 import { ShowFlashMessage } from '../../../../actions/flash-message.actions';
 import { FormControl, Validators } from '@angular/forms';
 import { SportObject } from '../../../../models/sport-object';
+import { FormSubmitType } from '../../../common/form-submit-button/form-submit-type';
 
 @Component({
   selector: 'app-new-sport-object',
@@ -24,6 +25,8 @@ export class NewSportObjectComponent implements OnInit {
   buildingNumber: FormControl;
   postalCode: FormControl;
   city: FormControl;
+
+  FormSubmitType = FormSubmitType;
 
   constructor(
     private store: Store,
@@ -86,5 +89,4 @@ export class NewSportObjectComponent implements OnInit {
     this.store.dispatch(new CreateNewSportObject(this.sportObject))
       .subscribe(() => this.store.dispatch(new ShowFlashMessage('Nowy obiekt sportowy został dodany')));
   }
-
 }

@@ -1,50 +1,31 @@
 <div class="row">
   <section class="col">
     <form (ngSubmit)="onSubmit()" #newSportObjectForm="ngForm">
-      <div class="form-group">
-        <label for="name">Nazwa obiektu sportowego</label>
-        <input [formControl]="name" name="name" type="text" class="form-control"
-               aria-describedby="name" placeholder="Wprowadź nazwę obiektu" required>
-      </div>
+      <app-form-field [control]="name" [label]="'Nazwa'" [type]="'text'" [invalidFeedback]="'Podaj nazwę'">
+      </app-form-field>
 
-      <div class="form-group form-row">
-        <div class="col">
-          <label for="bookingMarginInMonths">Margines rezerwacji (w miesiąch)</label>
-          <input [formControl]="bookingMarginInMonths" name="bookingMarginInMonths" type="number" class="form-control" aria-describedby="booking margin in months"
-                 placeholder="Podaj margines rezerwacji (w miesiącach)" required>
-        </div>
+      <app-form-row>
+        <app-form-field [rootClass]="'col'" [control]="bookingMarginInMonths"
+                        [label]="'Margines rezerwacji w miesiącach'" [type]="'number'"
+                        [invalidFeedback]="'Podaj margines rezerwacji w miesiącach'"></app-form-field>
 
-        <div class="col">
-          <label for="bookingMarginInDays">Margines rezerwacji (w dniach)</label>
-          <input [formControl]="bookingMarginInDays" name="bookingMarginInDays" type="number" class="form-control" aria-describedby="booking margin in days"
-                 placeholder="Podaj margines rezerwacji (w dniach)" required>
-        </div>
-      </div>
+        <app-form-field [rootClass]="'col'" [control]="bookingMarginInDays" [label]="'Margines rezerwacji w dniach'"
+                        [type]="'number'" [invalidFeedback]="'Podaj margines rezerwacji w dniach'"></app-form-field>
+      </app-form-row>
 
-      <div class="form-group">
-        <label for="street">Ulica</label>
-        <input [formControl]="street" name="street" type="text" class="form-control" aria-describedby="street"
-               placeholder="Podaj ulicę" required>
-      </div>
+      <app-form-field [control]="street" [label]="'Ulica'" [type]="'text'" [invalidFeedback]="'Podaj ulicę'">
+      </app-form-field>
 
-      <div class="form-group">
-        <label for="buildingNumber">Numer budynku</label>
-        <input [formControl]="buildingNumber" name="buildingNumber" type="number" class="form-control" aria-describedby="building number"
-               placeholder="Podaj numer budynku" required>
-      </div>
+      <app-form-field [control]="buildingNumber" [label]="'Numer budynku'" [type]="'text'"
+                      [invalidFeedback]="'Podaj numer budynku'"></app-form-field>
 
-      <div class="form-group">
-        <label for="postalCode">Kod pocztowy</label>
-        <input [formControl]="postalCode" name="postalCode" type="text" class="form-control" aria-describedby="postal code"
-               placeholder="Podaj kod pocztowy" required>
-      </div>
+      <app-form-field [control]="postalCode" [label]="'Kod pocztowy'" [type]="'text'"
+                      [invalidFeedback]="'Podaj kod pocztowy'"></app-form-field>
 
-      <div class="form-group">
-        <label for="city">Miasto</label>
-        <input [formControl]="city" name="city" type="text" class="form-control" aria-describedby="city"
-               placeholder="Podaj miasto" required>
-      </div>
-      <button type="submit" class="btn btn-primary">Edytuj</button>
+      <app-form-field [control]="city" [label]="'Miasto'" [type]="'text'"
+                      [invalidFeedback]="'Podaj miasto'"></app-form-field>
+
+      <app-form-submit-button [text]="'Edytuj obiekt'" [submitType]="FormSubmitType.OTHER"></app-form-submit-button>
     </form>
   </section>
 </div>

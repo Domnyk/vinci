@@ -3,6 +3,7 @@ import { BookingMargin, SportObject } from '../../../../models/sport-object';
 import { Store } from '@ngxs/store';
 import { FormControl, Validators } from '@angular/forms';
 import { UpdateSportObject } from './edit-sport-object.actions';
+import { FormSubmitType } from '../../../common/form-submit-button/form-submit-type';
 
 @Component({
   selector: 'app-edit-sport-object',
@@ -11,6 +12,8 @@ import { UpdateSportObject } from './edit-sport-object.actions';
 })
 export class EditSportObjectComponent implements OnChanges {
   @Input() sportObject: SportObject;
+
+  FormSubmitType = FormSubmitType;
 
   name: FormControl;
   id: FormControl;

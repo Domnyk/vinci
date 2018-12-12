@@ -7,12 +7,10 @@
 
 
     <form (ngSubmit)="onSubmit()" #newSportComplexForm="ngForm">
-      <div class="form-group">
-        <label for="name">Nazwa ośrodka sportowego</label>
-        <input [formControl]="sportComplexNameFormControl" name="name" type="text" class="form-control"
-               aria-describedby="name" placeholder="Wprowadź nazwę ośrodka" required>
-      </div>
-      <button type="submit" class="btn btn-primary">Dodaj ośrodek</button>
+      <app-form-field [label]="'Nazwa kompleksu sportowego'" [control]="sportComplexNameFormControl" [type]="'text'"
+                      [invalidFeedback]="'Podaj nazwę kompleksu sportowego'" ></app-form-field>
+
+      <app-form-submit-button [text]="'Dodaj kompleks'" [submitType]="FormSubmitType.CREATE" ></app-form-submit-button>
     </form>
 </section>
 </div>

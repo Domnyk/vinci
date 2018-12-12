@@ -1,10 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { SportDiscipline } from '../../../../models/sport-discipline';
 import { FormControl, Validators } from '@angular/forms';
 import { SportArena } from '../../../../models/sport-arena';
 import { CreateSportArena } from './new-sport-arena.actions';
+import { SelectParams } from '../../../common/form-field/select-params';
+import { flatMap } from 'rxjs/operators';
+import { FormSubmitType } from '../../../common/form-submit-button/form-submit-type';
 
 @Component({
   selector: 'app-new-sport-arena',
@@ -17,6 +20,8 @@ export class NewSportArenaComponent implements OnInit {
 
   name: FormControl;
   sportDisciplines: FormControl;
+
+  FormSubmitType = FormSubmitType;
 
   constructor(private store: Store) {
     this.name = new FormControl('', [
@@ -39,5 +44,13 @@ export class NewSportArenaComponent implements OnInit {
     console.debug('sportArena: ', sportArena);
 
     this.store.dispatch(new CreateSportArena(sportArena));
+  }
+
+  public get selectParams(): Observable<SelectParams> {
+    return this.sportDisciplines$.pipe(
+      flatMap((sportDisciplines: SportDiscipline[]) => of(
+        sportDisciplines.map(sd => ({ label: sd.name, value: sd.id }))
+      )),
+      flatMap((selectOptions) => of({ isMultiple: true, id: 'test', options: selectOptions })));
   }
 }
