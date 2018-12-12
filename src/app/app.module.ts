@@ -16,7 +16,7 @@ import { CurrentUserState } from './state/user.state';
 import { AppComponent } from './app.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
-import { ErrorNotFoundComponent } from './components/error-not-found/error-not-found.component';
+import { NotFoundComponent } from './components/errors/not-found/not-found.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { MapComponent } from './components/client/map/map.component';
 import { SportObjectComponent } from './components/owner/object/show/sport-object.component';
@@ -72,6 +72,7 @@ import { ShowEventComponent } from './components/client/event/show/show-event.co
 import { FormFieldComponent } from './components/common/form-field/form-field.component';
 import { FormRowComponent } from './components/common/form-row/form-row.component';
 import { FormSubmitButtonComponent } from './components/common/form-submit-button/form-submit-button.component';
+import { UnauthorizedComponent } from './components/errors/unauthorized/unauthorized.component';
 
 registerLocaleData(localePl);
 
@@ -82,7 +83,7 @@ registerLocaleData(localePl);
     AppComponent,
     SignUpComponent,
     WelcomeComponent,
-    ErrorNotFoundComponent,
+    NotFoundComponent,
     SignInComponent,
     MapComponent,
     SportObjectComponent,
@@ -116,6 +117,7 @@ registerLocaleData(localePl);
     FormFieldComponent,
     FormRowComponent,
     FormSubmitButtonComponent,
+    UnauthorizedComponent,
   ],
   imports: [
     RouterModule.forRoot(

@@ -3,7 +3,7 @@ import { Routes } from '@angular/router';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
-import { ErrorNotFoundComponent } from './components/error-not-found/error-not-found.component';
+import { NotFoundComponent } from './components/errors/not-found/not-found.component';
 import { MapComponent } from './components/client/map/map.component';
 import { SportObjectComponent } from './components/owner/object/show/sport-object.component';
 import { ComplexOwnerDashboardComponent } from './components/owner/complex-owner-dashboard/complex-owner-dashboard.component';
@@ -17,6 +17,7 @@ import { ObjectComponent } from './components/client/object/show/object.componen
 import { SearchComponent } from './components/client/search/search.component';
 import { SearchResultsComponent } from './components/client/search-results/search-results.component';
 import { ArenaComponent } from './components/client/arena/show/arena.component';
+import { UnauthorizedComponent } from './components/errors/unauthorized/unauthorized.component';
 
 
 
@@ -38,6 +39,7 @@ export const routes: Routes = [
       { path: 'arena/:id', component: SportArenaComponent },
     ]
   },
+  { path: 'unauthorized', component: UnauthorizedComponent },
   { path: '', component: WelcomeComponent },
-  { path: '**', component: ErrorNotFoundComponent },
+  { path: '**', component: NotFoundComponent },
 ];
