@@ -20,12 +20,11 @@
 
     <hr />
 
-    <form (ngSubmit)="onSubmitTest()">
+    <form>
       <app-form-field [label]="'ID'" [control]="testId" [type]="'number'" [invalidFeedback]="'Podaj ID'">
       </app-form-field>
 
-      <app-form-submit-button [text]="'Zaloguj się testowo'" [submitType]="FormSubmitType.OTHER">
-      </app-form-submit-button>
+      <a [href]="backendSignInAddressDev" class="btn btn-primary btn-block">Zaloguj się testowo</a>
     </form>
 
   </div>

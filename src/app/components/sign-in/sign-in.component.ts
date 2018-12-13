@@ -17,6 +17,7 @@ import { FormSubmitType } from '../common/form-submit-button/form-submit-type';
 })
 export class SignInComponent implements OnInit {
   backendSignInAddress = environment.api.urls.signIn();
+
   FormSubmitType = FormSubmitType;
   email: FormControl;
   password: FormControl;
@@ -39,12 +40,9 @@ export class SignInComponent implements OnInit {
   }
 
   // Test
-
   testId: FormControl = new FormControl(0);
-  onSubmitTest() {
-    console.log(this.testId.value);
-    const url = environment.api.urls.signIn(UserType.Regular, this.testId.value);
-    window.location.href = url;
+  get backendSignInAddressDev(): string {
+    return environment.api.urls.signIn(UserType.Regular, this.testId.value);
   }
 
 
