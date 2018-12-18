@@ -1,0 +1,23 @@
+<div class="row justify-content-center">
+  <div class="col-6">
+    <h3>Twoje dane</h3>
+    <form novalidate>
+      <app-form-field [label]="'Email'" [control]="clientProfile.email" [type]="'email'"
+                      [invalidFeedback]="'Podaj prawidłowy adres email'" ></app-form-field>
+
+      <app-form-field [label]="'Imię i nazwisko'" [control]="clientProfile.displayName" [type]="'text'"
+                      [readonly]="true" [invalidFeedback]="'Podaj prawidłowe dane'" ></app-form-field>
+
+
+
+      <app-form-checkbox [control]="clientProfile.isSameEmailForPaypal"
+                         [label]="'Email w serwisie Paypal taki sam jak w Vinci'"></app-form-checkbox>
+
+      <app-form-field [label]="'Email używany w serwisie PayPal'" [control]="clientProfile.paypalEmail" [type]="'email'"
+                      [invalidFeedback]="'Podaj prawidłowy adres email'" [readonly]="readonly">
+      </app-form-field>
+
+      <app-form-submit-button [text]="'Zaktualizuj'" [submitType]="FormSubmitType.OTHER"  ></app-form-submit-button>
+    </form>
+  </div>
+</div>

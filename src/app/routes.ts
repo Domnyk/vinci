@@ -18,6 +18,7 @@ import { SearchComponent } from './components/client/search/search.component';
 import { SearchResultsComponent } from './components/client/search-results/search-results.component';
 import { ArenaComponent } from './components/client/arena/show/arena.component';
 import { UnauthorizedComponent } from './components/errors/unauthorized/unauthorized.component';
+import { ProfileComponent } from './components/client/profile/profile.component';
 
 
 
@@ -25,7 +26,7 @@ export const routes: Routes = [
   { path: 'sign_up', component: SignUpComponent },
   { path: 'sign_in', component: SignInComponent },
   { path: 'map', component: MapComponent },
-  { path : 'search', component: SearchComponent },
+  { path: 'search', component: SearchComponent },
   { path: 'search_results', component: SearchResultsComponent },
   { path: 'objects/:id', component: ObjectComponent },
   { path: 'arenas/:id', component: ArenaComponent },
@@ -39,6 +40,7 @@ export const routes: Routes = [
       { path: 'arena/:id', component: SportArenaComponent },
     ]
   },
+  { path: 'profile', component: ProfileComponent} ,
   { path: 'unauthorized', component: UnauthorizedComponent },
   { path: '', component: WelcomeComponent },
   { path: '**', component: NotFoundComponent },

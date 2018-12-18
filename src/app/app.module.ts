@@ -73,6 +73,8 @@ import { FormFieldComponent } from './components/common/form-field/form-field.co
 import { FormRowComponent } from './components/common/form-row/form-row.component';
 import { FormSubmitButtonComponent } from './components/common/form-submit-button/form-submit-button.component';
 import { UnauthorizedComponent } from './components/errors/unauthorized/unauthorized.component';
+import { ProfileComponent } from './components/client/profile/profile.component';
+import { FormCheckboxComponent } from './components/common/form-checkbox/form-checkbox.component';
 
 registerLocaleData(localePl);
 
@@ -118,6 +120,8 @@ registerLocaleData(localePl);
     FormRowComponent,
     FormSubmitButtonComponent,
     UnauthorizedComponent,
+    ProfileComponent,
+    FormCheckboxComponent,
   ],
   imports: [
     RouterModule.forRoot(
