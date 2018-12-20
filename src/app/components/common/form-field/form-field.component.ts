@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import { Component, HostBinding, Input, OnChanges, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { FormHelper } from '../../../helpers/form.helper';
 import { SelectParams } from './select-params';
@@ -8,7 +8,7 @@ import { SelectParams } from './select-params';
   templateUrl: './form-field.component.html',
   styleUrls: ['./form-field.component.css']
 })
-export class FormFieldComponent implements OnInit {
+export class FormFieldComponent implements OnInit, OnChanges {
   static readonly DEFAULT_ROOT_CLASS: string = 'form-group';
 
   @Input() control: FormControl;
@@ -44,5 +44,11 @@ export class FormFieldComponent implements OnInit {
 
     this._isSelect = this.type === 'select';
     this._isReadonly = !!this.readonly ? this.readonly : false;
+  }
+
+  ngOnChanges({ readonly }: SimpleChanges) {
+    if (!!readonly) {
+      this._isReadonly = readonly.currentValue;
+    }
   }
 }

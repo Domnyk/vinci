@@ -14,7 +14,7 @@
                          [label]="'Email w serwisie Paypal taki sam jak w Vinci'"></app-form-checkbox>
 
       <app-form-field [label]="'Email używany w serwisie PayPal'" [control]="clientProfile.paypalEmail" [type]="'email'"
-                      [invalidFeedback]="'Podaj prawidłowy adres email'" [readonly]="readonly">
+                      [invalidFeedback]="'Podaj prawidłowy adres email'" [readonly]="isPaypalEmailReadonly">
       </app-form-field>
 
       <app-form-submit-button [text]="'Zaktualizuj'" [submitType]="FormSubmitType.OTHER"  ></app-form-submit-button>

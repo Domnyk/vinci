@@ -34,17 +34,17 @@ export class ProfileComponent implements OnInit {
       isSameEmailForPaypal: false };
 
     this.clientProfile = new Profiles.ClientProfile(profileData);
-    this.clientProfile.isSameEmailForPaypal.valueChanges.subscribe((value: boolean) => this.handleSameEmail(value));
+    this.clientProfile.isSameEmailForPaypal.valueChanges.subscribe((isSame: boolean) => this.handleSameEmail(isSame));
   }
 
-  handleSameEmail(value: boolean) {
-    if (value) {
+  handleSameEmail(isSame: boolean) {
+    if (isSame) {
       const email = this.clientProfile.email.value;
       this.clientProfile.paypalEmail.setValue(email);
     }
   }
 
-  get readonly(): boolean {
+  get isPaypalEmailReadonly(): boolean {
     return this.clientProfile.isSameEmailForPaypal.value;
   }
 }
