@@ -32,7 +32,7 @@ export class ProfileComponent implements OnInit {
 
   handleCurrentUserData(data: CurrentUserData) {
     const profileData: Profiles.ProfileData = { displayName: data.displayName, email: data.email,
-      isSameEmailForPaypal: false, id: data.id };
+      isSameEmailForPaypal: data.email === data.paypalEmail, id: data.id, paypalEmail: data.paypalEmail };
 
     this.clientProfile = new Profiles.ClientProfile(profileData);
     this.clientProfile.isSameEmailForPaypal.valueChanges.subscribe((isSame: boolean) => this.handleSameEmail(isSame));
