@@ -16,30 +16,14 @@ import { FormSubmitType } from '../common/form-submit-button/form-submit-type';
 export class SignUpComponent implements OnInit {
   FormHelper = FormHelper;
   FormSubmitType = FormSubmitType;
-  email: FormControl;
-  password: FormControl;
-  passwordConfirmation: FormControl;
-  passwordGroup: FormGroup;
+  complexesOwner = new ComplexesOwner();
 
   constructor(private store: Store) { }
 
   ngOnInit() {
-    this.email = new FormControl('', [Validators.required, Validators.email]);
-    this.password = new FormControl('', [Validators.required]);
-    this.passwordConfirmation = new FormControl('', [Validators.required]);
-    this.passwordGroup = new FormGroup({
-      'password': this.password,
-      'passwordConfirmation': this.passwordConfirmation
-    }, { validators: passwordMatchConfirmationValidator });
   }
 
   onSubmit() {
-    const newComplexesOwner = new ComplexesOwner(this.email.value, this.password.value);
-    this.store.dispatch(new SignUpComplexesOwner(newComplexesOwner));
-  }
-
-  isFormValid(): boolean {
-    return this.email.valid && this.password.valid && this.passwordConfirmation.valid
-      && this.passwordGroup.valid;
+    this.store.dispatch(new SignUpComplexesOwner(this.complexesOwner));
   }
 }

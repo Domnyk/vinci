@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import * as Profiles from '../../../models/profile';
+import * as Profiles from '../../../models/client-profile';
 import { FormSubmitType } from '../../common/form-submit-button/form-submit-type';
 import { Select, Store } from '@ngxs/store';
 import { CurrentUser, CurrentUserData } from '../../../models/current-user';

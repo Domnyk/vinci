@@ -3,19 +3,24 @@
 
   <main class="col">
     <form (ngSubmit)="onSubmit()" novalidate>
-      <app-form-field [label]="'Email'" [control]="email" [type]="'email'"
+      <app-form-field [label]="'Email'" [control]="complexesOwner.email" [type]="'email'"
                       [invalidFeedback]="'Podaj prawidłowy adres email'" ></app-form-field>
 
-      <app-form-field [label]="'Hasło'" [control]="password" [type]="'password'" [invalidFeedback]="'Podaj hasło'">
-      </app-form-field>
+      <app-form-field [label]="'Email do serwisu Paypal'" [control]="complexesOwner.paypalEmail" [type]="'email'"
+                      [invalidFeedback]="'Podaj prawidłowy adres email'" ></app-form-field>
+
+      <app-form-field [label]="'Hasło'" [control]="complexesOwner.password" [type]="'password'"
+                      [invalidFeedback]="'Podaj hasło'"></app-form-field>
 
       <!-- TODO: Refactor into app-form-field -->
       <div class="form-group">
         <label for="password">Powtórz hasło</label>
-        <input [formControl]="passwordConfirmation" [class.is-invalid]="FormHelper.isFormControlInvalid(passwordConfirmation)"
+        <input [formControl]="complexesOwner.passwordConfirmation"
+               [class.is-invalid]="FormHelper.isFormControlInvalid(complexesOwner.passwordConfirmation)"
                name="password_confirmation" type="password" class="form-control" id="password-confirmation"
                autocomplete="off">
-        <div *ngIf="passwordGroup.errors?.passwordDoesNotMatchConfirmation && (passwordGroup.touched || passwordGroup.dirty)"
+        <div *ngIf="complexesOwner.passwordGroup.errors?.passwordDoesNotMatchConfirmation
+                    && (complexesOwner.passwordGroup.touched || complexesOwner.passwordGroup.dirty)"
              class="password-mismatch">
           Hasła nie zgadzają się
         </div>
@@ -24,8 +29,8 @@
         </div>
       </div>
 
-      <app-form-submit-button [isValid]="isFormValid()" [text]="'Załóż konto'" [submitType]="FormSubmitType.OTHER">
-      </app-form-submit-button>
+      <app-form-submit-button [isValid]="complexesOwner.isValid" [text]="'Załóż konto'"
+                              [submitType]="FormSubmitType.OTHER"></app-form-submit-button>
     </form>
   </main>
 
