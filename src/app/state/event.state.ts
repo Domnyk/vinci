@@ -4,7 +4,7 @@ import { environment } from '../../environments/environment.generated.dev';
 import { HttpClient } from '@angular/common/http';
 import { flatMap, tap } from 'rxjs/operators';
 import { ErrorResponse } from '../models/api-response';
-import { ShowFlashMessage } from '../actions/flash-message.actions';
+import { ShowFlashMessageOnSuccess } from '../actions/flash-message.actions';
 import { of } from 'rxjs';
 import { Event, Participator } from '../models/event';
 import { CreateEvent } from '../components/client/event/add/add-event-form.actions';
@@ -40,7 +40,7 @@ export class EventState {
             newState = [...oldState, Event.fromDTO(response)];
 
       setState(newState);
-      return dispatch(new ShowFlashMessage('Utworzono nowe wydarzenie'));
+      return dispatch(new ShowFlashMessageOnSuccess('Utworzono nowe wydarzenie'));
     };
 
     return this.http.post(environment.api.resource('sport_arenas', arenaId, 'events'), event.dto(), { withCredentials: true })
@@ -57,13 +57,13 @@ export class EventState {
         const oldEvents = getState().filter(event => event.id !== eventId),
               [eventToModification] = getState().filter(event => event.id === eventId),
               participators = eventToModification.participators,
-              newParticipator: Participator = { displayName: currentUser.data.displayName, email: currentUser.data.email,
-                                                hasPaid: false, isEventOwner: false, id: currentUser.data.id },
+              newParticipator: Participator = { displayName: currentUser.displayName, email: currentUser.email,
+                                                hasPaid: false, isEventOwner: false, id: currentUser.id },
               newParticipators = [...participators, newParticipator];
 
         eventToModification.participators = newParticipators;
         setState([...oldEvents, eventToModification]);
-        return dispatch(new ShowFlashMessage('Dołączono do wydarzenia'));
+        return dispatch(new ShowFlashMessageOnSuccess('Dołączono do wydarzenia'));
       });
     };
 
@@ -83,7 +83,7 @@ export class EventState {
 
       eventToUpdate.participators = newParticipators;
       setState([...oldEvents, eventToUpdate]);
-      dispatch(new ShowFlashMessage('Zrezygnowano z uczestnictwa'));
+      dispatch(new ShowFlashMessageOnSuccess('Zrezygnowano z uczestnictwa'));
     };
 
 
@@ -95,6 +95,6 @@ export class EventState {
 
   private handleError(errorResponse: ErrorResponse) {
     console.debug('Error response: ', errorResponse);
-    this.store.dispatch(new ShowFlashMessage('Wystąpił błąd'));
+    this.store.dispatch(new ShowFlashMessageOnSuccess('Wystąpił błąd'));
   }
 }

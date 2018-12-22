@@ -1,10 +1,11 @@
 <div class="row">
   <section class="col">
-    <form (ngSubmit)="onSubmit()" #newSportComplexForm="ngForm">
-      <app-form-field [label]="'Nazwa kompleksu sportowego'" [control]="name" [type]="'text'"
+    <form (ngSubmit)="onSubmit()">
+      <app-form-field [label]="'Nazwa kompleksu sportowego'" [control]="complex.name" [type]="'text'"
                       [invalidFeedback]="'Podaj nazwę kompleksu sportowego'" ></app-form-field>
 
-      <app-form-submit-button [text]="'Edytuj kompleks'" [submitType]="FormSubmitType.OTHER" ></app-form-submit-button>
+      <app-form-submit-button [isValid]="complex.isValid()" [text]="'Edytuj kompleks'"
+                              [submitType]="FormSubmitType.OTHER" ></app-form-submit-button>
     </form>
   </section>
 </div>

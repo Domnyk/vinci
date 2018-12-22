@@ -1,7 +1,7 @@
-<section *ngIf="(sportComplex$ | async) as sportComplex">
+<section *ngIf="complex">
   <h2> Podstawowe informacje </h2>
   <p>Nazwa kompleksu:
-    <span class="font-weight-bold">{{sportComplex.name}}</span>
+    <span class="font-weight-bold">{{complex.name}}</span>
   </p>
 
   <p>Obiekty sportowe:</p>
@@ -21,7 +21,7 @@
 
       <div id="collapseOne" class="collapse" data-parent="#sport-complex-accordion">
         <div class="card-body">
-          <app-new-sport-object [sportComplexId]="(sportComplex$ | async).id"></app-new-sport-object>
+          <app-new-sport-object [sportComplexId]="complex.id"></app-new-sport-object>
         </div>
       </div>
     </div>
@@ -33,7 +33,7 @@
 
       <div id="collapseTwo" class="collapse" data-parent="#sport-complex-accordion">
         <div class="card-body">
-          <app-edit-sport-complex [sportComplexInput]="(sportComplex$ | async)"></app-edit-sport-complex>
+          <app-edit-sport-complex [complexId]="complex.id"></app-edit-sport-complex>
         </div>
       </div>
     </div>
@@ -45,7 +45,7 @@
 
       <div id="collapseThree" class="collapse" data-parent="#sport-complex-accordion">
         <div class="card-body">
-          <app-delete-sport-complex [sportComplex]="sportComplex"></app-delete-sport-complex>
+          <app-delete-sport-complex [complexId]="complex.id"></app-delete-sport-complex>
         </div>
       </div>
     </div>

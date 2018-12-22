@@ -1,7 +1,8 @@
-import { SportComplex } from '../../../../models/sport-complex';
+import { Complex } from '../../../../models/complex';
+
 
 export class CreateNewSportComplex {
   static readonly type = `[New sport complex component] Create new sport complex`;
 
-  constructor(public sportComplex: SportComplex) { }
+  constructor(public complex: Complex) { }
 }

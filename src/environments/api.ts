@@ -1,5 +1,5 @@
 import LatLngLiteral = google.maps.LatLngLiteral;
-import { UserType } from '../app/models/current-user';
+import { CurrentUserType } from '../app/models/current-user-type';
 
 export class API {
   constructor(private domain: string, private googleMapsApiKey: string) { }
@@ -30,12 +30,12 @@ export class API {
     return `${this.domain}/${resourceName}`;
   }
 
-  private calculateSignInAddress(userType: UserType = UserType.Regular, id?: number): string {
+  private calculateSignInAddress(userType: CurrentUserType = CurrentUserType.Client, id?: number): string {
     if (!!id) {
       return this.domain + `/session/new?id=${id}&redirect_url=${window.location.origin}`;
     }
 
-    if (userType === UserType.Regular) {
+    if (userType === CurrentUserType.Client) {
       return this.domain + `/session/new?redirect_url=${window.location.origin}`;
     }
 

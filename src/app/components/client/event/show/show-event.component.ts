@@ -3,8 +3,9 @@ import { Select, Store } from '@ngxs/store';
 import { JoinEvent, ResignFromEvent } from './show-event.actions';
 import { Event, Participator } from '../../../../models/event';
 import { Observable, of } from 'rxjs';
-import { CurrentUser, ParticipationStatus } from '../../../../models/current-user';
+import { CurrentUser } from '../../../../models/current-user';
 import { flatMap } from 'rxjs/operators';
+import { ParticipationStatus } from '../../../../models/participation-status';
 
 @Component({
   selector: 'app-show-event',
@@ -39,7 +40,8 @@ export class ShowEventComponent implements OnInit {
   }
 
   private defineParticipationStatus(currentUser: CurrentUser, participators: Participator[]): ParticipationStatus {
-    if (currentUser.isSignedIn && participators.length !== 0 && this.isUserAParticipator(currentUser, participators)) {
+    console.warn('This method has been changed without appropriate testing. Verify it!');
+    if (participators.length !== 0 && this.isUserAParticipator(currentUser, participators)) {
       if (this.hasUserPayed(currentUser, participators)) {
         return ParticipationStatus.PAYED;
       } else {
@@ -51,11 +53,11 @@ export class ShowEventComponent implements OnInit {
   }
 
   private isUserAParticipator(user: CurrentUser, participators: Participator[]): boolean {
-    return participators.filter(participator => participator.email === user.data.email) !== [];
+    return participators.filter(participator => participator.email === user.email) !== [];
   }
 
   private hasUserPayed(user: CurrentUser, participators: Participator[]): boolean {
-    const [currentUser] = participators.filter(participator => participator.email === user.data.email);
+    const [currentUser] = participators.filter(participator => participator.email === user.email);
 
     return !!currentUser && currentUser.hasPaid;
   }

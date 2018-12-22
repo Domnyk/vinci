@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SportArena } from '../../../../models/sport-arena';
 import { FormControl, Validators } from '@angular/forms';
-import { ShowFlashMessage } from '../../../../actions/flash-message.actions';
+import { ShowFlashMessageOnSuccess } from '../../../../actions/flash-message.actions';
 import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { DeleteSportArena } from './delete-sport-arena.actions';
@@ -36,13 +36,13 @@ export class DeleteSportArenaComponent implements OnInit {
   onSubmit() {
     const successfulDeletion = () => {
       this.router.navigate(['/owner']);
-      this.store.dispatch(new ShowFlashMessage('Arena pomyślnie usunięta'));
+      this.store.dispatch(new ShowFlashMessageOnSuccess('Arena pomyślnie usunięta'));
     };
 
     this.store.dispatch(new DeleteSportArena(this.sportArena.id))
       .subscribe(
         successfulDeletion,
-        () => this.store.dispatch(new ShowFlashMessage('Nie można usunąć tej areny sportowej'))
+        () => this.store.dispatch(new ShowFlashMessageOnSuccess('Nie można usunąć tej areny sportowej'))
       );
   }
 

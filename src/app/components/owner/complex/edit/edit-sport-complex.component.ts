@@ -1,9 +1,11 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { SportComplex } from '../../../../models/sport-complex';
+import { Component, Input, OnChanges } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { FormControl, Validators } from '@angular/forms';
 import { UpdateSportComplex } from './edit-sport-complex.actions';
 import { FormSubmitType } from '../../../common/form-submit-button/form-submit-type';
+import { ComplexFormModel } from '../form-model/complex-form-model';
+import { SportComplexState } from '../../../../state/sport-complex.state';
+import { map } from 'rxjs/operators';
+import { Complex } from '../../../../models/complex';
 
 @Component({
   selector: 'app-edit-sport-complex',
@@ -11,31 +13,24 @@ import { FormSubmitType } from '../../../common/form-submit-button/form-submit-t
   styleUrls: ['./edit-sport-complex.component.css']
 })
 export class EditSportComplexComponent implements OnChanges {
-  @Input() sportComplexInput: SportComplex;
-
+  @Input() complexId: number;
   FormSubmitType = FormSubmitType;
+  complex: ComplexFormModel = null;
 
-  name: FormControl;
-  id: FormControl;
+  constructor(private store: Store) { }
 
-  constructor(
-    private store: Store
-  ) {
-    this.name = new FormControl('', [
-      Validators.required
-    ]);
+  ngOnChanges() {
+    this.store.select(SportComplexState.getById)
+      .pipe(map(filterFn => filterFn(this.complexId)))
+      .subscribe((complex: Complex) => this.initFormData(complex));
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    const sportComplex = changes.sportComplexInput.currentValue;
-
-    this.name.setValue(sportComplex.name);
-  }
-
-  // TODO: How conveniently connect form controls with model?
   onSubmit() {
-    const sportComplex = new SportComplex(this.name.value, this.sportComplexInput.id);
-    this.store.dispatch(new UpdateSportComplex(sportComplex));
+    const complex = new Complex(this.complex.id.value, this.complex.name.value);
+    this.store.dispatch(new UpdateSportComplex(complex));
   }
 
+  private initFormData(complex: Complex) {
+    this.complex = new ComplexFormModel(complex.name, complex.id);
+  }
 }

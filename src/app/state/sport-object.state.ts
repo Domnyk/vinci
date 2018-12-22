@@ -8,7 +8,7 @@ import { catchError, map, tap } from 'rxjs/internal/operators';
 import { FetchSportObjectsInSportComplex } from '../components/owner/complex/show/sport-complex-dashboard.actions';
 import { environment } from '../../environments/environment.generated.dev';
 import { HttpClient } from '@angular/common/http';
-import { ShowFlashMessage } from '../actions/flash-message.actions';
+import { ShowFlashMessageOnSuccess } from '../actions/flash-message.actions';
 import { DeleteSportObject } from '../components/owner/object/delete/delete-sport-object.actions';
 import { Observable, throwError } from 'rxjs';
 import { UpdateSportObject } from '../components/owner/object/edit/edit-sport-object.actions';
@@ -74,14 +74,14 @@ export class SportObjectState {
     const url = environment.api.resource('sport_complexes', sportObject.sportComplexId, 'sport_objects'),
           stateUpdater = (response: Response) => {
             if (response.status === 'error') {
-              this.store.dispatch(new ShowFlashMessage('Wystąpił błąd w czasie tworzenia obiektu sportowego'));
+              this.store.dispatch(new ShowFlashMessageOnSuccess('Wystąpił błąd w czasie tworzenia obiektu sportowego'));
               return;
             }
 
             const sportObjectFromResponse: SportObject = SportObject.fromDTO(response.data.sport_object),
                   newState = [...getState().concat(sportObjectFromResponse)];
             setState(newState);
-            this.store.dispatch(new ShowFlashMessage('Obiekt sportowy został pomyślnie zaktualizowany'));
+            this.store.dispatch(new ShowFlashMessageOnSuccess('Obiekt sportowy został pomyślnie zaktualizowany'));
           };
 
     return this.geoCoder.geocode(BuildingAddressUtils.asString(sportObject.address))
@@ -101,7 +101,7 @@ export class SportObjectState {
           oldSportObject: SportObject = getState().filter((sportObject: SportObject) => sportObject.id === sportObjectToUpdate.id)[0],
           stateUpdater = (response) => {
             if (response.status === 'error') {
-              this.store.dispatch(new ShowFlashMessage('Wystąpił błąd w czasie aktualizacja danych obiektu sportowego'));
+              this.store.dispatch(new ShowFlashMessageOnSuccess('Wystąpił błąd w czasie aktualizacja danych obiektu sportowego'));
               return;
             }
 
@@ -110,7 +110,7 @@ export class SportObjectState {
 
 
             setState(newState);
-            this.store.dispatch(new ShowFlashMessage('Obiekt sportowy został pomyślnie zaktualizowany'));
+            this.store.dispatch(new ShowFlashMessageOnSuccess('Obiekt sportowy został pomyślnie zaktualizowany'));
           };
     let call: Observable<any> = null;
 
@@ -138,7 +138,7 @@ export class SportObjectState {
     const url = environment.api.resource('sport_complexes', sportComplexId, 'sport_objects'),
       stateUpdater = (receivedData) => {
         if (receivedData.status === 'error') {
-          this.store.dispatch(new ShowFlashMessage('Wystąpił błąd w czasie pobierania listy ośrodków sportowych'));
+          this.store.dispatch(new ShowFlashMessageOnSuccess('Wystąpił błąd w czasie pobierania listy ośrodków sportowych'));
           return;
         }
 
@@ -173,13 +173,13 @@ export class SportObjectState {
 
   private handleError(errorResponse: ErrorResponse) {
     console.debug('Error response: ', errorResponse);
-    this.store.dispatch(new ShowFlashMessage('Wystąpił błąd'));
+    this.store.dispatch(new ShowFlashMessageOnSuccess('Wystąpił błąd'));
   }
 
   private maybeLogError(response: Response | ErrorResponse, msg: string) {
     if (response.status === 'error') {
       console.debug('Error response: ', response);
-      this.store.dispatch(new ShowFlashMessage(msg));
+      this.store.dispatch(new ShowFlashMessageOnSuccess(msg));
     }
   }
 }

@@ -6,9 +6,8 @@ import { SignInWithPassword } from '../../actions/sign-in.actions';
 import { Credentials } from '../../models/credentials';
 import { environment } from '../../../environments/environment.generated.dev';
 import { FormControl, Validators } from '@angular/forms';
-import { FormHelper } from '../../helpers/form.helper';
-import { UserType } from '../../models/current-user';
 import { FormSubmitType } from '../common/form-submit-button/form-submit-type';
+import { CurrentUserType } from '../../models/current-user-type';
 
 @Component({
   selector: 'app-sign-in',
@@ -42,7 +41,7 @@ export class SignInComponent implements OnInit {
   // Test
   testId: FormControl = new FormControl(0);
   get backendSignInAddressDev(): string {
-    return environment.api.urls.signIn(UserType.Regular, this.testId.value);
+    return environment.api.urls.signIn(CurrentUserType.Client, this.testId.value);
   }
 
 

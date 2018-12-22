@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { ModelFactoryService } from '../../../../services/model-factory.service';
 import { CreateNewSportObject } from './new-sport-object.actions';
-import { ShowFlashMessage } from '../../../../actions/flash-message.actions';
+import { ShowFlashMessageOnSuccess } from '../../../../actions/flash-message.actions';
 import { FormControl, Validators } from '@angular/forms';
 import { SportObject } from '../../../../models/sport-object';
 import { FormSubmitType } from '../../../common/form-submit-button/form-submit-type';
@@ -87,6 +87,6 @@ export class NewSportObjectComponent implements OnInit {
     };
 
     this.store.dispatch(new CreateNewSportObject(this.sportObject))
-      .subscribe(() => this.store.dispatch(new ShowFlashMessage('Nowy obiekt sportowy został dodany')));
+      .subscribe(() => this.store.dispatch(new ShowFlashMessageOnSuccess('Nowy obiekt sportowy został dodany')));
   }
 }

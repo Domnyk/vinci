@@ -20,8 +20,6 @@ import { ArenaComponent } from './components/client/arena/show/arena.component';
 import { UnauthorizedComponent } from './components/errors/unauthorized/unauthorized.component';
 import { ProfileComponent } from './components/client/profile/profile.component';
 
-
-
 export const routes: Routes = [
   { path: 'sign_up', component: SignUpComponent },
   { path: 'sign_in', component: SignInComponent },

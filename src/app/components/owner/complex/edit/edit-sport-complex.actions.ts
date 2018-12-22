@@ -1,7 +1,7 @@
-import { SportComplex } from '../../../../models/sport-complex';
+import { Complex } from '../../../../models/complex';
 
 export class UpdateSportComplex {
-  static readonly type = '[Edit sport complex component] Button edit has been clicked';
+  static readonly type = 'Update complexFormModel';
 
-  constructor(public sportComplexToUpdate: SportComplex) { }
+  constructor(public complex: Complex) { }
 }

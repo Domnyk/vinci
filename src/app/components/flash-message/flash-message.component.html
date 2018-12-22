@@ -1,12 +1,10 @@
-<div *ngIf="(message$ | async)">
-
+<div *ngIf="isMessageToShow">
   <div class="row">
-    <div class="col alert alert-info" role="alert">
-      {{ message$ | async }}
-      <button type="button" class="close" aria-label="Close" (click)="onClick()">
+    <div class="col alert {{ alertColor }}" role="alert">
+      {{ message.content }}
+      <button type="button" class="close" aria-label="Close" (click)="hide()">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
   </div>
-
 </div>

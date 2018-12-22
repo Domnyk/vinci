@@ -1,6 +1,6 @@
 <section>
   <form (ngSubmit)="onSubmit()" >
-    <app-form-field [label]="'Nazwa kompleksu sportowego'" [control]="sportComplexNameFormControl" [type]="'text'"
+    <app-form-field [label]="'Nazwa kompleksu sportowego'" [control]="complex.name" [type]="'text'"
                     [invalidFeedback]="'Podaj nazwę kompleksu sportowego'" ></app-form-field>
 
     <app-form-submit-button [isValid]="isValid()" [text]="'Usuń kompleks'"

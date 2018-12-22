@@ -1,19 +1,26 @@
 import { Action, State, StateContext } from '@ngxs/store';
-import { HideFlashMessage, ShowFlashMessage } from '../actions/flash-message.actions';
+import { HideFlashMessage, ShowFlashMessageOnError, ShowFlashMessageOnSuccess } from '../actions/flash-message.actions';
+import { FlashMessage } from '../models/flash-message';
+import { FlashMessageStatus } from '../models/flash-message-status';
 
-@State<string>({
+@State<FlashMessage>({
   name: 'flashMessage',
   defaults: null
 })
 export class FlashMessageState {
 
-  @Action(ShowFlashMessage)
-  showFlashMessage({ setState }: StateContext<string>, { message }: ShowFlashMessage) {
-    setState(message);
+  @Action(ShowFlashMessageOnSuccess)
+  showFlashMessageOnSuccess({ setState }: StateContext<FlashMessage>, { message }: ShowFlashMessageOnSuccess) {
+    setState({ status: FlashMessageStatus.SUCCESS, content: message });
+  }
+
+  @Action(ShowFlashMessageOnError)
+  showFlashMessageOnError({ setState }: StateContext<FlashMessage>, { message }: ShowFlashMessageOnError) {
+    setState({ status: FlashMessageStatus.ERROR, content: message });
   }
 
   @Action(HideFlashMessage)
-  hideFlasMessage({ setState }: StateContext<string>) {
+  hideFlasMessage({ setState }: StateContext<FlashMessage>) {
     setState(null);
   }
 }

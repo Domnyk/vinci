@@ -6,7 +6,7 @@ import { SportDiscipline } from '../models/sport-discipline';
 import { environment } from '../../environments/environment.generated.dev';
 import { HttpClient } from '@angular/common/http';
 import { ErrorResponse, Response } from '../models/api-response';
-import { ShowFlashMessage } from '../actions/flash-message.actions';
+import { ShowFlashMessageOnSuccess } from '../actions/flash-message.actions';
 
 type SportDisciplines = Array<SportDiscipline>;
 
@@ -37,7 +37,7 @@ export class SportDisciplineState {
 
   private handleError(errorResponse: ErrorResponse) {
     console.debug('Error response: ', errorResponse);
-    this.store.dispatch(new ShowFlashMessage('Wystąpił błąd'));
+    this.store.dispatch(new ShowFlashMessageOnSuccess('Wystąpił błąd'));
   }
 
 }

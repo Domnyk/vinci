@@ -6,7 +6,7 @@ export class FetchSportDisciplines {
 }
 
 export class FetchAllSportComplexes {
-  static readonly type = '[Complex owner dashboard component] Fetch all sport complexes';
+  static readonly type = '[ComplexFormModel owner dashboard component] Fetch all sport complexes';
 
   constructor() { }
 }

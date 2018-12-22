@@ -11,35 +11,39 @@
           <a routerLink="/search" class="nav-link">Szukaj</a>
         </li>
       </ul>
-      <ul *ngIf="(currentUser$ | async).isSignedIn === false; else signedIn" class="navbar-nav d-flex justify-content-end" >
-        <li class="nav-item">
-          <a routerLink="/sign_in" class="nav-link">Zaloguj</a>
-        </li>
-        <li class="nav-item">
-          <a routerLink="/sign_up" class="nav-link">Zarejestruj</a>
-        </li>
-      </ul>
+      <ng-container *ngIf="isSignedIn; then signedIn; else unsigned"></ng-container>
     </div>
   </nav>
 </div>
 
 <ng-template #signedIn>
-  <ul [ngSwitch]="(currentUser$ | async)?.data?.type" class="navbar-nav d-flex justify-content-end">
-    <ng-container *ngSwitchCase="UserType.ComplexesOwner">
+  <ul [ngSwitch]="currentUser.type" class="navbar-nav d-flex justify-content-end">
+    <ng-container *ngSwitchCase="CurrentUserType.ComplexesOwner">
       <li class="nav-item">
-        <span class="nav-link">{{ (currentUser$ | async).data.email }}</span>
+        <span class="nav-link">{{ currentUser.email }}</span>
       </li>
       <li class="nav-item">
         <a routerLink="/owner" class="nav-link">Zarządzaj kompleksami</a>
       </li>
     </ng-container>
-    <ng-container *ngSwitchCase="UserType.Regular">
+    <ng-container *ngSwitchCase="CurrentUserType.Client">
       <li class="nav-item">
-        <a routerLink="/profile" class="nav-link">{{ (currentUser$ | async).data.displayName }}</a>
+        <a routerLink="/profile" class="nav-link">{{ currentUser.displayName }}</a>
       </li>
     </ng-container>
     <li class="nav-item">
       <button type="button" class="btn btn-link nav-link" (click)="signOut()">Wyloguj</button>
+    </li>
+  </ul>
+</ng-template>
+
+<ng-template #unsigned>
+  <ul class="navbar-nav d-flex justify-content-end">
+    <li class="nav-item">
+      <a routerLink="/sign_in" class="nav-link">Zaloguj</a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="/sign_up" class="nav-link">Zarejestruj</a>
     </li>
   </ul>
 </ng-template>
