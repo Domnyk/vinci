@@ -9,6 +9,7 @@ import { take, tap } from 'rxjs/operators';
 import { ErrorResponse } from '../models/api-response';
 import { ShowFlashMessage } from '../actions/flash-message.actions';
 import { Router } from '@angular/router';
+import { UpdateClient } from '../components/client/profile/profile.actions';
 
 
 @State<CurrentUser>({
@@ -61,5 +62,19 @@ export class CurrentUserState {
   private handleError(errorResponse: ErrorResponse) {
     console.debug('Error response: ', errorResponse);
     this.store.dispatch(new ShowFlashMessage('Wystąpił błąd'));
+  }
+
+  @Action(UpdateClient)
+  updateClient({ patchState }: StateContext<CurrentUser>, { clientProfile }: UpdateClient) {
+    const url = environment.api.resource('users', clientProfile.id),
+          stateUpdater = (response) => patchState({ isSignedIn: true, data: { email: response.email, id: response.id,
+                                                                              displayName: response.display_name,
+                                                                              type: UserType.Regular,
+                                                                              paypalEmail: response.paypal_email }});
+
+    return this.http.patch(url, clientProfile.dto(), { withCredentials: true })
+      .pipe(
+        tap((response) => stateUpdater(response))
+      );
   }
 }

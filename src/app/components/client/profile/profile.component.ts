@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import * as Profiles from '../../../models/profile';
 import { FormSubmitType } from '../../common/form-submit-button/form-submit-type';
-import { Select } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
 import { CurrentUser, CurrentUserData } from '../../../models/current-user';
 import { Observable, of } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
+import { UpdateClient } from './profile.actions';
 
 
 @Component({
@@ -19,19 +20,19 @@ export class ProfileComponent implements OnInit {
 
   clientProfile: Profiles.ClientProfile;
 
-  constructor() { }
+  constructor(private store: Store) { }
 
   ngOnInit() {
     this.currentUser$
       .pipe(
         flatMap(currentUser => of(currentUser.data))
       )
-      .subscribe(data => this.handleCurrentUserDate(data));
+      .subscribe(data => this.handleCurrentUserData(data));
   }
 
-  handleCurrentUserDate(data: CurrentUserData) {
+  handleCurrentUserData(data: CurrentUserData) {
     const profileData: Profiles.ProfileData = { displayName: data.displayName, email: data.email,
-      isSameEmailForPaypal: false };
+      isSameEmailForPaypal: false, id: data.id };
 
     this.clientProfile = new Profiles.ClientProfile(profileData);
     this.clientProfile.isSameEmailForPaypal.valueChanges.subscribe((isSame: boolean) => this.handleSameEmail(isSame));
@@ -46,5 +47,9 @@ export class ProfileComponent implements OnInit {
 
   get isPaypalEmailReadonly(): boolean {
     return this.clientProfile.isSameEmailForPaypal.value;
+  }
+
+  update() {
+    this.store.dispatch(new UpdateClient(this.clientProfile));
   }
 }

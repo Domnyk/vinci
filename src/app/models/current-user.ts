@@ -8,6 +8,7 @@ export interface CurrentUserData {
   type: UserType;
   displayName?: string;
   id?: number;
+  paypalEmail?: string;
 }
 
 export enum UserType {
