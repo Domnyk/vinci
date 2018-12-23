@@ -1,4 +1,4 @@
-import { DTO } from './dto';
+import { DTO } from '../interfaces/dto';
 import { SportDiscipline } from './sport-discipline';
 
 

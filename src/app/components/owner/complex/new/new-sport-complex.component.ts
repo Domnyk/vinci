@@ -23,7 +23,7 @@ export class NewSportComplexComponent implements OnInit {
   ngOnInit() { }
 
   onSubmit() {
-    const complex = new Complex(this.complexFormModel.id.value, this.complexFormModel.name.value);
+    const complex = new Complex(this.complexFormModel.id, this.complexFormModel.name.value);
     this.store.dispatch(new CreateNewSportComplex(complex));
   }
 

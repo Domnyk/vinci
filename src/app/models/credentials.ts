@@ -1,4 +1,4 @@
-import { DTO } from './dto';
+import { DTO } from '../interfaces/dto';
 
 export class Credentials implements DTO {
   constructor(

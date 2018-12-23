@@ -1,5 +1,5 @@
 import { FormControl, Validators } from '@angular/forms';
-import { DTO } from './dto';
+import { DTO } from '../interfaces/dto';
 
 export class ClientProfile implements DTO {
   id: number = null;

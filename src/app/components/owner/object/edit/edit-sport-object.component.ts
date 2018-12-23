@@ -85,7 +85,7 @@ export class EditSportObjectComponent implements OnChanges {
         buildingNumber: this.buildingNumber.value,
         postalCode: this.postalCode.value,
         city: this.city.value
-    }, sportObject = new SportObject(this.id.value, this.name.value, address, this.sportObject.geoCoordinates, bookingMargin, this.sportObject.sportComplexId);
+    }, sportObject = new SportObject(this.id.value, this.name.value, address, this.sportObject.geoCoordinates, bookingMargin, this.sportObject.complexId);
 
     this.store.dispatch(new UpdateSportObject(sportObject));
   }

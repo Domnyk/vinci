@@ -44,7 +44,7 @@ export class SportObjectState {
   @Selector()
   static sportObjectsInSportComplex(state: SportObjects) {
     return (sportComplexId: number) => {
-      return state.filter(sportObject => sportObject.sportComplexId === +sportComplexId);
+      return state.filter(sportObject => sportObject.complexId === +sportComplexId);
     };
   }
 
@@ -71,7 +71,7 @@ export class SportObjectState {
 
   @Action(CreateNewSportObject)
   createNewSportObject({ getState, setState }: StateContext<SportObjects>, { sportObject }: CreateNewSportObject ) {
-    const url = environment.api.resource('sport_complexes', sportObject.sportComplexId, 'sport_objects'),
+    const url = environment.api.resource('sport_complexes', sportObject.complexId, 'sport_objects'),
           stateUpdater = (response: Response) => {
             if (response.status === 'error') {
               this.store.dispatch(new ShowFlashMessageOnSuccess('Wystąpił błąd w czasie tworzenia obiektu sportowego'));
@@ -88,7 +88,7 @@ export class SportObjectState {
       .pipe(
         flatMap((coords: LatLngLiteral) => {
           sportObject.geoCoordinates = coords;
-          return this.http.post(url, sportObject.dto());
+          return this.http.post(url, sportObject.dto(), { withCredentials: true });
         }),
         tap(stateUpdater)
       )

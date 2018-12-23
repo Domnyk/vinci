@@ -1,16 +1,26 @@
-import { DTO } from './dto';
+import { DTO } from '../interfaces/dto';
 import LatLngLiteral = google.maps.LatLngLiteral;
 import { BuildingAddressLiteral } from './building-address-literal';
 
 export class SportObject implements DTO {
-   constructor(
-     public id: number,
-     public name: string,
-      public address: BuildingAddressLiteral,
-      public geoCoordinates: LatLngLiteral,
-      public bookingMargin: BookingMargin,
-      public sportComplexId?: number
-   ) { }
+  id: number;
+  name: string;
+  address: BuildingAddressLiteral;
+  geoCoordinates: LatLngLiteral;
+  bookingMargin: BookingMargin;
+  complexId?: number;
+
+  constructor(params: ConstructorParams = null) {
+    if (!!params) {
+      const { id, bookingMargin, address, geoCoordinates, name, complexId } = params;
+      this.id = id;
+      this.name = name;
+      this.address = address;
+      this.geoCoordinates = geoCoordinates;
+      this.bookingMargin = bookingMargin;
+      this.complexId = complexId;
+    }
+  }
 
    static fromDTO(dto: any): SportObject {
      const address = {
@@ -19,9 +29,11 @@ export class SportObject implements DTO {
              postalCode: dto.address.postal_code,
              city: dto.address.city
            },
-           geoCoordinates = { lat: dto.geo_coordinates.latitude, lng: dto.geo_coordinates.longitude };
+           geoCoordinates = { lat: dto.geo_coordinates.latitude, lng: dto.geo_coordinates.longitude },
+           params = { id: dto.id, name: dto.name, address: address, geoCoordinates: geoCoordinates,
+             bookingMargin: dto.booking_margin, complexId: dto.sport_complex_id };
 
-     return new SportObject(dto.id, dto.name, address, geoCoordinates, dto.booking_margin, dto.sport_complex_id);
+     return new SportObject(params);
    }
 
    dto(): SportObjectDTO {
@@ -42,18 +54,11 @@ export class SportObject implements DTO {
             postal_code: this.address.postalCode,
             street: this.address.street,
           },
-          sport_complex_id: this.sportComplexId
+          sport_complex_id: this.complexId
         }
       }
     };
   }
-}
-
-export class SportObjectBasicInformation {
-  constructor(
-    public id: number,
-    public name: string,
-  ) { }
 }
 
 interface SportObjectDTO {
@@ -76,6 +81,15 @@ interface SportObjectDTO {
       sport_complex_id: number
     }
   };
+}
+
+interface ConstructorParams {
+  id: number;
+  name: string;
+  address: BuildingAddressLiteral;
+  geoCoordinates: LatLngLiteral;
+  bookingMargin: BookingMargin;
+  complexId: number;
 }
 
 interface HadrianGeoLocation {

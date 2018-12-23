@@ -2,32 +2,33 @@
   <section>
     <h2>Dodaj nowy obiekt</h2>
 
-    <form (ngSubmit)="onSubmit()" #newSportComplexForm="ngForm">
-      <app-form-field [control]="name" [label]="'Nazwa'" [type]="'text'" [invalidFeedback]="'Podaj nazwę'">
+    <form (ngSubmit)="createObject()">
+      <app-form-field [control]="object.name" [label]="'Nazwa'" [type]="'text'" [invalidFeedback]="'Podaj nazwę'">
       </app-form-field>
 
       <app-form-row>
-        <app-form-field [rootClass]="'col'" [control]="bookingMarginInMonths"
+        <app-form-field [rootClass]="'col'" [control]="object.bookingMarginInMonths"
                         [label]="'Margines rezerwacji w miesiącach'" [type]="'number'"
                         [invalidFeedback]="'Podaj margines rezerwacji w miesiącach'"></app-form-field>
 
-        <app-form-field [rootClass]="'col'" [control]="bookingMarginInDays" [label]="'Margines rezerwacji w dniach'"
+        <app-form-field [rootClass]="'col'" [control]="object.bookingMarginInDays" [label]="'Margines rezerwacji w dniach'"
                         [type]="'number'" [invalidFeedback]="'Podaj margines rezerwacji w dniach'"></app-form-field>
       </app-form-row>
 
-      <app-form-field [control]="street" [label]="'Ulica'" [type]="'text'" [invalidFeedback]="'Podaj ulicę'">
+      <app-form-field [control]="object.street" [label]="'Ulica'" [type]="'text'" [invalidFeedback]="'Podaj ulicę'">
       </app-form-field>
 
-      <app-form-field [control]="buildingNumber" [label]="'Numer budynku'" [type]="'text'"
-                      [invalidFeedback]="'Podaj numer budynku'"></app-form-field>
+      <app-form-field [control]="object.buildingNumber" [label]="'Numer budynku'" [type]="'text'"
+                      [invalidFeedback]="'Podaj poprawny numer budynku'"></app-form-field>
 
-      <app-form-field [control]="postalCode" [label]="'Kod pocztowy'" [type]="'text'"
-                      [invalidFeedback]="'Podaj kod pocztowy'"></app-form-field>
+      <app-form-field [control]="object.postalCode" [label]="'Kod pocztowy'" [type]="'text'"
+                      [invalidFeedback]="'Podaj poprawny kod pocztowy'"></app-form-field>
 
-      <app-form-field [control]="city" [label]="'Miasto'" [type]="'text'"
+      <app-form-field [control]="object.city" [label]="'Miasto'" [type]="'text'"
                       [invalidFeedback]="'Podaj miasto'"></app-form-field>
 
-      <app-form-submit-button [text]="'Dodaj obiekt'" [submitType]="FormSubmitType.CREATE"></app-form-submit-button>
+      <app-form-submit-button [isValid]="object.isValid()" [text]="'Dodaj obiekt'"
+                              [submitType]="FormSubmitType.CREATE"></app-form-submit-button>
     </form>
   </section>
 </div>

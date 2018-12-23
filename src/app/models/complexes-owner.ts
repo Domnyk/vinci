@@ -1,4 +1,4 @@
-import { DTO } from './dto';
+import { DTO } from '../interfaces/dto';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { passwordMatchConfirmationValidator } from '../components/sign-up/password-match-confirmation.directive';
 

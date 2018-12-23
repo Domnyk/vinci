@@ -1,4 +1,4 @@
-import { DTO } from './dto';
+import { DTO } from '../interfaces/dto';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { startLaterThanEndValidator } from '../components/client/event/add/start-later-than-end.directive';
 import { addDays } from 'date-fns';

@@ -38,7 +38,7 @@ export class DeleteSportComplexComponent implements OnChanges {
       this.store.dispatch(new ShowFlashMessageOnSuccess('Kompleks pomyślnie usunięty'));
     };
 
-    this.store.dispatch(new DeleteSportComplex(this.complex.id.value))
+    this.store.dispatch(new DeleteSportComplex(this.complex.id))
       .subscribe(
         successfulDeletion,
         () => this.store.dispatch(new ShowFlashMessageOnSuccess('Nie można usunąć tego kompleksu sportowego'))

@@ -26,7 +26,7 @@ export class EditSportComplexComponent implements OnChanges {
   }
 
   onSubmit() {
-    const complex = new Complex(this.complex.id.value, this.complex.name.value);
+    const complex = new Complex(this.complex.id, this.complex.name.value);
     this.store.dispatch(new UpdateSportComplex(complex));
   }
 
