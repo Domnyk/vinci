@@ -27,6 +27,9 @@ type SportObjects = Array<SportObject>;
 })
 
 export class SportObjectState {
+  static readonly resourceName = 'sport_objects';
+  static readonly parentResourceName = 'complexes';
+
 
   constructor(
     private geoCoder: GeocoderService,
@@ -35,7 +38,7 @@ export class SportObjectState {
   ) { }
 
   @Selector()
-  static sportObject(state: SportObjects) {
+  static getById(state: SportObjects) {
     return (id: number) => {
       return state.filter(sportObject => sportObject.id === +id)[0];
     };
@@ -51,7 +54,7 @@ export class SportObjectState {
 
   @Action(FetchAllObjects)
   fetchAllObjects({ getState, setState }: StateContext<SportObjects>, { }: FetchAllObjects ) {
-    const url: string = environment.api.resource('sport_objects'),
+    const url: string = environment.api.resource(SportObjectState.resourceName),
           stateUpdater = (response: Response) => {
             const sportObjectsData = response.data.sport_objects,
                   sportObjects = sportObjectsData.map((sportObjectData: any) => SportObject.fromDTO(sportObjectData)),
@@ -71,7 +74,7 @@ export class SportObjectState {
 
   @Action(CreateNewSportObject)
   createNewSportObject({ getState, setState }: StateContext<SportObjects>, { sportObject }: CreateNewSportObject ) {
-    const url = environment.api.resource('sport_complexes', sportObject.complexId, 'sport_objects'),
+    const url = environment.api.resource(SportObjectState.parentResourceName, sportObject.complexId, SportObjectState.resourceName),
           stateUpdater = (response: Response) => {
             if (response.status === 'error') {
               this.store.dispatch(new ShowFlashMessageOnSuccess('Wystąpił błąd w czasie tworzenia obiektu sportowego'));
@@ -97,7 +100,7 @@ export class SportObjectState {
 
   @Action(UpdateSportObject)
   updateSportObject({ getState, setState }: StateContext<SportObjects>, { sportObjectToUpdate }: UpdateSportObject) {
-    const url = environment.api.resource('sport_objects', sportObjectToUpdate.id),
+    const url = environment.api.resource(SportObjectState.resourceName, sportObjectToUpdate.id),
           oldSportObject: SportObject = getState().filter((sportObject: SportObject) => sportObject.id === sportObjectToUpdate.id)[0],
           stateUpdater = (response) => {
             if (response.status === 'error') {
@@ -135,7 +138,7 @@ export class SportObjectState {
 
   @Action(FetchSportObjectsInSportComplex)
   fetchSportObjectNames({ getState, setState }: StateContext<SportObjects>, { sportComplexId }: FetchSportObjectsInSportComplex) {
-    const url = environment.api.resource('sport_complexes', sportComplexId, 'sport_objects'),
+    const url = environment.api.resource(SportObjectState.parentResourceName, sportComplexId, SportObjectState.resourceName),
       stateUpdater = (receivedData) => {
         if (receivedData.status === 'error') {
           this.store.dispatch(new ShowFlashMessageOnSuccess('Wystąpił błąd w czasie pobierania listy ośrodków sportowych'));
@@ -153,7 +156,7 @@ export class SportObjectState {
 
   @Action(DeleteSportObject)
   deleteSportObject({ getState, setState }: StateContext<SportObjects>, { id }: DeleteSportObject) {
-    const url = environment.api.resource('sport_objects', id),
+    const url = environment.api.resource(SportObjectState.resourceName, id),
       successDeletionHandler = () => {
         const updatedSportComplexList: SportObjects = getState().filter((sportObject: SportObject) => sportObject.id !== id);
         setState(

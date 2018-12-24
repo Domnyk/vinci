@@ -1,6 +1,6 @@
 import { Action, State, StateContext, Store } from '@ngxs/store';
 
-import { SignInWithPassword } from '../actions/sign-in.actions';
+import { SignInWithPassword, UserHasSignedIn } from '../actions/sign-in.actions';
 import { CurrentUser } from '../models/current-user';
 import { SignOut, SignUpComplexesOwner } from '../actions/user.actions';
 import { HttpClient } from '@angular/common/http';
@@ -12,6 +12,8 @@ import { Router } from '@angular/router';
 import { SignUpComplexesOwnerResponse } from '../models/api-responses/sign-up-complexes-owner-response';
 import { CurrentUserType } from '../models/current-user-type';
 import { SignInWithPasswordResponse } from '../models/api-responses/sign-in-with-password-response';
+import { UpdateClient } from '../components/client/profile/profile.actions';
+import { Client } from '../models/api-responses/client';
 
 
 @State<CurrentUser>({
@@ -25,7 +27,7 @@ export class CurrentUserState {
   signUpComplexesOwner({ setState }: StateContext<CurrentUser>, { complexesOwner }: SignUpComplexesOwner) {
     const stateUpdater = (response: SignUpComplexesOwnerResponse) => {
       const { id, email, paypal_email } = response;
-      setState( { id, email, paypalEmail: paypal_email, type: CurrentUserType.ComplexesOwner } );
+      setState( { email, paypalEmail: paypal_email, type: CurrentUserType.ComplexesOwner } );
       this.store.dispatch(new ShowFlashMessageOnSuccess('Pomyślnie zarejestrowano'));
       this.router.navigate(['/owner']);
     };
@@ -35,11 +37,11 @@ export class CurrentUserState {
       .subscribe(() => {}, (error) => this.handleError(error));
   }
 
-  // @Action(UserHasSignedIn)
-  // userHasSignedIn({ patchState }: StateContext<CurrentUser>, { id, email, displayName }: UserHasSignedIn) {
-  //   patchState({ isSignedIn: true, data: { id, email, displayName, type: CurrentUserType.Client} });
-  // }
-  //
+  @Action(UserHasSignedIn)
+  userHasSignedIn({ patchState }: StateContext<CurrentUser>, { paypalEmail, email, displayName }: UserHasSignedIn) {
+    patchState({ paypalEmail, email, displayName, type: CurrentUserType.Client });
+  }
+
   @Action(SignOut)
   signOut({ setState }: StateContext<CurrentUser>, {}: SignOut) {
     return this.http.delete(environment.api.urls.signOut, { withCredentials: true })
@@ -52,7 +54,7 @@ export class CurrentUserState {
   signInWithPassword({ setState }: StateContext<CurrentUser>, { credentials }: SignInWithPassword) {
     const updateState = (response: SignInWithPasswordResponse) => {
             const { id, email, paypal_email } = response;
-            setState({ id, email, paypalEmail: paypal_email, type: CurrentUserType.ComplexesOwner });
+            setState({ email, paypalEmail: paypal_email, type: CurrentUserType.ComplexesOwner });
     }, updateUI = () => {
       this.store.dispatch(new ShowFlashMessageOnSuccess('Pomyślnie zalogowano'));
       this.router.navigate(['/owner']);
@@ -69,18 +71,15 @@ export class CurrentUserState {
     console.debug('Error response: ', errorResponse);
     this.store.dispatch(new ShowFlashMessageOnSuccess('Wystąpił błąd'));
   }
-  //
-  // @Action(UpdateClient)
-  // updateClient({ patchState }: StateContext<CurrentUser>, { clientProfile }: UpdateClient) {
-  //   const url = environment.api.resource('users', clientProfile.id),
-  //         stateUpdater = (response) => patchState({ isSignedIn: true, data: { email: response.email, id: response.id,
-  //                                                                             displayName: response.display_name,
-  //                                                                             type: CurrentUserType.Regular,
-  //                                                                             paypalEmail: response.paypal_email }});
-  //
-  //   return this.http.patch(url, clientProfile.dto(), { withCredentials: true })
-  //     .pipe(
-  //       tap((response) => stateUpdater(response))
-  //     );
-  // }
+
+  @Action(UpdateClient)
+  updateClient({ patchState }: StateContext<CurrentUser>, { clientProfile }: UpdateClient) {
+    const url = environment.api.resource('users', clientProfile.id),
+          stateUpdater = ({ email, paypal_email: paypalEmail, display_name: displayName }: Client) => {
+            return patchState({ email, displayName, paypalEmail, type: CurrentUserType.Client });
+          };
+
+    return this.http.patch(url, clientProfile.dto(), { withCredentials: true })
+      .pipe(tap((client: Client) => stateUpdater(client)));
+  }
 }

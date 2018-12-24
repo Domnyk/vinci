@@ -6,6 +6,7 @@
                     [selectParams]="(selectParams | async)" [invalidFeedback]="'Wybierz przynajmniej jedną'">
     </app-form-field>
 
-    <app-form-submit-button [text]="'Stwórz arenę'" [submitType]="FormSubmitType.OTHER" ></app-form-submit-button>
+    <app-form-submit-button [isValid]="true" [text]="'Stwórz arenę'" [submitType]="FormSubmitType.OTHER" >
+    </app-form-submit-button>
   </form>
 </section>

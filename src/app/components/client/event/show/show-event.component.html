@@ -43,7 +43,7 @@
             <button (click)="joinEvent()" type="submit" class="btn btn-success">Dołącz</button>
           </ng-container>
           <ng-container *ngSwitchCase="ParticipationStatus.JOINED">
-            <button type="submit" data-dismiss="modal" class="btn btn-success">Zapłać</button>
+            <button (click)="pay()" type="submit" data-dismiss="modal" class="btn btn-success">Zapłać</button>
             <button (click)="resignFromEvent()" class="btn btn-danger">Zrezygnuj</button>
           </ng-container>
         </div>

@@ -1,4 +1,4 @@
-import { Action, State, StateContext, Store } from '@ngxs/store';
+import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { FetchEvents } from '../components/owner/calendar/calendar.actions';
 import { environment } from '../../environments/environment.generated.dev';
 import { HttpClient } from '@angular/common/http';
@@ -8,8 +8,9 @@ import { ShowFlashMessageOnSuccess } from '../actions/flash-message.actions';
 import { of } from 'rxjs';
 import { Event, Participator } from '../models/event';
 import { CreateEvent } from '../components/client/event/add/add-event-form.actions';
-import { JoinEvent, ResignFromEvent } from '../components/client/event/show/show-event.actions';
+import { JoinEvent, Pay, ResignFromEvent } from '../components/client/event/show/show-event.actions';
 import { CurrentUser } from '../models/current-user';
+import { JoinEventResponse } from '../models/api-responses/join-event-response';
 
 type Events = Array<Event>;
 
@@ -18,7 +19,18 @@ type Events = Array<Event>;
   defaults: []
 })
 export class EventState {
+  private static readonly events = 'events';
+  private static readonly participators = 'participators';
+  private static readonly arenas = 'sport_arenas';
+
   constructor(private http: HttpClient, private store: Store) { }
+
+  @Selector()
+  static getById(state: Events) {
+    return (id: number) => {
+      return state.filter(event => event.id === +id)[0];
+    };
+  }
 
   @Action(FetchEvents)
   fetchEvents({ getState, setState }: StateContext<Events>, { sportArenaId }: FetchEvents) {
@@ -26,7 +38,7 @@ export class EventState {
       setState(events);
     };
 
-    return this.http.get(environment.api.resource('sport_arenas', sportArenaId, 'events'), { withCredentials: true })
+    return this.http.get(environment.api.resource(EventState.arenas, sportArenaId, EventState.events), { withCredentials: true })
       .pipe(
         flatMap((response: any[]) => of(response.map(dto => Event.fromDTO(dto)))),
         tap(stateUpdater)
@@ -43,7 +55,7 @@ export class EventState {
       return dispatch(new ShowFlashMessageOnSuccess('Utworzono nowe wydarzenie'));
     };
 
-    return this.http.post(environment.api.resource('sport_arenas', arenaId, 'events'), event.dto(), { withCredentials: true })
+    return this.http.post(environment.api.resource(EventState.arenas, arenaId, EventState.events), event.dto(), { withCredentials: true })
       .pipe(
         tap((response) => stateUpdater(response))
       )
@@ -52,13 +64,15 @@ export class EventState {
 
   @Action(JoinEvent)
   joinEvent({ dispatch, getState, setState }: StateContext<Events>, { eventId }: JoinEvent) {
-    const stateUpdater = (response: any) => {
+    const stateUpdater = (response: JoinEventResponse) => {
       this.store.select(state => state.currentUser).subscribe((currentUser: CurrentUser) => {
-        const oldEvents = getState().filter(event => event.id !== eventId),
+        console.warn('Join Event not working!');
+        const { user_id: id, has_paid: hasPaid, is_event_owner: isEventOwner } = response,
+              oldEvents = getState().filter(event => event.id !== eventId),
               [eventToModification] = getState().filter(event => event.id === eventId),
               participators = eventToModification.participators,
               newParticipator: Participator = { displayName: currentUser.displayName, email: currentUser.email,
-                                                hasPaid: false, isEventOwner: false, id: currentUser.id },
+                                                id: id, hasPaid: hasPaid, isEventOwner: isEventOwner },
               newParticipators = [...participators, newParticipator];
 
         eventToModification.participators = newParticipators;
@@ -67,11 +81,17 @@ export class EventState {
       });
     };
 
-    return this.http.post(environment.api.resource('events', eventId, 'participations'), {} , { withCredentials: true })
+    return this.http.post(environment.api.resource(EventState.events, eventId, EventState.participators), {} , { withCredentials: true })
       .pipe(
-        tap((response) => stateUpdater(response))
+        tap((response: JoinEventResponse) => stateUpdater(response))
       )
       .subscribe(() => {}, (error) => this.handleError(error));
+  }
+
+  @Action(Pay)
+  pay({ getState, setState }: StateContext<Events>, { eventId }: Pay) {
+    const url = environment.api.resource(EventState.events, eventId, EventState.participators + '/pay');
+    window.open(url, '_blank');
   }
 
   @Action(ResignFromEvent)
@@ -87,7 +107,7 @@ export class EventState {
     };
 
 
-    return this.http.delete(environment.api.resource('events', eventId, 'participations'), { withCredentials: true})
+    return this.http.delete(environment.api.resource(EventState.events, eventId, EventState.participators), { withCredentials: true })
       .pipe(
         tap(stateUpdater)
       );

@@ -2,6 +2,9 @@ import { AbstractControl, FormControl, ValidatorFn, Validators } from '@angular/
 import { Validator } from '../../../../interfaces/validator';
 
 export class ObjectFormModel implements Validator {
+  id: number = null;
+  complexId: number = null;
+  geoCoordinates: LatLngLiteral = null;
   name = new FormControl('', [Validators.required]);
   bookingMarginInMonths: FormControl = new FormControl(0, [Validators.required, Validators.min(0)]);
   bookingMarginInDays: FormControl = new FormControl(1, [Validators.required, Validators.min(0)]);
@@ -17,9 +20,13 @@ export class ObjectFormModel implements Validator {
     return controls.reduce((prev, curr) => prev && curr.valid, true);
   }
 
-  constructor(params: ConstructorParams = null) {
+  constructor(params: ObjectFormModelConstructorParams = null) {
     if (!!params) {
-      const { name, bookingMarginInMonths, bookingMarginInDays, buildingNumber, city, street, postalCode } = params;
+      const { id, complexId, name, bookingMarginInMonths, bookingMarginInDays, buildingNumber, city, street,
+              postalCode, geoCoordinates } = params;
+      this.id = id;
+      this.complexId = complexId;
+      this.geoCoordinates = geoCoordinates;
       this.name.setValue(name);
       this.bookingMarginInMonths.setValue(bookingMarginInMonths);
       this.bookingMarginInDays.setValue(bookingMarginInDays);
@@ -47,14 +54,4 @@ function buildingNumberValidator(): ValidatorFn {
 
     return properBuildingNumber ? null : { 'invalidBuildingNumber' : { value: control.value } };
   };
-}
-
-interface ConstructorParams {
-  name?: string;
-  bookingMarginInMonths?: number;
-  bookingMarginInDays?: number;
-  street?: string;
-  buildingNumber?: string;
-  postalCode?: string;
-  city?: string;
 }

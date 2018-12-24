@@ -25,7 +25,7 @@ export class ObjectComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(({ id }: Params) => {
-      this.object$ = this.store.select(SportObjectState.sportObject).pipe(map(filterFn => filterFn(+id)));
+      this.object$ = this.store.select(SportObjectState.getById).pipe(map(filterFn => filterFn(+id)));
 
       this.store.dispatch(new FetchSportArenasInSportObject(id));
 

@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import { JoinEvent, ResignFromEvent } from './show-event.actions';
+import { JoinEvent, Pay, ResignFromEvent } from './show-event.actions';
 import { Event, Participator } from '../../../../models/event';
 import { Observable, of } from 'rxjs';
 import { CurrentUser } from '../../../../models/current-user';
@@ -12,17 +12,13 @@ import { ParticipationStatus } from '../../../../models/participation-status';
   templateUrl: './show-event.component.html',
   styleUrls: ['./show-event.component.css']
 })
-export class ShowEventComponent implements OnInit {
+export class ShowEventComponent {
   @Select(state => state.currentUser) currentUser$: Observable<CurrentUser>;
   @Input() modalId: string;
   @Input() event: Event;
   ParticipationStatus = ParticipationStatus;
 
-
   constructor(private store: Store) { }
-
-  ngOnInit() {
-  }
 
   joinEvent() {
     this.store.dispatch(new JoinEvent(this.event.id));
@@ -30,6 +26,10 @@ export class ShowEventComponent implements OnInit {
 
   resignFromEvent() {
     this.store.dispatch(new ResignFromEvent(this.event.id));
+  }
+
+  pay() {
+    this.store.dispatch(new Pay(this.event.id));
   }
 
   get participationStatus(): Observable<ParticipationStatus> {
@@ -40,7 +40,6 @@ export class ShowEventComponent implements OnInit {
   }
 
   private defineParticipationStatus(currentUser: CurrentUser, participators: Participator[]): ParticipationStatus {
-    console.warn('This method has been changed without appropriate testing. Verify it!');
     if (participators.length !== 0 && this.isUserAParticipator(currentUser, participators)) {
       if (this.hasUserPayed(currentUser, participators)) {
         return ParticipationStatus.PAYED;
@@ -53,7 +52,7 @@ export class ShowEventComponent implements OnInit {
   }
 
   private isUserAParticipator(user: CurrentUser, participators: Participator[]): boolean {
-    return participators.filter(participator => participator.email === user.email) !== [];
+    return participators.filter(p => p.email === user.email).length !== 0;
   }
 
   private hasUserPayed(user: CurrentUser, participators: Participator[]): boolean {

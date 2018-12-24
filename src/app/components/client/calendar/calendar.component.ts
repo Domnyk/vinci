@@ -1,10 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CalendarView, CalendarEvent, collapseAnimation } from 'angular-calendar';
-import { Select, Store } from '@ngxs/store';
-import { FetchEvents } from '../../owner/calendar/calendar.actions';
-import { Observable, of, Subject } from 'rxjs';
+import { Store } from '@ngxs/store';
+import { Observable } from 'rxjs';
 import { isEqual, startOfDay } from 'date-fns';
-import { flatMap, tap } from 'rxjs/operators';
 import { Event } from '../../../models/event';
 
 @Component({

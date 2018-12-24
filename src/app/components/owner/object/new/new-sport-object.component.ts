@@ -18,23 +18,12 @@ export class NewSportObjectComponent implements OnInit {
 
   constructor(private store: Store) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.object.complexId = this.sportComplexId;
+  }
 
   createObject() {
-    const object = new SportObject();
-    object.complexId = this.sportComplexId;
-    object.name = this.object.name.value;
-    object.bookingMargin = {
-      months: +this.object.bookingMarginInMonths.value,
-      days: +this.object.bookingMarginInDays.value,
-      seconds: 0
-    };
-    object.address = {
-        street: this.object.street.value,
-        buildingNumber: this.object.buildingNumber.value,
-        postalCode: this.object.postalCode.value,
-        city: this.object.city.value
-    };
+    const object = new SportObject(this.object);
 
     this.store.dispatch(new CreateNewSportObject(object))
       .subscribe(() => this.store.dispatch(new ShowFlashMessageOnSuccess('Nowy obiekt sportowy został dodany')));

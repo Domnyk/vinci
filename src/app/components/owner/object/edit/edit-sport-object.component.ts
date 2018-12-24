@@ -1,9 +1,11 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { BookingMargin, SportObject } from '../../../../models/sport-object';
 import { Store } from '@ngxs/store';
-import { FormControl, Validators } from '@angular/forms';
 import { UpdateSportObject } from './edit-sport-object.actions';
 import { FormSubmitType } from '../../../common/form-submit-button/form-submit-type';
+import { map } from 'rxjs/operators';
+import { SportObjectState } from '../../../../state/sport-object.state';
+import { ObjectFormModel } from '../form-model/object-form-model';
 
 @Component({
   selector: 'app-edit-sport-object',
@@ -11,83 +13,52 @@ import { FormSubmitType } from '../../../common/form-submit-button/form-submit-t
   styleUrls: ['./edit-sport-object.component.css']
 })
 export class EditSportObjectComponent implements OnChanges {
-  @Input() sportObject: SportObject;
+  @Input() objectId: number;
+  object: ObjectFormModel = null;
 
   FormSubmitType = FormSubmitType;
 
-  name: FormControl;
-  id: FormControl;
-  bookingMarginInMonths: FormControl;
-  bookingMarginInDays: FormControl;
-  street: FormControl;
-  buildingNumber: FormControl;
-  postalCode: FormControl;
-  city: FormControl
+  constructor(private store: Store) { }
 
-  constructor(
-    private store: Store
-  ) {
-    this.name = new FormControl('', [
-      Validators.required
-    ]);
-
-    this.id = new FormControl('', [
-      Validators.required
-    ]);
-
-    this.bookingMarginInMonths = new FormControl('', [
-      Validators.required
-    ]);
-
-    this.bookingMarginInDays = new FormControl('', [
-      Validators.required
-    ]);
-
-    this.street = new FormControl('', [
-      Validators.required
-    ]);
-
-    this.buildingNumber = new FormControl('', [
-
-    ]);
-
-    this.postalCode = new FormControl('', [
-
-    ]);
-
-    this.city = new FormControl('', [
-
-    ]);
+  ngOnChanges() {
+    this.store.select(SportObjectState.getById)
+      .pipe(map(filterFn => filterFn(this.objectId)))
+      .subscribe((object: SportObject) => this.initFormData(object));
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    const sportObject = changes.sportObject.currentValue;
-
-    console.debug('sportObject is: ', sportObject);
-
-    this.name.setValue(sportObject.name);
-    this.id.setValue(sportObject.id);
-    this.bookingMarginInMonths.setValue(sportObject.bookingMargin.months);
-    this.bookingMarginInDays.setValue(sportObject.bookingMargin.days);
-    this.street.setValue(sportObject.address.street);
-    this.buildingNumber.setValue(sportObject.address.buildingNumber);
-    this.postalCode.setValue(sportObject.address.postalCode);
-    this.city.setValue(sportObject.address.city);
-  }
-
-  onSubmit() {
+  editObject() {
     const bookingMargin: BookingMargin = {
-        months: this.bookingMarginInMonths.value,
-        days: this.bookingMarginInDays.value,
+        months: this.object.bookingMarginInMonths.value,
+        days: this.object.bookingMarginInDays.value,
         seconds: 0
     }, address = {
-        street: this.street.value,
-        buildingNumber: this.buildingNumber.value,
-        postalCode: this.postalCode.value,
-        city: this.city.value
-    }, sportObject = new SportObject(this.id.value, this.name.value, address, this.sportObject.geoCoordinates, bookingMargin, this.sportObject.complexId);
+        street: this.object.street.value,
+        buildingNumber: this.object.buildingNumber.value,
+        postalCode: this.object.postalCode.value,
+        city: this.object.city.value
+    }, params = { id: this.object.id, name: this.object.name.value, address: address,
+                  geoCoordinates: this.object.geoCoordinates, bookingMargin: bookingMargin,
+                  complexId: this.object.complexId  },
+       object = new SportObject(params);
 
-    this.store.dispatch(new UpdateSportObject(sportObject));
+    this.store.dispatch(new UpdateSportObject(object));
+  }
+
+  private initFormData({ id, name, address, bookingMargin, complexId, geoCoordinates }: SportObject) {
+    const params: ObjectFormModelConstructorParams = {
+      id: id,
+      complexId: complexId,
+      name: name,
+      bookingMarginInMonths: bookingMargin.months,
+      bookingMarginInDays: bookingMargin.days,
+      street: address.street,
+      buildingNumber: address.buildingNumber,
+      postalCode: address.postalCode,
+      city: address.city,
+      geoCoordinates: geoCoordinates
+    };
+
+    this.object = new ObjectFormModel(params);
   }
 
 }

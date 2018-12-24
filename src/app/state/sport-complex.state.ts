@@ -24,7 +24,7 @@ type Complexes = Complex[];
 
 
 export class SportComplexState {
-  static readonly resourceName: string = 'sport_complexes';
+  static readonly resourceName: string = 'complexes';
 
   constructor(
     private http: HttpClient,
@@ -40,16 +40,9 @@ export class SportComplexState {
 
   @Action(FetchAllSportComplexes)
   fetchAllSportComplexesHandler({ setState }: StateContext<Complexes>) {
-    type StateUpdaterType = (response: Response & ErrorResponse) => void;
+    type StateUpdaterType = (response: any[]) => void;
     const url = environment.api.resource(SportComplexState.resourceName),
-          stateUpdater: StateUpdaterType = (response) => {
-            if (response.status === 'error') {
-              this.store.dispatch(new ShowFlashMessageOnSuccess('Wystąpił błąd w czasie pobierania listy kompleksów sportowych'));
-              return;
-            }
-
-            setState([...response.data.sport_complexes]);
-          };
+          stateUpdater: StateUpdaterType = (response) => setState([...response]);
 
     return this.http.get(url)
       .pipe(
@@ -59,7 +52,7 @@ export class SportComplexState {
 
   @Action(CreateNewSportComplex)
   newSportComplex({ getState, setState }: StateContext<Complexes>, { complex }: CreateNewSportComplex) {
-    type stateUpdaterType = (response: Response) => void;
+    type stateUpdaterType = (response: any) => void;
     const url = environment.api.resource(SportComplexState.resourceName),
           stateUpdater: stateUpdaterType = (response) => {
             if (response.status === 'error') {
@@ -67,7 +60,7 @@ export class SportComplexState {
               return;
             }
 
-            setState([...getState().concat(response.data.sport_complex)]);
+            setState([...getState().concat(response)]);
             this.store.dispatch(new ShowFlashMessageOnSuccess('Pomyślnie stworzono kompleks sportowy'));
           };
 
@@ -78,14 +71,14 @@ export class SportComplexState {
 
   @Action(UpdateSportComplex)
   updateSportComplex({ getState, setState }: StateContext<Complexes>, { complex }: UpdateSportComplex) {
-    const url = environment.api.resource('sport_complexes', complex.id),
-      stateUpdater = (response: Response) => {
+    const url = environment.api.resource(SportComplexState.resourceName, complex.id),
+      stateUpdater = (response: any) => {
         if (response.status === 'error') {
           this.store.dispatch(new ShowFlashMessageOnSuccess('Wystąpił błąd w czasie aktualizacja danych kompleksu sportowego'));
           return;
         }
 
-        const updatedSportComplex = response.data.sport_complex,
+        const updatedSportComplex = response,
               newState = getState().map(sportComplex => sportComplex.id === complex.id ? updatedSportComplex : sportComplex);
 
 
@@ -100,7 +93,7 @@ export class SportComplexState {
 
   @Action(DeleteSportComplex)
   deleteSportComplex({ getState, setState }: StateContext<Complexes>, { id }: DeleteSportComplex) {
-    const url = environment.api.resource('sport_complexes', id),
+    const url = environment.api.resource(SportComplexState.resourceName, id),
       successDeletionHandler = () => {
         const updatedSportComplexList: Complexes = getState().filter((complex: Complex) => complex.id !== id);
         setState(

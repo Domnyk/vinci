@@ -9,3 +9,9 @@ export class ResignFromEvent {
 
   constructor(public eventId: number) { }
 }
+
+export class Pay {
+  static readonly type = 'Pay for event';
+
+  constructor(public eventId: number) { }
+}

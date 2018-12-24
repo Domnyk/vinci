@@ -3,7 +3,7 @@ import * as Profiles from '../../../models/client-profile';
 import { FormSubmitType } from '../../common/form-submit-button/form-submit-type';
 import { Select, Store } from '@ngxs/store';
 import { CurrentUser } from '../../../models/current-user';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { UpdateClient } from './profile.actions';
 
 
@@ -26,7 +26,7 @@ export class ProfileComponent implements OnInit {
   }
 
   fillForm(user: CurrentUser) {
-    const profileData: Profiles.ProfileData = { displayName: user.displayName, email: user.email, id: user.id,
+    const profileData: Profiles.ProfileData = { displayName: user.displayName, email: user.email,
       isSameEmailForPaypal: user.email === user.paypalEmail, paypalEmail: user.paypalEmail };
 
     this.clientProfile = new Profiles.ClientProfile(profileData);

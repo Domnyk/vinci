@@ -25,7 +25,7 @@ export class SportObjectComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(
       ({ id }: Params) => {
-        this.sportObject$ = this.store.select(SportObjectState.sportObject).pipe(
+        this.sportObject$ = this.store.select(SportObjectState.getById).pipe(
           map(filterFn => filterFn(id))
         );
 
