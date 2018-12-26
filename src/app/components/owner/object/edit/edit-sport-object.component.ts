@@ -6,6 +6,7 @@ import { FormSubmitType } from '../../../common/form-submit-button/form-submit-t
 import { map } from 'rxjs/operators';
 import { SportObjectState } from '../../../../state/sport-object.state';
 import { ObjectFormModel } from '../form-model/object-form-model';
+import { ObjectFormModelConstructorParams } from '../form-model/object-form-model-constructor-params';
 
 @Component({
   selector: 'app-edit-sport-object',
