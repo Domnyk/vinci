@@ -38,11 +38,17 @@
             </div>
           </div>
         </div>
-        <div class="modal-footer" [ngSwitch]="(userStatus | async)">
+        <div [ngSwitch]="(userStatus | async)" class="modal-footer">
           <ng-container *ngSwitchCase="ParticipationStatus.DID_NOT_JOIN">
-            <button (click)="joinEvent()" type="submit" class="btn btn-success">Dołącz</button>
+            <div *ngIf="event.isJoiningPossible(currentUser$ | async); else notJoinable">
+              <button (click)="joinEvent()" type="submit" class="btn btn-success">Dołącz</button>
+            </div>
+            <ng-template #notJoinable>
+              <span class="font-weight-bold">Nie możesz dołączyć do tego wydarzenia</span>
+            </ng-template>
           </ng-container>
           <ng-container *ngSwitchCase="ParticipationStatus.JOINED">
+
             <button (click)="pay()" type="submit" data-dismiss="modal" class="btn btn-success">Zapłać</button>
             <button (click)="resignFromEvent()" class="btn btn-danger">Zrezygnuj</button>
           </ng-container>

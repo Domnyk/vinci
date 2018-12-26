@@ -32,7 +32,7 @@ export const routes: Routes = [
   { path: 'owner', component: ComplexOwnerDashboardComponent, canActivate: [AdminAuthorizationGuard],
     children: [
       { path: '', component: WelcomeToDashboardComponent },
-      { path: 'new_sport_complex', component: NewSportComplexComponent },
+      { path: 'new_complex', component: NewSportComplexComponent },
       { path: 'new_sport_arena', component: NewSportArenaComponent },
       { path: 'complex/:id', component: SportComplexDashboardComponent },
       { path: 'object/:id', component: SportObjectComponent },

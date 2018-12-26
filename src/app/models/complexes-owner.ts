@@ -22,19 +22,15 @@ export class ComplexesOwner implements DTO {
 
   dto(): SportComplexDTO {
     return {
-      complexes_owner: {
-        email: this.email.value,
-        paypal_email: this.paypalEmail.value,
-        password: this.password.value
-      }
+      email: this.email.value,
+      paypal_email: this.paypalEmail.value,
+      password: this.password.value
     };
   }
 }
 
 export interface SportComplexDTO {
-  complexes_owner: {
-    email: string;
-    paypal_email: string;
-    password: string;
-  };
+  email: string;
+  paypal_email: string;
+  password: string;
 }

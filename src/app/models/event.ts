@@ -1,5 +1,6 @@
 import { CalendarEvent } from 'angular-calendar';
 import { parse } from 'date-fns';
+import { CurrentUser } from './current-user';
 
 export class Event implements CalendarEvent {
   public static fromDTO(eventDTO: any): Event {
@@ -20,6 +21,18 @@ export class Event implements CalendarEvent {
     public minParticipants: number,
     public participators: Participator[]
   ) { }
+
+  public isEventInJoinPhase(): boolean {
+    return true;
+  }
+
+  public isJoiningPossible(user: CurrentUser): boolean {
+    const isSpaceForNextParticipant = this.participators.length < this.maxParticipants;
+    const isEventInJoinPhase = true;
+    const hasUserJoined = this.participators.filter(p => p.email === user.email).length === 1;
+
+    return isSpaceForNextParticipant && isEventInJoinPhase && !hasUserJoined;
+  }
 
   private static createDate(day: string, time: string): Date {
     return parse(day + 'T' + time);
