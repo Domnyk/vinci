@@ -44,10 +44,8 @@ export class CurrentUserState {
 
   @Action(SignOut)
   signOut({ setState }: StateContext<CurrentUser>, {}: SignOut) {
-    return this.http.delete(environment.api.urls.signOut, { withCredentials: true })
-      .pipe(
-        tap(() => setState(null)),
-      );
+    setState(null);
+    return this.http.delete(environment.api.urls.signOut, { withCredentials: true });
   }
 
   @Action(SignInWithPassword)

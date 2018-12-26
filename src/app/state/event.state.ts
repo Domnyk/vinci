@@ -90,7 +90,7 @@ export class EventState {
 
   @Action(Pay)
   pay({ getState, setState }: StateContext<Events>, { eventId }: Pay) {
-    const url = environment.api.resource(EventState.events, eventId, EventState.participators + '/pay');
+    const url = environment.api.resource(EventState.events, eventId, 'payments' + '/approve');
     window.open(url, '_blank');
   }
 

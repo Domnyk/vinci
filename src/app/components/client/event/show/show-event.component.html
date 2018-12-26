@@ -38,13 +38,19 @@
             </div>
           </div>
         </div>
-        <div class="modal-footer" [ngSwitch]="(participationStatus | async)">
+        <div class="modal-footer" [ngSwitch]="(userStatus | async)">
           <ng-container *ngSwitchCase="ParticipationStatus.DID_NOT_JOIN">
             <button (click)="joinEvent()" type="submit" class="btn btn-success">Dołącz</button>
           </ng-container>
           <ng-container *ngSwitchCase="ParticipationStatus.JOINED">
             <button (click)="pay()" type="submit" data-dismiss="modal" class="btn btn-success">Zapłać</button>
             <button (click)="resignFromEvent()" class="btn btn-danger">Zrezygnuj</button>
+          </ng-container>
+          <ng-container *ngSwitchCase="ParticipationStatus.PAYED">
+            <span class="font-weight-bold"> Dokonano już płatności </span>
+          </ng-container>
+          <ng-container *ngSwitchCase="ParticipationStatus.NOT_SIGNED_IN">
+            <a routerLink="/sign_in" data-dismiss="modal">Zaloguj się</a>
           </ng-container>
         </div>
       </div>

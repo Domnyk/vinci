@@ -1,0 +1,11 @@
+<div class="row">
+  <main [ngSwitch]="(paymentStatus$ | async)" class="col-6 offset-3">
+   <ng-container *ngSwitchCase="Status.SUCCESS">
+     <p class="lead">Dziękujemy za dokonanie płatności</p>
+   </ng-container>
+    <ng-container *ngSwitchCase="Status.FAILURE">
+      <p class="lead">Nie udało się zrealizował płatności</p>
+      <button type="button" class="btn btn-success">Ponów</button>
+    </ng-container>
+  </main>
+</div>

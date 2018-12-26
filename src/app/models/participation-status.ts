@@ -1,5 +1,6 @@
 export enum ParticipationStatus {
-  DID_NOT_JOIN = 1,
-  JOINED = 2,
-  PAYED = 3
+  NOT_SIGNED_IN = 1,
+  DID_NOT_JOIN = 2,
+  JOINED = 3,
+  PAYED = 4
 }

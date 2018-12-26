@@ -19,6 +19,7 @@ import { SearchResultsComponent } from './components/client/search-results/searc
 import { ArenaComponent } from './components/client/arena/show/arena.component';
 import { UnauthorizedComponent } from './components/errors/unauthorized/unauthorized.component';
 import { ProfileComponent } from './components/client/profile/profile.component';
+import { PaymentComponent } from './components/client/payment/payment.component';
 
 export const routes: Routes = [
   { path: 'sign_up', component: SignUpComponent },
@@ -38,7 +39,8 @@ export const routes: Routes = [
       { path: 'arena/:id', component: SportArenaComponent },
     ]
   },
-  { path: 'profile', component: ProfileComponent} ,
+  { path: 'payment', component: PaymentComponent },
+  { path: 'profile', component: ProfileComponent },
   { path: 'unauthorized', component: UnauthorizedComponent },
   { path: '', component: WelcomeComponent },
   { path: '**', component: NotFoundComponent },

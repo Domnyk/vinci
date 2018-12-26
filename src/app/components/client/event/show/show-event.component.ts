@@ -32,7 +32,7 @@ export class ShowEventComponent {
     this.store.dispatch(new Pay(this.event.id));
   }
 
-  get participationStatus(): Observable<ParticipationStatus> {
+  get userStatus(): Observable<ParticipationStatus> {
     return this.currentUser$.pipe(
       flatMap((currentUser: CurrentUser) => of(this.defineParticipationStatus(currentUser, this.event.participators))
       )
@@ -40,14 +40,14 @@ export class ShowEventComponent {
   }
 
   private defineParticipationStatus(currentUser: CurrentUser, participators: Participator[]): ParticipationStatus {
-    if (participators.length !== 0 && this.isUserAParticipator(currentUser, participators)) {
+    if (!!currentUser && participators.length !== 0 && this.isUserAParticipator(currentUser, participators)) {
       if (this.hasUserPayed(currentUser, participators)) {
         return ParticipationStatus.PAYED;
       } else {
         return ParticipationStatus.JOINED;
       }
     } else {
-      return ParticipationStatus.DID_NOT_JOIN;
+      return !!currentUser ? ParticipationStatus.DID_NOT_JOIN : ParticipationStatus.NOT_SIGNED_IN;
     }
   }
 
