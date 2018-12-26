@@ -1,6 +1,6 @@
 import LatLngLiteral = google.maps.LatLngLiteral;
 
-interface ObjectFormModelConstructorParams {
+export interface ObjectFormModelConstructorParams {
   id?: number;
   complexId?: number;
   name?: string;
@@ -10,5 +10,5 @@ interface ObjectFormModelConstructorParams {
   buildingNumber?: string;
   postalCode?: string;
   city?: string;
-  geoCoordinates?: LatLngLiteral
+  geoCoordinates?: LatLngLiteral;
 }

@@ -1,5 +1,7 @@
 import { AbstractControl, FormControl, ValidatorFn, Validators } from '@angular/forms';
 import { Validator } from '../../../../interfaces/validator';
+import { ObjectFormModelConstructorParams } from './object-form-model-constructor-params';
+import LatLngLiteral = google.maps.LatLngLiteral;
 
 export class ObjectFormModel implements Validator {
   id: number = null;
