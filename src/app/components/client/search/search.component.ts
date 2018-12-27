@@ -35,7 +35,6 @@ export class SearchComponent implements OnInit {
   month: FormControl;
   day: FormControl;
   location: FormControl;
-  radius: FormControl;
 
   constructor(private store: Store, private router: Router, private currentLocationService: CurrentLocationService,
               private geocoderService: GeocoderService) {
@@ -62,8 +61,6 @@ export class SearchComponent implements OnInit {
     this.location.valueChanges.subscribe((newValue: string) => {
       this.fullLocation.readableAddress = newValue;
     });
-
-    this.radius = new FormControl(0.1, [Validators.required, Validators.min(0.1)]);
   }
 
   ngOnInit() {
@@ -101,15 +98,15 @@ export class SearchComponent implements OnInit {
       this.geocoderService.geocode(this.fullLocation.readableAddress)
         .pipe(tap( (coords: LatLngLiteral) => this.fullLocation.coords = coords))
         .subscribe(() => this.search());
+    } else {
+      this.search();
     }
-
-    this.search();
   }
 
   private search() {
     const day = this.day.value < 10 ? '0' + this.day.value : this.day.value,
       date = [this.year.value, this.month.value.value, day].join('-'),
-      params = new SearchParams(this.disciplines.value, this.price.value, date, this.fullLocation.coords, this.radius.value);
+      params = new SearchParams(this.disciplines.value, this.price.value, date, this.fullLocation.coords);
 
     this.store.dispatch(new Search(params));
     this.router.navigate(['search_results']);

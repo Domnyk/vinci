@@ -6,8 +6,7 @@ export class SearchParams implements DTO {
     public disciplines: Array<number>,
     public price: number,
     public date: string,
-    public geoLocation: LatLngLiteral,
-    public radius: number
+    public geoLocation: LatLngLiteral
   ) { }
 
   dto(): SearchParamsDTO {
@@ -17,7 +16,6 @@ export class SearchParams implements DTO {
         price: this.price,
         date: this.date,
         geo_location: this.geoLocation,
-        radius: this.radius
       }
     };
   }
@@ -29,6 +27,5 @@ interface SearchParamsDTO {
     price: number;
     date: string;
     geo_location: LatLngLiteral;
-    radius: number;
   };
 }
