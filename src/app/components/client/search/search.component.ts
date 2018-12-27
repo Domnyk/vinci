@@ -29,7 +29,6 @@ export class SearchComponent implements OnInit {
   fullLocation: FullLocation = { readableAddress: '', coords: null, wasEditedByUser: true };
 
   disciplines: FormControl;
-  price: FormControl;
   date: FormGroup;
   year: FormControl;
   month: FormControl;
@@ -49,8 +48,6 @@ export class SearchComponent implements OnInit {
     };
 
     this.lastDayOfMonth = +format(lastDayOfMonth(currentDate), 'DD');
-
-    this.price = new FormControl(0, [Validators.required]);
     this.year = new FormControl(this.currentDate.year, [
       Validators.required, Validators.min(this.currentDate.year)
     ]);
@@ -105,8 +102,9 @@ export class SearchComponent implements OnInit {
 
   private search() {
     const day = this.day.value < 10 ? '0' + this.day.value : this.day.value,
-      date = [this.year.value, this.month.value.value, day].join('-'),
-      params = new SearchParams(this.disciplines.value, this.price.value, date, this.fullLocation.coords);
+          disciplines = this.disciplines.value.map(d => +d),
+          date = [this.year.value, this.month.value.value, day].join('-'),
+          params = new SearchParams(disciplines, date, this.fullLocation.coords);
 
     this.store.dispatch(new Search(params));
     this.router.navigate(['search_results']);

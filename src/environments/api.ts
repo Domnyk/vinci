@@ -9,6 +9,7 @@ export class API {
       signUp: this.domain + '/users',
       signIn: this.calculateSignInAddress.bind(this),
       signOut: this.domain + '/session',
+      search: this.domain + '/sport_objects/search',
       geocoder: this.calculateGeocoderAddress.bind(this),
       reverseGeocoder: this.calculateReverseGeocoderAddress.bind(this)
     };

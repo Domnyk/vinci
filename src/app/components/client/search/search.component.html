@@ -9,20 +9,6 @@
       <app-select-disciplines [label]="'Dyscyplina'" [disciplinesFormControl]="disciplines">
       </app-select-disciplines>
 
-      <div class="form-group">
-        <label>Cena</label>
-        <div class="input-group">
-          <input [formControl]="price" [class.is-invalid]="price.invalid" name="price" type="number" min="0" step="1"
-                 class="form-control"/>
-          <div class="input-group-append">
-            <div class="input-group-text">PLN</div>
-          </div>
-          <div class="invalid-feedback">
-            Podaj cenę
-          </div>
-        </div>
-      </div>
-
       <div class="form-row">
         <div class="form-group col">
           <label>Rok</label>
