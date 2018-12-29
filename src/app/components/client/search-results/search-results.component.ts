@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { Select } from '@ngxs/store';
-import { Observable } from 'rxjs';
-import { SearchResults } from '../../../state/search-results.state';
+import { Select, Store } from '@ngxs/store';
+import { Observable, of, zip } from 'rxjs';
 import { CurrentLocationService } from '../../../services/current-location.service';
 import { MarkerService } from '../../../services/marker.service';
 import { Router } from '@angular/router';
 import { SportArena } from '../../../models/sport-arena';
-import { warsaw } from '../../../locations';
 import LatLngLiteral = google.maps.LatLngLiteral;
+import { SportObject } from '../../../models/sport-object';
+import { SearchResult } from '../../../models/search-result';
+import { flatMap, map } from 'rxjs/operators';
+import { SportObjectState } from '../../../state/sport-object.state';
+import { FetchAllObjects } from '../map/map.actions';
 
 @Component({
   selector: 'app-search-results',
@@ -15,18 +18,25 @@ import LatLngLiteral = google.maps.LatLngLiteral;
   styleUrls: ['./search-results.component.css']
 })
 export class SearchResultsComponent implements OnInit {
-  @Select(state => state.searchResults) searchResults$: Observable<SearchResults>;
+  @Select(state => state.search.params.geoLocation) geoLocation$: Observable<LatLngLiteral>;
+  @Select(state => state.search.results) results$: Observable<SearchResult[]>;
+  objects$: Observable<SportObject[]>;
   arenas: SportArena[];
   map: google.maps.Map;
 
   constructor(private currentLocationService: CurrentLocationService,
               private markerService: MarkerService,
-              private router: Router) {
+              private router: Router,
+              private store: Store) {
   }
 
   ngOnInit() {
-    this.currentLocationService.fetch({ fallbackLocation: warsaw })
-      .subscribe((currentLocation: LatLngLiteral) => this.createMap(currentLocation));
+    const ids$ = this.store.select(state => state.search.results).pipe(
+      flatMap((results: SearchResult[]) => of(results.map(result => result.objectId)))
+    );
+
+    zip(this.geoLocation$, ids$, this.store.dispatch(new FetchAllObjects()))
+      .subscribe(([location, ids, obs]: [LatLngLiteral, number[], Observable<any>]) => this.createMap(location, ids));
   }
 
   handleClick(event) {
@@ -37,19 +47,21 @@ export class SearchResultsComponent implements OnInit {
       return;
     }
 
-    const sportObjectId: number = +sourceElem.split('-').pop(),
-          foundArenasIds = this.arenas
-            .map(arena => `${arena.id}`)
-            .join(',');
-    this.router.navigate([`/objects/${sportObjectId}`, { found: foundArenasIds }]);
+    const sportObjectId: number = +sourceElem.split('-').pop();
+    this.router.navigate([`/objects/${sportObjectId}`]);
   }
 
-  private createMap(currentLocation: LatLngLiteral) {
+  private createMap(currentLocation: LatLngLiteral, ids: number[]) {
     this.map = new google.maps.Map(document.getElementById('map'), { center: currentLocation, zoom: 15 });
+    this.markerService.addMarkerRaw(currentLocation, this.map);
 
-    this.searchResults$.subscribe(({ objects, arenas }) => {
-      this.arenas = arenas;
-      objects.forEach(object => this.markerService.addMarker(object, this.map));
-    });
+    console.log('ids are: ', ids);
+
+    this.store.select(SportObjectState.getByIds)
+      .pipe(map(filterFn => filterFn(ids)))
+      .subscribe((objects: SportObject[]) => {
+        console.log('Objects are: ', objects);
+        objects.forEach(object => this.markerService.addMarker(object, this.map));
+      });
   }
 }

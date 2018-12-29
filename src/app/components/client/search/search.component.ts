@@ -107,7 +107,6 @@ export class SearchComponent implements OnInit {
           params = new SearchParams(disciplines, date, this.fullLocation.coords);
 
     this.store.dispatch(new Search(params));
-    this.router.navigate(['search_results']);
   }
 
   private onSuccessfulLocationFetchHandleControls(readableAddress: string) {

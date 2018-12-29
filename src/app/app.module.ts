@@ -61,7 +61,7 @@ import { ListArenasComponent } from './components/client/arena/list/list-arenas.
 import { CustomDateFormatter } from './custom-date-formatter';
 import { SearchComponent } from './components/client/search/search.component';
 import { SelectDisciplinesComponent } from './components/common/select-disciplines/select-disciplines.component';
-import { SearchResultsState } from './state/search-results.state';
+import { SearchState } from './state/search.state';
 import { SearchResultsComponent } from './components/client/search-results/search-results.component';
 import { CalendarComponent as CalendarComponentClient } from './components/client/calendar/calendar.component';
 import { AddEventFormComponent } from './components/client/event/add/add-event-form.component';
@@ -143,7 +143,7 @@ registerLocaleData(localePl);
       FlashMessageState,
       SportArenaState,
       EventState,
-      SearchResultsState,
+      SearchState,
     ]),
     NgxsStoragePluginModule.forRoot({ key: 'currentUser' }),
     NgxsLoggerPluginModule.forRoot(),

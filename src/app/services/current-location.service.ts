@@ -6,6 +6,8 @@ import LatLngLiteral = google.maps.LatLngLiteral;
   providedIn: 'root'
 })
 export class CurrentLocationService {
+  private static readonly timeout = 5000;
+
 
   constructor() {}
 
@@ -13,17 +15,18 @@ export class CurrentLocationService {
     const subscribe = (subject: Subscriber<LatLngLiteral>) => {
       const isGeoLocationNotSupported: boolean = !('geolocation' in navigator);
       if (isGeoLocationNotSupported) {
-        subject.error('Location api not supported');
+        console.warn('Geolocation api not supported - returning fallback location');
+        subject.next(options.fallbackLocation);
       }
 
       const handleSuccess = ({ coords: { latitude, longitude } }: Position) => {
         subject.next({ lat: latitude, lng: longitude });
-      }, handleError = (error: PositionError) => {
-          console.debug('Error in navigator.geolocation.getCurrentPosition: ', error);
-          subject.next(options.fallbackLocation);
+      }, handleError = (_: PositionError) => {
+        console.warn('Geolocation api timeout - returning fallback location');
+        subject.next(options.fallbackLocation);
       };
 
-      navigator.geolocation.getCurrentPosition(handleSuccess, handleError);
+      navigator.geolocation.getCurrentPosition(handleSuccess, handleError, { timeout: CurrentLocationService.timeout });
     };
 
     return Observable.create(subscribe);

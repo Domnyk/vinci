@@ -45,6 +45,16 @@ export class SportObjectState {
   }
 
   @Selector()
+  static getByIds(state: SportObjects) {
+    return (ids: number[]) => {
+
+      const objects = state.filter(sportObject => ids.some(id => +id === sportObject.id));
+      console.log('Objects from state selector: ', objects);
+      return objects;
+    };
+  }
+
+  @Selector()
   static sportObjectsInSportComplex(state: SportObjects) {
     return (sportComplexId: number) => {
       return state.filter(sportObject => sportObject.complexId === +sportComplexId);
