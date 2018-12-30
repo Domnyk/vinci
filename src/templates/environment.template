@@ -4,5 +4,6 @@ import { API } from './api';
 
 export const environment = {
   production: {{#PRODUCTION#}},
-  api: new API('{{#API_ADDRESS#}}', '{{#GOOGLE_MAPS_API_KEY#}}')
+  api: new API('{{#API_ADDRESS#}}', '{{#GOOGLE_MAPS_API_KEY#}}'),
+  flashTimeout: 5000
 };

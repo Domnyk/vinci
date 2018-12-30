@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Select, Store } from '@ngxs/store';
-import { RouterStateParams } from './state/custom-router-state-serializer';
-import { Observable } from 'rxjs';
+import { Store } from '@ngxs/store';
 import { UserHasSignedIn } from './actions/sign-in.actions';
+import { HideFlashMessage } from './actions/flash-message.actions';
 
 
 @Component({
@@ -40,6 +39,11 @@ export class AppComponent implements OnInit {
 
       this.store.dispatch(new UserHasSignedIn(paypalEmail, email, displayName));
     });
+  }
+
+  @HostListener('document:click')
+  hideFlashAfterClick() {
+    this.store.dispatch(new HideFlashMessage());
   }
 }
 
