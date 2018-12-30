@@ -31,12 +31,10 @@ export class SearchResultsComponent implements OnInit {
   }
 
   ngOnInit() {
-    const ids$ = this.store.select(state => state.search.results).pipe(
-      flatMap((results: SearchResult[]) => of(results.map(result => result.objectId)))
-    );
+    const searchResults$ = this.store.select(state => state.search.results);
 
-    zip(this.geoLocation$, ids$, this.store.dispatch(new FetchAllObjects()))
-      .subscribe(([location, ids, obs]: [LatLngLiteral, number[], Observable<any>]) => this.createMap(location, ids));
+    zip(this.geoLocation$, searchResults$, this.store.dispatch(new FetchAllObjects()))
+      .subscribe(([location, searchResults, _]: [LatLngLiteral, SearchResult[], Observable<any>]) => this.createMap(location, searchResults));
   }
 
   handleClick(event) {
@@ -51,17 +49,22 @@ export class SearchResultsComponent implements OnInit {
     this.router.navigate([`/objects/${sportObjectId}`]);
   }
 
-  private createMap(currentLocation: LatLngLiteral, ids: number[]) {
+  private createMap(currentLocation: LatLngLiteral, searchResults: SearchResult[], ) {
     this.map = new google.maps.Map(document.getElementById('map'), { center: currentLocation, zoom: 15 });
     this.markerService.addMarkerRaw(currentLocation, this.map);
+    const ids = searchResults.map(result => result.objectId),
+          prices = searchResults.map(result => result.averagePrice),
+          maxPrice = Math.max(...prices),
+          minPrice = Math.min(...prices);
 
-    console.log('ids are: ', ids);
 
     this.store.select(SportObjectState.getByIds)
       .pipe(map(filterFn => filterFn(ids)))
       .subscribe((objects: SportObject[]) => {
-        console.log('Objects are: ', objects);
-        objects.forEach(object => this.markerService.addMarker(object, this.map));
+        objects.forEach(object => {
+          const price = searchResults.filter(result => result.objectId === object.id)[0].averagePrice;
+          this.markerService.addSearchResultsMarker(object, { min: minPrice, max: maxPrice, value: price } , this.map);
+        });
       });
   }
 }
