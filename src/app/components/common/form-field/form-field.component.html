@@ -6,7 +6,7 @@
 
 <ng-template #input>
   <input [formControl]="control" [class.is-invalid]="isInvalid(control)" [attr.type]="type" class="form-control"
-         [attr.aria-describedby]="label" [readonly]="_isReadonly">
+         [attr.aria-describedby]="label" [readonly]="_isReadonly" [attr.autocomplete]="_autocomplete">
 </ng-template>
 
 <ng-template #select>
