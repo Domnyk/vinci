@@ -22,6 +22,7 @@ export class EditSportArenaComponent implements OnInit, OnChanges {
 
   name: FormControl;
   sportDisciplines: FormControl;
+  pricePerHour: FormControl = new FormControl(1, [Validators.required, Validators.min(1)]);
 
   constructor(private store: Store) {
     this.name = new FormControl('', [
@@ -42,12 +43,13 @@ export class EditSportArenaComponent implements OnInit, OnChanges {
 
     this.name.setValue(sportArena.name);
     this.sportDisciplines.setValue(sportArena.sportDisciplines);
+    this.pricePerHour.setValue(sportArena.pricePerHour);
   }
 
   onSubmit() {
     const sportDisciplines: Array<number> = this.sportDisciplines.value.map((id: string) => +id),
           sportArena: SportArena = new SportArena(this.sportArena.id, this.name.value, sportDisciplines,
-                                                  this.sportArena.sportObjectId);
+                                                  this.sportArena.sportObjectId, +this.pricePerHour.value);
 
     this.store.dispatch(new UpdateSportArena(sportArena));
   }

@@ -1,8 +1,10 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Store } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
 import { UserHasSignedIn } from './actions/sign-in.actions';
 import { HideFlashMessage } from './actions/flash-message.actions';
+import { FlashMessage } from './models/flash-message';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -11,11 +13,16 @@ import { HideFlashMessage } from './actions/flash-message.actions';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  @Select(state => state.flashMessage) flashMessage$: Observable<FlashMessage>;
+
   title = 'Vinci';
+  flashMsg: FlashMessage = null;
 
   constructor(private store: Store, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.flashMessage$.subscribe((flash: FlashMessage) => this.flashMsg = flash);
+
     this.route.fragment.subscribe((fragment: string) => {
       if (!fragment || !fragment.split('&')) {
         return;
@@ -43,7 +50,9 @@ export class AppComponent implements OnInit {
 
   @HostListener('document:click')
   hideFlashAfterClick() {
-    this.store.dispatch(new HideFlashMessage());
+    if (!!this.flashMsg) {
+      this.store.dispatch(new HideFlashMessage());
+    }
   }
 }
 

@@ -20,6 +20,7 @@ export class NewSportArenaComponent implements OnInit {
 
   name: FormControl;
   sportDisciplines: FormControl;
+  pricePerHour: FormControl = new FormControl(1, [Validators.required, Validators.min(1)]);
 
   FormSubmitType = FormSubmitType;
 
@@ -39,7 +40,7 @@ export class NewSportArenaComponent implements OnInit {
 
   onSubmit() {
     const sportDisciplines: Array<number> = this.sportDisciplines.value.map((sportDiscipline: string) => +sportDiscipline),
-          sportArena = new SportArena(null, this.name.value, sportDisciplines, this.sportObjectId);
+          sportArena = new SportArena(null, this.name.value, sportDisciplines, this.sportObjectId, +this.pricePerHour.value);
 
     console.debug('sportArena: ', sportArena);
 

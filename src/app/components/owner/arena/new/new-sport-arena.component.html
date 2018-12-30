@@ -5,6 +5,8 @@
     <app-form-field [label]="'Dyscypliny sportowe'" [control]="sportDisciplines" [type]="'select'"
                     [selectParams]="(selectParams | async)" [invalidFeedback]="'Wybierz przynajmniej jedną'">
     </app-form-field>
+    <app-form-field [label]="'Cena za godzinę'" [control]="pricePerHour" [type]="'number'"
+                    [invalidFeedback]="'Podaj prawidłową cenę za godzinę'"></app-form-field>
 
     <app-form-submit-button [isValid]="true" [text]="'Stwórz arenę'" [submitType]="FormSubmitType.OTHER" >
     </app-form-submit-button>

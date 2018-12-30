@@ -13,14 +13,14 @@ export class FlashMessageState {
   constructor(private store: Store) { }
 
   @Action(ShowFlashMessageOnSuccess)
-  showFlashMessageOnSuccess({ setState }: StateContext<FlashMessage>, { message }: ShowFlashMessageOnSuccess) {
-    this.initTimer();
+  showFlashMessageOnSuccess({ getState, setState }: StateContext<FlashMessage>, { message }: ShowFlashMessageOnSuccess) {
+    this.initTimer(getState);
     setState({ status: FlashMessageStatus.SUCCESS, content: message });
   }
 
   @Action(ShowFlashMessageOnError)
-  showFlashMessageOnError({ setState }: StateContext<FlashMessage>, { message }: ShowFlashMessageOnError) {
-    this.initTimer();
+  showFlashMessageOnError({ getState, setState }: StateContext<FlashMessage>, { message }: ShowFlashMessageOnError) {
+    this.initTimer(getState);
     setState({ status: FlashMessageStatus.ERROR, content: message });
   }
 
@@ -29,10 +29,14 @@ export class FlashMessageState {
     setState(null);
   }
 
-  private initTimer(timeout?: number) {
+  private initTimer(getState: () => FlashMessage, timeout?: number) {
     const _timeout = !!timeout ? timeout : environment.flashTimeout,
       t = timer(_timeout);
 
-    t.subscribe(() => this.store.dispatch(new HideFlashMessage()));
+    t.subscribe(() => {
+      if (!!getState()) {
+        this.store.dispatch(new HideFlashMessage());
+      }
+    });
   }
 }
