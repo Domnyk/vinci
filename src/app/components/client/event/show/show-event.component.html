@@ -12,10 +12,20 @@
           <div class="container-fluid">
             <div class="row mt-2 mb-2">
               <div class="col">
-                Początek: {{ event.start.getHours() }}:{{ event.start.getMinutes() }}
+                Początek wydarzenia: {{ formatTime(event.start) }}
               </div>
               <div class="col">
-                Koniec: {{ event.end.getHours() }}:{{ event.end.getMinutes() }}
+                Koniec wydarzenia: {{ formatTime(event.end) }}
+              </div>
+            </div>
+            <div class="row mt-2 mb-2">
+              <div class="col">
+                Koniec etapu dołączania: <br />
+                {{ formatDateTime(event.joiningEnd) }}
+              </div>
+              <div class="col">
+                Koniec etapu płacenia: <br />
+                {{ formatDateTime(event.payingEnd) }}
               </div>
             </div>
             <div class="row mt-2 mb-2">
@@ -38,26 +48,8 @@
             </div>
           </div>
         </div>
-        <div [ngSwitch]="(userStatus | async)" class="modal-footer">
-          <ng-container *ngSwitchCase="ParticipationStatus.DID_NOT_JOIN">
-            <div *ngIf="event.isJoiningPossible(currentUser$ | async); else notJoinable">
-              <button (click)="joinEvent()" type="submit" class="btn btn-success">Dołącz</button>
-            </div>
-            <ng-template #notJoinable>
-              <span class="font-weight-bold">Nie możesz dołączyć do tego wydarzenia</span>
-            </ng-template>
-          </ng-container>
-          <ng-container *ngSwitchCase="ParticipationStatus.JOINED">
-
-            <button (click)="pay()" type="submit" data-dismiss="modal" class="btn btn-success">Zapłać</button>
-            <button (click)="resignFromEvent()" class="btn btn-danger">Zrezygnuj</button>
-          </ng-container>
-          <ng-container *ngSwitchCase="ParticipationStatus.PAYED">
-            <span class="font-weight-bold"> Dokonano już płatności </span>
-          </ng-container>
-          <ng-container *ngSwitchCase="ParticipationStatus.NOT_SIGNED_IN">
-            <a routerLink="/sign_in" data-dismiss="modal">Zaloguj się</a>
-          </ng-container>
+        <div class="modal-footer">
+          {{ getActions() | async }}
         </div>
       </div>
     </div>
@@ -67,3 +59,36 @@
 <ng-template #emptyEvent>
   <span> Jeszcze nikt nie dołączył do tego wydarzenia </span>
 </ng-template>
+
+<ng-template #unsigned>
+  <div class="modal-footer" [ngSwitch]="event.isJoiningPossible2()">
+    <ng-container *ngSwitchCase="true">
+      Zaloguj się aby dołączyć
+    </ng-container>
+    <ng-container *ngSwitchCase="false">
+      Zaloguj się
+    </ng-container>
+  </div>
+</ng-template>
+
+<!--<div [ngSwitch]="(userStatus | async)" class="modal-footer">-->
+  <!--<ng-container *ngSwitchCase="ParticipationStatus.DID_NOT_JOIN">-->
+    <!--<div *ngIf="event.isJoiningPossible(currentUser$ | async); else notJoinable">-->
+      <!--<button (click)="joinEvent()" type="submit" class="btn btn-success">Dołącz</button>-->
+    <!--</div>-->
+    <!--<ng-template #notJoinable>-->
+      <!--<span class="font-weight-bold">Nie możesz dołączyć do tego wydarzenia</span>-->
+    <!--</ng-template>-->
+  <!--</ng-container>-->
+  <!--<ng-container *ngSwitchCase="ParticipationStatus.JOINED">-->
+
+    <!--<button (click)="pay()" type="submit" data-dismiss="modal" class="btn btn-success">Zapłać</button>-->
+    <!--<button (click)="resignFromEvent()" class="btn btn-danger">Zrezygnuj</button>-->
+  <!--</ng-container>-->
+  <!--<ng-container *ngSwitchCase="ParticipationStatus.PAYED">-->
+    <!--<span class="font-weight-bold"> Dokonano już płatności </span>-->
+  <!--</ng-container>-->
+  <!--<ng-container *ngSwitchCase="ParticipationStatus.NOT_SIGNED_IN">-->
+    <!--<a routerLink="/sign_in" data-dismiss="modal">Zaloguj się</a>-->
+  <!--</ng-container>-->
+<!--</div>-->

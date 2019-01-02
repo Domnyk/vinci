@@ -1,4 +1,4 @@
-import { Action, State, StateContext, Store } from '@ngxs/store';
+import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 
 import { SignInWithPassword, UserHasSignedIn } from '../actions/sign-in.actions';
 import { CurrentUser } from '../models/current-user';
@@ -22,6 +22,12 @@ import { Client } from '../models/api-responses/client';
 
 export class CurrentUserState {
   constructor (private http: HttpClient, private store: Store, private router: Router) { }
+
+  @Selector()
+  static isSignedIn(state: CurrentUserState) {
+    return () => !!state;
+  };
+
 
   @Action(SignUpComplexesOwner)
   signUpComplexesOwner({ setState }: StateContext<CurrentUser>, { complexesOwner }: SignUpComplexesOwner) {
