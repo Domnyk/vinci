@@ -55,7 +55,7 @@ export class MarkerService {
     const green: Rgb = { r: 0, g: 255, b: 0 },
           red: Rgb = { r: 255, g: 0, b: 0 },
           val = (max - value) / (max - min),
-          color = this.colorService.interpolate(green, red, (max - value) / (max - min));
+          color = this.colorService.interpolate(red, green, (max - value) / (max - min));
 
     console.log(color);
     return color;

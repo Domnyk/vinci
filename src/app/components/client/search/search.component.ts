@@ -102,8 +102,9 @@ export class SearchComponent implements OnInit {
 
   private search() {
     const day = this.day.value < 10 ? '0' + this.day.value : this.day.value,
+          month = +this.month.value.value < 10 ? '0' + this.month.value.value : this.month.value.value,
           disciplines = this.disciplines.value.map(d => +d),
-          date = [this.year.value, this.month.value.value, day].join('-'),
+          date = [this.year.value, month, day].join('-'),
           params = new SearchParams(disciplines, date, this.fullLocation.coords);
 
     this.store.dispatch(new Search(params));

@@ -25,7 +25,6 @@ export class NewSportObjectComponent implements OnInit {
   createObject() {
     const object = new SportObject(this.object);
 
-    this.store.dispatch(new CreateNewSportObject(object))
-      .subscribe(() => this.store.dispatch(new ShowFlashMessageOnSuccess('Nowy obiekt sportowy został dodany')));
+    this.store.dispatch(new CreateNewSportObject(object));
   }
 }
