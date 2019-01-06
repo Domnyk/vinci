@@ -18,6 +18,7 @@ import { InsertArenas } from '../actions/sport-arena.actions';
 import { BuildingAddressUtils } from '../services/building-address-utils.service';
 import { ERROR } from '../models/error';
 import LatLngLiteral = google.maps.LatLngLiteral;
+import { handleError } from './error-handler';
 
 
 type SportObjects = Array<SportObject>;
@@ -104,7 +105,7 @@ export class SportObjectState {
           return this.http.post(url, sportObject.dto(), { withCredentials: true });
         }),
         tap(stateUpdater),
-        catchError((error: ERROR) => this.handleError2(error))
+        catchError((error: ERROR) => handleError(error, this.store))
       );
   }
 
@@ -143,7 +144,7 @@ export class SportObjectState {
         );
     }
 
-    return call.subscribe(() => {}, (error) => this.handleError(error));
+    return call;
   }
 
   @Action(FetchSportObjectsInSportComplex)
@@ -182,30 +183,6 @@ export class SportObjectState {
         map(successDeletionHandler),
         catchError(failureDeletionHandler),
       );
-  }
-
-  /**
-   * @Deprecated
-   * @param errorResponse
-   */
-  private handleError(errorResponse: ErrorResponse) {
-    console.error('Error response: ', errorResponse);
-    this.store.dispatch(new ShowFlashMessageOnError('Wystąpił błąd'));
-  }
-
-  private handleError2(error: ERROR): Observable<never> {
-    let msg: string = null;
-
-    switch (error) {
-      case ERROR.NO_SUCH_ADDRESS:
-        msg = 'Nie ma takieg adresu. Podaj poprawny adres i spróbuj ponownie';
-        break;
-      default:
-        msg = 'Wystąpił błąd. Spróbuj ponownie później';
-    }
-
-    this.store.dispatch(new ShowFlashMessageOnError(msg));
-    return EMPTY;
   }
 
   private maybeLogError(response: Response | ErrorResponse, msg: string) {

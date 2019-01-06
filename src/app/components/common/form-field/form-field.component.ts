@@ -19,6 +19,7 @@ export class FormFieldComponent implements OnInit, OnChanges {
   @Input() rootClass?: string;
   @Input() selectParams?: SelectParams;
   @Input() readonly?: boolean;
+  @Input() fieldReq?: string;
   @Input() autocomplete?: string;
 
   /*
@@ -34,6 +35,7 @@ export class FormFieldComponent implements OnInit, OnChanges {
   _isSelect: boolean = null;
   _isReadonly: boolean = null;
   _autocomplete: string = null;
+  showFieldReq = false;
 
   // TODO: 'new-password' should return AutocompleteType.NEW_PASSWORD but this would require this.type to be 'new-password'
   // TODO: this.type is also used in input as attr.type
@@ -71,6 +73,10 @@ export class FormFieldComponent implements OnInit, OnChanges {
       this._autocomplete = this.autocomplete;
     } else {
       this._autocomplete = FormFieldComponent.getAutocompleteType(this.type);
+    }
+
+    if (!!this.fieldReq) {
+      this.showFieldReq = true;
     }
   }
 

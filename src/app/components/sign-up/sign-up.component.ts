@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormHelper } from '../../helpers/form.helper';
-import { passwordMatchConfirmationValidator } from './password-match-confirmation.directive';
+import { passwordMatchConfirmationValidator } from './password-validators';
 import { Store } from '@ngxs/store';
 import { SignUpComplexesOwner } from '../../actions/user.actions';
 import { ComplexesOwner } from '../../models/complexes-owner';

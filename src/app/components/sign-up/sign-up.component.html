@@ -10,7 +10,7 @@
                       [invalidFeedback]="'Podaj prawidłowy adres email'" ></app-form-field>
 
       <app-form-field [label]="'Hasło'" [control]="complexesOwner.password" [type]="'password'"
-                      [invalidFeedback]="'Podaj hasło'"></app-form-field>
+                      [fieldReq]="complexesOwner.passwordReq" [invalidFeedback]="'Podaj poprawne hasło'"></app-form-field>
 
       <!-- TODO: Refactor into app-form-field -->
       <div class="form-group">

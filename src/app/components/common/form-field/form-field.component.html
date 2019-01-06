@@ -1,6 +1,7 @@
 <div [ngClass]="_class">
   <label [attr.label]="label">{{ label }}</label>
   <div *ngIf="_isSelect; then select; else input"></div>
+  <small *ngIf="showFieldReq" class="form-text text-muted">{{ fieldReq }}</small>
   <div class="invalid-feedback">{{ invalidFeedback }}</div>
 </div>
 

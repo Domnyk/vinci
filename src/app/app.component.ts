@@ -39,12 +39,12 @@ export class AppComponent implements OnInit {
                   return Object.assign(prev, { [current.key]: current.value });
                 }, { });
 
-      const { display_name: displayName, email, paypal_email: paypalEmail } = <UserInfo>userInfo;
-      if (!email || !displayName) {
+      const { display_name: displayName, paypal_email: paypalEmail } = <UserInfo>userInfo;
+      if (!displayName) {
         return;
       }
 
-      this.store.dispatch(new UserHasSignedIn(paypalEmail, email, displayName));
+      this.store.dispatch(new UserHasSignedIn(paypalEmail, displayName));
     });
   }
 
@@ -59,5 +59,4 @@ export class AppComponent implements OnInit {
 interface UserInfo {
   paypal_email: string;
   display_name: string;
-  email: string;
 }
