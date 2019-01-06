@@ -51,7 +51,7 @@ export class Event implements CalendarEvent {
   }
 
   public isParticipator(user: CurrentUser): boolean {
-    return this.participators.filter(p => p.email === user.email).length === 1;
+    return !!user && this.participators.filter(p => p.email === user.email).length === 1;
   }
 
   public isInJoiningPhase(): boolean {
@@ -59,7 +59,12 @@ export class Event implements CalendarEvent {
   }
 
   public hasUserPaid(user: CurrentUser): boolean {
-    return this.participators.filter(p => p.email === user.email)[0].hasPaid;
+    if (!!user) {
+      const participator = this.participators.filter(p => p.email === user.email)[0];
+      return !!participator && participator.hasPaid;
+    }
+
+    return false;
   }
 
   private static createDatetime(day: string, time: string): Date {

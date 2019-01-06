@@ -9,6 +9,7 @@ import { ParticipationStatus } from '../../../../models/participation-status';
 import { format } from 'date-fns';
 import * as pl from 'date-fns/locale/pl';
 import { CurrentUserState } from '../../../../state/user.state';
+import { ModalActionType } from '../../../../models/modal-action-type';
 
 @Component({
   selector: 'app-show-event',
@@ -23,47 +24,39 @@ export class ShowEventComponent implements DoCheck {
   isSignedIn$: Observable<boolean>;
   @Input() modalId: string;
   @Input() event: Event;
-  ParticipationStatus = ParticipationStatus;
 
-  constructor(private store: Store) { }
+  constructor(public myStore: Store) { }
 
   ngDoCheck() {
-    this.isSignedIn$ = this.store.select(CurrentUserState.isSignedIn).pipe(map(filterFn => filterFn()));
+    this.isSignedIn$ = this.myStore.select(CurrentUserState.isSignedIn).pipe(map(filterFn => filterFn()));
   }
 
-  joinEvent() {
-    this.store.dispatch(new JoinEvent(this.event.id));
+  joinEvent(store: Store, eventId: number) {
+    return () => store.dispatch(new JoinEvent(eventId));
   }
 
-  resignFromEvent() {
-    this.store.dispatch(new ResignFromEvent(this.event.id));
+  resignFromEvent(store: Store, eventId: number) {
+    return () => store.dispatch(new ResignFromEvent(eventId));
   }
 
-  pay() {
-    this.store.dispatch(new Pay(this.event.id));
+  pay(store: Store, eventId: number) {
+    return () => store.dispatch(new Pay(eventId));
   }
 
-  get userStatus(): Observable<ParticipationStatus> {
-    return this.currentUser$.pipe(
-      flatMap((currentUser: CurrentUser) => of(this.defineParticipationStatus(currentUser, this.event.participators))
-      )
-    );
-  }
-
-  getActions(): Observable<string> {
+  getActions(): Observable<ModalActionType> {
     return zip(this.isSignedIn$, this.currentUser$).pipe(flatMap(([isSignedIn, user]) => {
       const isParticipator = this.event.isParticipator(user),
             isJoiningPossible = this.event.isJoiningPossible2(),
             isEventInJoinPhase = this.event.isInJoiningPhase(),
             hasUserPaid = this.event.hasUserPaid(user);
 
-      if (!isSignedIn && isJoiningPossible) return of('Zaloguj się aby dołączyć');
-      if (!isSignedIn && !isJoiningPossible) return of('Zaloguj się');
-      if (isSignedIn && !isParticipator && isJoiningPossible) return of('Dołącz');
-      if (isSignedIn && !isParticipator && !isJoiningPossible) return of('Do tego wydarzenia nie można już dołączyć');
-      if (isSignedIn && isParticipator && isEventInJoinPhase) return of('Zrezygnuj');
-      if (isSignedIn && isParticipator && !isEventInJoinPhase && hasUserPaid) return of('Dziękujemy za dokonanie płatności');
-      if (isSignedIn && isParticipator && !isEventInJoinPhase && !hasUserPaid) return of('Zapłać');
+      if (!isSignedIn && isJoiningPossible) return of(ModalActionType.SIGN_IN_TO_JOIN);
+      if (!isSignedIn && !isJoiningPossible) return of(ModalActionType.SIGN_IN);
+      if (isSignedIn && !isParticipator && isJoiningPossible) return of(ModalActionType.JOIN);
+      if (isSignedIn && !isParticipator && !isJoiningPossible) return of(ModalActionType.CANT_JOIN);
+      if (isSignedIn && isParticipator && isEventInJoinPhase) return of(ModalActionType.RESIGN);
+      if (isSignedIn && isParticipator && !isEventInJoinPhase && hasUserPaid) return of(ModalActionType.THANKS_FOR_PAYING);
+      if (isSignedIn && isParticipator && !isEventInJoinPhase && !hasUserPaid) return of(ModalActionType.PAY);
     }));
   }
 

@@ -49,7 +49,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          {{ getActions() | async }}
+          <app-event-action [action]="(getActions() | async)" [join]="joinEvent(myStore, event.id)" [pay]="pay(myStore, event.id)" [resign]="resignFromEvent(myStore, event.id)">
+          </app-event-action>
         </div>
       </div>
     </div>
@@ -58,17 +59,6 @@
 
 <ng-template #emptyEvent>
   <span> Jeszcze nikt nie dołączył do tego wydarzenia </span>
-</ng-template>
-
-<ng-template #unsigned>
-  <div class="modal-footer" [ngSwitch]="event.isJoiningPossible2()">
-    <ng-container *ngSwitchCase="true">
-      Zaloguj się aby dołączyć
-    </ng-container>
-    <ng-container *ngSwitchCase="false">
-      Zaloguj się
-    </ng-container>
-  </div>
 </ng-template>
 
 <!--<div [ngSwitch]="(userStatus | async)" class="modal-footer">-->

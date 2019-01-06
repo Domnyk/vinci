@@ -76,6 +76,7 @@ import { UnauthorizedComponent } from './components/errors/unauthorized/unauthor
 import { ProfileComponent } from './components/client/profile/profile.component';
 import { FormCheckboxComponent } from './components/common/form-checkbox/form-checkbox.component';
 import { PaymentComponent } from './components/client/payment/payment.component';
+import { EventActionComponent } from './components/client/event/event-action/event-action.component';
 
 registerLocaleData(localePl);
 
@@ -124,6 +125,7 @@ registerLocaleData(localePl);
     ProfileComponent,
     FormCheckboxComponent,
     PaymentComponent,
+    EventActionComponent,
   ],
   imports: [
     RouterModule.forRoot(
