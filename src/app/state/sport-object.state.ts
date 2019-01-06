@@ -8,15 +8,16 @@ import { catchError, map, tap } from 'rxjs/internal/operators';
 import { FetchSportObjectsInSportComplex } from '../components/owner/complex/show/sport-complex-dashboard.actions';
 import { environment } from '../../environments/environment.generated.dev';
 import { HttpClient } from '@angular/common/http';
-import { ShowFlashMessageOnSuccess } from '../actions/flash-message.actions';
+import { ShowFlashMessageOnError, ShowFlashMessageOnSuccess } from '../actions/flash-message.actions';
 import { DeleteSportObject } from '../components/owner/object/delete/delete-sport-object.actions';
-import { Observable, throwError } from 'rxjs';
+import { EMPTY, empty, Observable, of, throwError } from 'rxjs';
 import { UpdateSportObject } from '../components/owner/object/edit/edit-sport-object.actions';
 import { ErrorResponse, Response } from '../models/api-response';
 import { FetchAllObjects } from '../components/client/map/map.actions';
 import { InsertArenas } from '../actions/sport-arena.actions';
-import LatLngLiteral = google.maps.LatLngLiteral;
 import { BuildingAddressUtils } from '../services/building-address-utils.service';
+import { ERROR } from '../models/error';
+import LatLngLiteral = google.maps.LatLngLiteral;
 
 
 type SportObjects = Array<SportObject>;
@@ -97,15 +98,14 @@ export class SportObjectState {
             this.store.dispatch(new ShowFlashMessageOnSuccess('Obiekt sportowy został pomyślnie zaktualizowany'));
           };
 
-    return this.geoCoder.geocode(BuildingAddressUtils.asString(sportObject.address))
-      .pipe(
+    return this.geoCoder.geocode(BuildingAddressUtils.asString(sportObject.address)).pipe(
         flatMap((coords: LatLngLiteral) => {
           sportObject.geoCoordinates = coords;
           return this.http.post(url, sportObject.dto(), { withCredentials: true });
         }),
-        tap(stateUpdater)
-      )
-      .subscribe(() => {}, (error) => this.handleError(error));
+        tap(stateUpdater),
+        catchError((error: ERROR) => this.handleError2(error))
+      );
   }
 
   @Action(UpdateSportObject)
@@ -184,9 +184,28 @@ export class SportObjectState {
       );
   }
 
+  /**
+   * @Deprecated
+   * @param errorResponse
+   */
   private handleError(errorResponse: ErrorResponse) {
-    console.debug('Error response: ', errorResponse);
-    this.store.dispatch(new ShowFlashMessageOnSuccess('Wystąpił błąd'));
+    console.error('Error response: ', errorResponse);
+    this.store.dispatch(new ShowFlashMessageOnError('Wystąpił błąd'));
+  }
+
+  private handleError2(error: ERROR): Observable<never> {
+    let msg: string = null;
+
+    switch (error) {
+      case ERROR.NO_SUCH_ADDRESS:
+        msg = 'Nie ma takieg adresu. Podaj poprawny adres i spróbuj ponownie';
+        break;
+      default:
+        msg = 'Wystąpił błąd. Spróbuj ponownie później';
+    }
+
+    this.store.dispatch(new ShowFlashMessageOnError(msg));
+    return EMPTY;
   }
 
   private maybeLogError(response: Response | ErrorResponse, msg: string) {
