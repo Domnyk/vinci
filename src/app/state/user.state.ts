@@ -5,7 +5,7 @@ import { CurrentUser } from '../models/current-user';
 import { SignOut, SignUpComplexesOwner } from '../actions/user.actions';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../environments/environment.generated.dev';
-import { catchError, catchError, tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { ShowFlashMessageOnSuccess } from '../actions/flash-message.actions';
 import { Router } from '@angular/router';
 import { SignUpComplexesOwnerResponse } from '../models/api-responses/sign-up-complexes-owner-response';
