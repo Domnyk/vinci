@@ -83,9 +83,9 @@ export class EventState {
 
     return this.http.post(environment.api.resource(EventState.events, eventId, EventState.participators), {} , { withCredentials: true })
       .pipe(
-        tap((response: JoinEventResponse) => stateUpdater(response))
-      )
-      .subscribe(() => {}, (error) => this.handleError(error));
+        tap((response: JoinEventResponse) => stateUpdater(response)),
+        tap(() => console.log('Joined to event'))
+      );
   }
 
   @Action(Pay)

@@ -1,0 +1,9 @@
+export enum ModalActionType {
+  SIGN_IN_TO_JOIN = 'SIGN_IN_TO_JOIN',
+  SIGN_IN = 'SIGN_IN',
+  JOIN = 'JOIN',
+  CANT_JOIN = 'CANT_JOIN',
+  RESIGN = 'RESIGN',
+  THANKS_FOR_PAYING = 'THANKS_FOR_PAYING',
+  PAY = 'PAY'
+}
