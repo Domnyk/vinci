@@ -6,21 +6,18 @@
     <a routerLink="/sign_in" data-dismiss="modal">Zaloguj się</a>
   </div>
   <ng-container *ngSwitchCase="ModalActionType.JOIN">
-    <span *ngIf="showWaitMessageOnJoin" class="text-warning">
-      Proszę czekać na dołączenie
-    </span>
-    <button (click)="joinEvent()" [disabled]="disableJoinButton" type="submit" class="btn btn-success">Dołącz</button>
+    <button (click)="join.emit()" [disabled]="disableJoinButton" type="submit" class="btn btn-success">Dołącz</button>
   </ng-container>
   <div *ngSwitchCase="ModalActionType.CANT_JOIN">
     <span class="text-danger">Do tego wydarzenia nie można już dołączyć</span>
   </div>
   <div *ngSwitchCase="ModalActionType.RESIGN">
-    <button (click)="resign()" class="btn btn-danger">Zrezygnuj</button>
+    <button (click)="resign.emit()" class="btn btn-danger">Zrezygnuj</button>
   </div>
   <div *ngSwitchCase="ModalActionType.THANKS_FOR_PAYING">
     <span class="text-success">Dziękujemy za dokonanie płatności</span>
   </div>
   <div *ngSwitchCase="ModalActionType.PAY">
-    <button (click)="pay()" class="btn btn-success">Zapłać</button>
+    <button (click)="pay.emit()" class="btn btn-success">Zapłać</button>
   </div>
 </ng-container>

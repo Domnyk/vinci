@@ -25,22 +25,22 @@ export class ShowEventComponent implements DoCheck {
   @Input() modalId: string;
   @Input() event: Event;
 
-  constructor(public myStore: Store) { }
+  constructor(public store: Store) { }
 
   ngDoCheck() {
-    this.isSignedIn$ = this.myStore.select(CurrentUserState.isSignedIn).pipe(map(filterFn => filterFn()));
+    this.isSignedIn$ = this.store.select(CurrentUserState.isSignedIn).pipe(map(filterFn => filterFn()));
   }
 
-  joinEvent(store: Store, eventId: number) {
-    return () => store.dispatch(new JoinEvent(eventId));
+  joinEvent() {
+    this.store.dispatch(new JoinEvent(this.event.id));
   }
 
-  resignFromEvent(store: Store, eventId: number) {
-    return () => store.dispatch(new ResignFromEvent(eventId));
+  resign() {
+    this.store.dispatch(new ResignFromEvent(this.event.id));
   }
 
-  pay(store: Store, eventId: number) {
-    return () => store.dispatch(new Pay(eventId));
+  pay() {
+    this.store.dispatch(new Pay(this.event.id));
   }
 
   getActions(): Observable<ModalActionType> {

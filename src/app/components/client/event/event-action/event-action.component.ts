@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ModalActionType } from '../../../../models/modal-action-type';
 import { Observable } from 'rxjs';
 
@@ -9,25 +9,14 @@ import { Observable } from 'rxjs';
 })
 export class EventActionComponent implements OnInit {
   @Input() action: ModalActionType;
-  @Input() join: () => Observable<any>;
-  @Input() resign: () => Observable<any>;
-  @Input() pay: () => Observable<any>;
+
+  @Output() pay = new EventEmitter<void>();
+  @Output() resign = new EventEmitter<void>();
+  @Output() join = new EventEmitter<void>();
 
   ModalActionType = ModalActionType;
 
-  showWaitMessageOnJoin = false;
   disableJoinButton = false;
-
-  joinEvent() {
-    this.showWaitMessageOnJoin = true;
-    this.disableJoinButton = true;
-
-    this.join().subscribe(() => {
-      console.log('Subscribe callback fired');
-      this.showWaitMessageOnJoin = false;
-      this.disableJoinButton = false;
-    });
-  }
 
   constructor() { }
 
