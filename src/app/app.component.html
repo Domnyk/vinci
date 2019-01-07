@@ -1,5 +1,29 @@
-<div class="container-fluid">
+<ng-container [ngSwitch]="status">
+
+<div class="container-fluid" *ngSwitchCase="ApiStatus.ALL_GOOD">
   <app-navbar [title]="title"></app-navbar>
   <app-flash-message></app-flash-message>
   <router-outlet id="main-router"></router-outlet>
 </div>
+
+<div class="container-fluid" *ngSwitchCase="ApiStatus.API_NOT_WORKING">
+  <div class="row">
+    <div class="col">
+      <div class="alert alert-danger" role="alert">
+        Aplikacja nie działa. Spróbuj ponownie później
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid" *ngSwitchCase="ApiStatus.NO_INTERNET_CONNECTION">
+  <div class="row">
+    <div class="col">
+      <div class="alert alert-danger" role="alert">
+        Brak połączenia z internetem
+      </div>
+    </div>
+  </div>
+</div>
+
+</ng-container>
