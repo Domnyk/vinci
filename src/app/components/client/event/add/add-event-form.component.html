@@ -3,6 +3,9 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5>Dodaj nowe wydarzenie</h5>
+        <button type="button" class="close" aria-label="Close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
       <div class="modal-body">
         <form novalidate>
@@ -85,11 +88,21 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button (click)="createEvent()" [disabled]="!event.isValid" data-dismiss="modal" type="submit"
-                class="btn btn-success">
-          Dodaj
-        </button>
-        <button class="btn btn-danger" data-dismiss="modal">Zamknij</button>
+        <ng-container [ngSwitch]="(getActions() | async)">
+          <ng-container *ngSwitchCase="ModalActionType.SIGN_IN">
+            <span><a routerLink="/sign_in" data-dismiss="modal">Zaloguj się </a> aby utworzyć nowe wydarzenie</span>
+          </ng-container>
+          <ng-container *ngSwitchCase="ModalActionType.OWNER_CANT_DO_THIS">
+            Jako właściciel kompleksów sporotywch nie możesz dodawać w ten sposób wydarzeń
+          </ng-container>
+          <ng-container *ngSwitchCase="ModalActionType.CREATE_EVENT">
+            <button (click)="createEvent()" [disabled]="!event.isValid" data-dismiss="modal" type="submit"
+                    class="btn btn-success">
+              Dodaj
+            </button>
+            <button class="btn btn-danger" data-dismiss="modal">Zamknij</button>
+          </ng-container>
+        </ng-container>
       </div>
     </div>
   </div>
