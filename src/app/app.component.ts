@@ -4,8 +4,9 @@ import { Select, Store } from '@ngxs/store';
 import { UserHasSignedIn } from './actions/sign-in.actions';
 import { HideFlashMessage } from './actions/flash-message.actions';
 import { FlashMessage } from './models/flash-message';
-import { Observable, of, zip } from 'rxjs';
+import { Observable, timer } from 'rxjs';
 import { NetworkConnectionService } from './services/network-connection.service';
+import { switchMap } from 'rxjs/operators';
 
 
 @Component({
@@ -16,8 +17,9 @@ import { NetworkConnectionService } from './services/network-connection.service'
 export class AppComponent implements OnInit {
   @Select(state => state.flashMessage) flashMessage$: Observable<FlashMessage>;
 
-  status: ApiStatus = null;
-  ApiStatus = ApiStatus;
+  isInternetConnection = true;
+  isApiConnection = true;
+  ApiStatus = AppStatus;
   title = 'Vinci';
   flashMsg: FlashMessage = null;
 
@@ -51,13 +53,19 @@ export class AppComponent implements OnInit {
       this.store.dispatch(new UserHasSignedIn(paypalEmail, displayName));
     });
 
+    timer(0, 1000).pipe(
+      switchMap(() => this.networkConnection.isApiOnline())
+    ).subscribe((status: boolean) => {
+      this.isApiConnection = status;
+    });
 
-    zip(this.networkConnection.isApiOnline(), of(this.networkConnection.isUserOnline())).subscribe(
-      ([isApiOnline, isUserOnline]: boolean[]) => {
-        if (isApiOnline && isUserOnline) { this.status = ApiStatus.ALL_GOOD; return; }
-        if (isUserOnline && !isApiOnline) { this.status = ApiStatus.API_NOT_WORKING; return; }
-        this.status = ApiStatus.NO_INTERNET_CONNECTION;
-      });
+    window.addEventListener('online', () => {
+      this.isInternetConnection = true;
+    });
+
+    window.addEventListener('offline', () => {
+      this.isInternetConnection = false;
+    });
   }
 
   @HostListener('document:click')
@@ -66,9 +74,15 @@ export class AppComponent implements OnInit {
       this.store.dispatch(new HideFlashMessage());
     }
   }
+
+  get appStatus(): AppStatus {
+    if (this.isInternetConnection && this.isApiConnection) { return AppStatus.ALL_GOOD; }
+    if (this.isInternetConnection && !this.isApiConnection) { return AppStatus.API_NOT_WORKING; }
+    return AppStatus.NO_INTERNET_CONNECTION;
+  }
 }
 
-enum ApiStatus {
+enum AppStatus {
   NO_INTERNET_CONNECTION = 'NO_INTERNET_CONNECTION',
   API_NOT_WORKING = 'API_NOT_WORKING',
   ALL_GOOD = 'ALL_GOOD'
