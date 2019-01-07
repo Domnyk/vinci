@@ -12,22 +12,23 @@ export class CurrentLocationService {
   constructor() {}
 
   fetch(options?: FetchOptions): Observable<LatLngLiteral> {
-    const subscribe = (subject: Subscriber<LatLngLiteral>) => {
-      const isGeoLocationNotSupported: boolean = !('geolocation' in navigator);
-      if (isGeoLocationNotSupported) {
-        console.warn('Geolocation api not supported - returning fallback location');
-        subject.next(options.fallbackLocation);
-      }
+    const opts: PositionOptions = { timeout: CurrentLocationService.timeout, enableHighAccuracy: true },
+      subscribe = (subject: Subscriber<LatLngLiteral>) => {
+        const isGeoLocationNotSupported: boolean = !('geolocation' in navigator);
+        if (isGeoLocationNotSupported) {
+          console.warn('Geolocation api not supported - returning fallback location');
+          subject.next(options.fallbackLocation);
+        }
 
-      const handleSuccess = ({ coords: { latitude, longitude } }: Position) => {
-        subject.next({ lat: latitude, lng: longitude });
-      }, handleError = (_: PositionError) => {
-        console.warn('Geolocation api timeout - returning fallback location');
-        subject.next(options.fallbackLocation);
+        const handleSuccess = ({ coords: { latitude, longitude } }: Position) => {
+          subject.next({ lat: latitude, lng: longitude });
+        }, handleError = (_: PositionError) => {
+          console.warn('Geolocation api timeout - returning fallback location');
+          subject.next(options.fallbackLocation);
+        };
+
+        navigator.geolocation.getCurrentPosition(handleSuccess, handleError, opts);
       };
-
-      navigator.geolocation.getCurrentPosition(handleSuccess, handleError, { timeout: CurrentLocationService.timeout });
-    };
 
     return Observable.create(subscribe);
   }
