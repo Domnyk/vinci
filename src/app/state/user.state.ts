@@ -6,7 +6,7 @@ import { SignOut, SignUpComplexesOwner } from '../actions/user.actions';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../environments/environment.generated.dev';
 import { catchError, tap } from 'rxjs/operators';
-import { ShowFlashMessageOnSuccess } from '../actions/flash-message.actions';
+import { ShowFlashMessageOnSuccessfulOperation } from '../actions/flash-message.actions';
 import { Router } from '@angular/router';
 import { SignUpComplexesOwnerResponse } from '../models/api-responses/sign-up-complexes-owner-response';
 import { CurrentUserType } from '../models/current-user-type';
@@ -33,7 +33,7 @@ export class CurrentUserState {
     const stateUpdater = (response: SignUpComplexesOwnerResponse) => {
       const { id, email, paypal_email } = response;
       setState( { email, paypalEmail: paypal_email, type: CurrentUserType.ComplexesOwner } );
-      this.store.dispatch(new ShowFlashMessageOnSuccess('Pomyślnie zarejestrowano'));
+      this.store.dispatch(new ShowFlashMessageOnSuccessfulOperation('Pomyślnie zarejestrowano'));
       this.router.navigate(['/owner']);
     };
 
@@ -60,7 +60,7 @@ export class CurrentUserState {
             const { id, email, paypal_email } = response;
             setState({ email, paypalEmail: paypal_email, type: CurrentUserType.ComplexesOwner });
     }, updateUI = () => {
-      this.store.dispatch(new ShowFlashMessageOnSuccess('Pomyślnie zalogowano'));
+      this.store.dispatch(new ShowFlashMessageOnSuccessfulOperation('Pomyślnie zalogowano'));
       this.router.navigate(['/owner']);
     };
 

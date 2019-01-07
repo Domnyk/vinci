@@ -1,5 +1,7 @@
 <div class="row">
   <section class="col">
+    <app-nested-flash-message></app-nested-flash-message>
+
     <form (ngSubmit)="onSubmit()">
       <app-form-field [label]="'Nazwa kompleksu sportowego'" [control]="complex.name" [type]="'text'"
                       [invalidFeedback]="'Podaj nazwę kompleksu sportowego'" ></app-form-field>

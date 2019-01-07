@@ -1,5 +1,7 @@
 <div class="row">
   <section class="col">
+    <app-nested-flash-message></app-nested-flash-message>
+
     <form (ngSubmit)="editObject()" #newSportObjectForm="ngForm">
       <app-form-field [control]="object.name" [label]="'Nazwa'" [type]="'text'" [invalidFeedback]="'Podaj nazwę'">
       </app-form-field>

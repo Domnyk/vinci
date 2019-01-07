@@ -7,10 +7,10 @@ import { FlashMessageStatus } from '../../models/flash-message-status';
 
 @Component({
   selector: 'app-flash-message',
-  templateUrl: './flash-message.component.html',
-  styleUrls: ['./flash-message.component.css']
+  templateUrl: './standalone-flash-message.component.html',
+  styleUrls: ['./standalone-flash-message.component.css']
 })
-export class FlashMessageComponent implements OnInit {
+export class StandaloneFlashMessageComponent implements OnInit {
   private static readonly SUCCESS_CLASS = 'alert-success';
   private static readonly ERROR_CLASS = 'alert-danger';
   private static readonly DEFAULT_CLASS = 'alert-primary';
@@ -37,12 +37,12 @@ export class FlashMessageComponent implements OnInit {
 
   get alertColor(): string {
     switch (this.message.status) {
-      case FlashMessageStatus.SUCCESS:
-        return FlashMessageComponent.SUCCESS_CLASS;
+      case FlashMessageStatus.SUCCESSFUL_OPERATION:
+        return StandaloneFlashMessageComponent.SUCCESS_CLASS;
       case FlashMessageStatus.ERROR:
-        return FlashMessageComponent.ERROR_CLASS;
+        return StandaloneFlashMessageComponent.ERROR_CLASS;
       default:
-        return FlashMessageComponent.DEFAULT_CLASS;
+        return StandaloneFlashMessageComponent.DEFAULT_CLASS;
     }
   }
 

@@ -9,11 +9,12 @@ import { _ } from 'underscore';
 import { environment } from '../../environments/environment.generated.dev';
 import { HttpClient } from '@angular/common/http';
 import { UpdateSportComplex } from '../components/owner/complex/edit/edit-sport-complex.actions';
-import { ShowFlashMessageOnSuccess } from '../actions/flash-message.actions';
+import { ShowFlashMessageOnEdited, ShowFlashMessageOnSuccessfulOperation } from '../actions/flash-message.actions';
 import { catchError, map } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { ErrorResponse, Response } from '../models/api-response';
 import { Complex } from '../models/complex';
+import { Router } from '@angular/router';
 
 type Complexes = Complex[];
 
@@ -28,7 +29,8 @@ export class SportComplexState {
 
   constructor(
     private http: HttpClient,
-    private store: Store
+    private store: Store,
+    private router: Router
   ) { }
 
   @Selector()
@@ -56,17 +58,18 @@ export class SportComplexState {
     const url = environment.api.resource(SportComplexState.resourceName),
           stateUpdater: stateUpdaterType = (response) => {
             if (response.status === 'error') {
-              this.store.dispatch(new ShowFlashMessageOnSuccess('Wystąpił błąd w czasie tworzenia kompleksu sportowego'));
+              this.store.dispatch(new ShowFlashMessageOnSuccessfulOperation('Wystąpił błąd w czasie tworzenia kompleksu sportowego'));
               return;
             }
 
             setState([...getState().concat(response)]);
-            this.store.dispatch(new ShowFlashMessageOnSuccess('Pomyślnie stworzono kompleks sportowy'));
+            this.store.dispatch(new ShowFlashMessageOnSuccessfulOperation('Pomyślnie stworzono kompleks sportowy'));
+            this.router.navigate(['/owner/complex/' + response.id]);
           };
 
-    return this.http.post(url, complex.dto(), { withCredentials: true })
-      .pipe(tap(stateUpdater))
-      .subscribe(() => {}, (error) => this.handleError(error));
+    return this.http.post(url, complex.dto(), { withCredentials: true }).pipe(
+      tap(stateUpdater)
+    );
   }
 
   @Action(UpdateSportComplex)
@@ -74,7 +77,7 @@ export class SportComplexState {
     const url = environment.api.resource(SportComplexState.resourceName, complex.id),
       stateUpdater = (response: any) => {
         if (response.status === 'error') {
-          this.store.dispatch(new ShowFlashMessageOnSuccess('Wystąpił błąd w czasie aktualizacja danych kompleksu sportowego'));
+          this.store.dispatch(new ShowFlashMessageOnSuccessfulOperation('Wystąpił błąd w czasie aktualizacja danych kompleksu sportowego'));
           return;
         }
 
@@ -83,12 +86,12 @@ export class SportComplexState {
 
 
         setState(newState);
-        this.store.dispatch(new ShowFlashMessageOnSuccess('Kompleks sportowy został pomyślnie zaktualizowany'));
+        this.store.dispatch(new ShowFlashMessageOnEdited('Kompleks sportowy został pomyślnie zaktualizowany'));
       };
 
-    return this.http.put(url, complex.dto(), { withCredentials: true })
-      .pipe(tap(stateUpdater))
-      .subscribe(() => {}, (error) => this.handleError(error));
+    return this.http.put(url, complex.dto(), { withCredentials: true }).pipe(
+      tap(stateUpdater)
+    );
   }
 
   @Action(DeleteSportComplex)
@@ -113,6 +116,6 @@ export class SportComplexState {
 
   private handleError(errorResponse: ErrorResponse) {
     console.debug('Error response: ', errorResponse);
-    this.store.dispatch(new ShowFlashMessageOnSuccess('Wystąpił błąd'));
+    this.store.dispatch(new ShowFlashMessageOnSuccessfulOperation('Wystąpił błąd'));
   }
 }

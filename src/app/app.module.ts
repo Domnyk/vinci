@@ -31,7 +31,7 @@ import { SportComplexDashboardComponent } from './components/owner/complex/show/
 import { SportObjectState } from './state/sport-object.state';
 import { NewSportArenaComponent } from './components/owner/arena/new/new-sport-arena.component';
 import { SportDisciplineState } from './state/sport-discipline.state';
-import { FlashMessageComponent } from './components/flash-message/flash-message.component';
+import { StandaloneFlashMessageComponent } from './components/standalone-flash-message/standalone-flash-message.component';
 import { FlashMessageState } from './state/flash-message.state';
 import { WelcomeToDashboardComponent } from './welcome-to-dashboard/welcome-to-dashboard.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -77,6 +77,7 @@ import { ProfileComponent } from './components/client/profile/profile.component'
 import { FormCheckboxComponent } from './components/common/form-checkbox/form-checkbox.component';
 import { PaymentComponent } from './components/client/payment/payment.component';
 import { EventActionComponent } from './components/client/event/event-action/event-action.component';
+import { NestedFlashMessageComponent } from './components/common/nested-flash-message/nested-flash-message.component';
 
 registerLocaleData(localePl);
 
@@ -99,7 +100,7 @@ registerLocaleData(localePl);
     ModalComponent,
     SportComplexDashboardComponent,
     NewSportArenaComponent,
-    FlashMessageComponent,
+    StandaloneFlashMessageComponent,
     WelcomeToDashboardComponent,
     DeleteSportComplexComponent,
     SportArenaComponent,
@@ -126,6 +127,7 @@ registerLocaleData(localePl);
     FormCheckboxComponent,
     PaymentComponent,
     EventActionComponent,
+    NestedFlashMessageComponent,
   ],
   imports: [
     RouterModule.forRoot(

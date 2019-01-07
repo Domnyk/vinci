@@ -1,0 +1,6 @@
+<div *ngIf="isMessageToShow" class="col alert {{ alertColor }}" role="alert">
+  <span [class.font-weight-bold]="isTextBold">{{ message.content }}</span>
+  <button type="button" class="close" aria-label="Close" (click)="hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>

@@ -4,7 +4,7 @@ import { environment } from '../../environments/environment.generated.dev';
 import { HttpClient } from '@angular/common/http';
 import { flatMap, tap } from 'rxjs/operators';
 import { ErrorResponse } from '../models/api-response';
-import { ShowFlashMessageOnSuccess } from '../actions/flash-message.actions';
+import { ShowFlashMessageOnDeleted, ShowFlashMessageOnSuccessfulOperation } from '../actions/flash-message.actions';
 import { of } from 'rxjs';
 import { Event, Participator } from '../models/event';
 import { CreateEvent } from '../components/client/event/add/add-event-form.actions';
@@ -52,7 +52,7 @@ export class EventState {
             newState = [...oldState, Event.fromDTO(response)];
 
       setState(newState);
-      return dispatch(new ShowFlashMessageOnSuccess('Utworzono nowe wydarzenie'));
+      return dispatch(new ShowFlashMessageOnSuccessfulOperation('Utworzono nowe wydarzenie'));
     };
 
     return this.http.post(environment.api.resource(EventState.arenas, arenaId, EventState.events), event.dto(), { withCredentials: true })
@@ -77,7 +77,7 @@ export class EventState {
 
         eventToModification.participators = newParticipators;
         setState([...oldEvents, eventToModification]);
-        return dispatch(new ShowFlashMessageOnSuccess('Dołączono do wydarzenia'));
+        return dispatch(new ShowFlashMessageOnSuccessfulOperation('Dołączono do wydarzenia'));
       });
     };
 
@@ -103,7 +103,7 @@ export class EventState {
 
       eventToUpdate.participators = newParticipators;
       setState([...oldEvents, eventToUpdate]);
-      dispatch(new ShowFlashMessageOnSuccess('Zrezygnowano z uczestnictwa'));
+      dispatch(new ShowFlashMessageOnDeleted('Zrezygnowano z uczestnictwa'));
     };
 
 
@@ -115,6 +115,6 @@ export class EventState {
 
   private handleError(errorResponse: ErrorResponse) {
     console.debug('Error response: ', errorResponse);
-    this.store.dispatch(new ShowFlashMessageOnSuccess('Wystąpił błąd'));
+    this.store.dispatch(new ShowFlashMessageOnSuccessfulOperation('Wystąpił błąd'));
   }
 }

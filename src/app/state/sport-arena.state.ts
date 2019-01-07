@@ -1,7 +1,11 @@
 import { SportArena } from '../models/sport-arena';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { environment } from '../../environments/environment.generated.dev';
-import { ShowFlashMessageOnSuccess } from '../actions/flash-message.actions';
+import {
+  ShowFlashMessageOnCreated,
+  ShowFlashMessageOnEdited,
+  ShowFlashMessageOnSuccessfulOperation
+} from '../actions/flash-message.actions';
 import { tap } from 'rxjs/operators';
 import { ErrorResponse, Response } from '../models/api-response';
 import { _ } from 'underscore';
@@ -66,7 +70,7 @@ export class SportArenaState {
     const url = environment.api.resource(SportArenaState.parentResourceName, sportObjectId, SportArenaState.resourceName),
           stateUpdater = (response: Response) => {
             if (response.status === 'error') {
-              this.store.dispatch(new ShowFlashMessageOnSuccess('Wystąpił błąd w czasie pobierania listy aren sportowych'));
+              this.store.dispatch(new ShowFlashMessageOnSuccessfulOperation('Wystąpił błąd w czasie pobierania listy aren sportowych'));
               return;
             }
 
@@ -84,14 +88,14 @@ export class SportArenaState {
     const url = environment.api.resource(SportArenaState.parentResourceName, sportArena.sportObjectId, SportArenaState.resourceName),
           stateUpdater = (response: Response) => {
             if (response.status === 'error') {
-              this.store.dispatch(new ShowFlashMessageOnSuccess('Wystąpił błąd w czasie tworzenia areny sportowej'));
+              this.store.dispatch(new ShowFlashMessageOnSuccessfulOperation('Wystąpił błąd w czasie tworzenia areny sportowej'));
               return;
             }
 
             const createdSportArena: SportArena = SportArena.fromDTO(response.data.sport_arena),
                   newState = [...getState(), createdSportArena];
             setState(newState);
-            this.store.dispatch(new ShowFlashMessageOnSuccess('Pomyślnie utworzono arenę sportową'));
+            this.store.dispatch(new ShowFlashMessageOnCreated('Pomyślnie utworzono arenę sportową'));
           };
 
     return this.http.post(url, sportArena.dto())
@@ -119,7 +123,7 @@ export class SportArenaState {
     const url = environment.api.resource('sport_arenas', sportArena.id),
       stateUpdater = (response: Response) => {
         if (response.status === 'error') {
-          this.store.dispatch(new ShowFlashMessageOnSuccess('Wystąpił błąd w czasie aktualizacja danych areny sportowej'));
+          this.store.dispatch(new ShowFlashMessageOnSuccessfulOperation('Wystąpił błąd w czasie aktualizacja danych areny sportowej'));
           return;
         }
 
@@ -128,7 +132,7 @@ export class SportArenaState {
 
 
         setState(newState);
-        this.store.dispatch(new ShowFlashMessageOnSuccess('Arena sportowa została pomyślnie zaktualizowana'));
+        this.store.dispatch(new ShowFlashMessageOnEdited('Arena sportowa została pomyślnie zaktualizowana'));
       };
 
     return this.http.put(url, sportArena.dto())
@@ -138,7 +142,7 @@ export class SportArenaState {
 
   private handleError(errorResponse: ErrorResponse) {
     console.debug('Error response: ', errorResponse);
-    this.store.dispatch(new ShowFlashMessageOnSuccess('Wystąpił błąd'));
+    this.store.dispatch(new ShowFlashMessageOnSuccessfulOperation('Wystąpił błąd'));
   }
 }
 

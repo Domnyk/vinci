@@ -2,7 +2,6 @@
 
 <div *ngSwitchCase="ApiStatus.ALL_GOOD" class="container-fluid">
   <app-navbar [title]="title"></app-navbar>
-  <app-flash-message></app-flash-message>
   <router-outlet id="main-router"></router-outlet>
 </div>
 
@@ -10,7 +9,7 @@
   <div class="row">
     <div class="col">
       <div class="alert alert-danger" role="alert">
-        Aplikacja nie działa. Spróbuj ponownie później
+        <span class="font-weight-bold"> Aplikacja nie działa. Spróbuj ponownie później </span>
       </div>
     </div>
   </div>
@@ -20,7 +19,7 @@
   <div class="row">
     <div class="col">
       <div class="alert alert-danger" role="alert">
-        Brak połączenia z internetem
+        <span class="font-weight-bold"> Brak połączenia z internetem </span>
       </div>
     </div>
   </div>

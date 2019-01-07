@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { DeleteSportObject } from './delete-sport-object.actions';
 import { SportObject } from '../../../../models/sport-object';
-import { ShowFlashMessageOnSuccess } from '../../../../actions/flash-message.actions';
+import { ShowFlashMessageOnSuccessfulOperation } from '../../../../actions/flash-message.actions';
 import { FormSubmitType } from '../../../common/form-submit-button/form-submit-type';
 
 @Component({
@@ -28,13 +28,13 @@ export class DeleteSportObjectComponent {
   onSubmit() {
     const successfulDeletion = () => {
       this.router.navigate(['/owner']);
-      this.store.dispatch(new ShowFlashMessageOnSuccess('Obiekt pomyślnie usunięty'));
+      this.store.dispatch(new ShowFlashMessageOnSuccessfulOperation('Obiekt pomyślnie usunięty'));
     };
 
     this.store.dispatch(new DeleteSportObject(this.sportObject.id))
       .subscribe(
         successfulDeletion,
-        () => this.store.dispatch(new ShowFlashMessageOnSuccess('Nie można usunąć tego obiektu sportowego'))
+        () => this.store.dispatch(new ShowFlashMessageOnSuccessfulOperation('Nie można usunąć tego obiektu sportowego'))
       );
   }
 

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { DeleteSportComplex } from './delete-sport-complex.actions';
 import { ComplexFormModel } from '../form-model/complex-form-model';
-import { ShowFlashMessageOnSuccess } from '../../../../actions/flash-message.actions';
+import { ShowFlashMessageOnSuccessfulOperation } from '../../../../actions/flash-message.actions';
 import { FormSubmitType } from '../../../common/form-submit-button/form-submit-type';
 import { SportComplexState } from '../../../../state/sport-complex.state';
 import { map } from 'rxjs/operators';
@@ -35,13 +35,13 @@ export class DeleteSportComplexComponent implements OnChanges {
   onSubmit() {
     const successfulDeletion = () => {
       this.router.navigate(['/owner']);
-      this.store.dispatch(new ShowFlashMessageOnSuccess('Kompleks pomyślnie usunięty'));
+      this.store.dispatch(new ShowFlashMessageOnSuccessfulOperation('Kompleks pomyślnie usunięty'));
     };
 
     this.store.dispatch(new DeleteSportComplex(this.complex.id))
       .subscribe(
         successfulDeletion,
-        () => this.store.dispatch(new ShowFlashMessageOnSuccess('Nie można usunąć tego kompleksu sportowego'))
+        () => this.store.dispatch(new ShowFlashMessageOnSuccessfulOperation('Nie można usunąć tego kompleksu sportowego'))
       );
   }
 

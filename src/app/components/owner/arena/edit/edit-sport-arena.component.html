@@ -1,4 +1,6 @@
 <section>
+  <app-nested-flash-message></app-nested-flash-message>
+
   <form (ngSubmit)="onSubmit()">
     <app-form-field [label]="'Nazwa areny sportowej'" [control]="name" [type]="'text'"
                     [invalidFeedback]="'Podaj nazwę areny sportowej'"></app-form-field>

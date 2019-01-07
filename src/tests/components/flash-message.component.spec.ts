@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FlashMessageComponent } from '../../app/components/flash-message/flash-message.component';
+import { StandaloneFlashMessageComponent } from '../../app/components/standalone-flash-message/standalone-flash-message.component';
 
-xdescribe('FlashMessageComponent', () => {
-  let component: FlashMessageComponent;
-  let fixture: ComponentFixture<FlashMessageComponent>;
+xdescribe('StandaloneFlashMessageComponent', () => {
+  let component: StandaloneFlashMessageComponent;
+  let fixture: ComponentFixture<StandaloneFlashMessageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FlashMessageComponent ]
+      declarations: [ StandaloneFlashMessageComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FlashMessageComponent);
+    fixture = TestBed.createComponent(StandaloneFlashMessageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

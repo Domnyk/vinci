@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { CreateNewSportObject } from './new-sport-object.actions';
-import { ShowFlashMessageOnSuccess } from '../../../../actions/flash-message.actions';
 import { FormSubmitType } from '../../../common/form-submit-button/form-submit-type';
 import { ObjectFormModel } from '../form-model/object-form-model';
 import { SportObject } from '../../../../models/sport-object';

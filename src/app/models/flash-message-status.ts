@@ -1,4 +1,7 @@
 export enum FlashMessageStatus {
-  SUCCESS = 1,
-  ERROR = 2
+  SUCCESSFUL_OPERATION = 1,
+  CREATED = 2,
+  DELETED = 3,
+  EDITED = 4,
+  ERROR = 5,
 }
