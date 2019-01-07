@@ -1,12 +1,12 @@
-<ng-container [ngSwitch]="status">
+<ng-container [ngSwitch]="appStatus">
 
-<div class="container-fluid" *ngSwitchCase="ApiStatus.ALL_GOOD">
+<div *ngSwitchCase="ApiStatus.ALL_GOOD" class="container-fluid">
   <app-navbar [title]="title"></app-navbar>
   <app-flash-message></app-flash-message>
   <router-outlet id="main-router"></router-outlet>
 </div>
 
-<div class="container-fluid" *ngSwitchCase="ApiStatus.API_NOT_WORKING">
+<div *ngSwitchCase="ApiStatus.API_NOT_WORKING" class="container api-not-working" >
   <div class="row">
     <div class="col">
       <div class="alert alert-danger" role="alert">
@@ -16,7 +16,7 @@
   </div>
 </div>
 
-<div class="container-fluid" *ngSwitchCase="ApiStatus.NO_INTERNET_CONNECTION">
+<div *ngSwitchCase="ApiStatus.NO_INTERNET_CONNECTION" class="container no-internet-connection">
   <div class="row">
     <div class="col">
       <div class="alert alert-danger" role="alert">
