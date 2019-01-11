@@ -51,7 +51,7 @@ export class Event implements CalendarEvent {
   }
 
   public isParticipator(user: CurrentUser): boolean {
-    return !!user && this.participators.filter(p => p.email === user.email).length === 1;
+    return !!user && this.participators.filter(p => p.id === user.id).length === 1;
   }
 
   public isInJoiningPhase(): boolean {
@@ -60,7 +60,7 @@ export class Event implements CalendarEvent {
 
   public hasUserPaid(user: CurrentUser): boolean {
     if (!!user) {
-      const participator = this.participators.filter(p => p.email === user.email)[0];
+      const participator = this.participators.filter(p => p.id === user.id)[0];
       return !!participator && participator.hasPaid;
     }
 

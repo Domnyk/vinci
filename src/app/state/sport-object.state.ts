@@ -135,7 +135,10 @@ export class SportObjectState {
     if (BuildingAddressUtils.areEqual(oldSportObject.address, sportObjectToUpdate.address)) {
       console.debug('Not calling geocoder');
       call = this.http.put(url, sportObjectToUpdate.dto())
-        .pipe(tap(stateUpdater));
+        .pipe(
+          tap(stateUpdater),
+          catchError((error: ERROR) => handleError(error, this.store))
+        );
     } else {
       console.debug('Calling geocoder');
       call = this.geoCoder.geocode(BuildingAddressUtils.asString(sportObjectToUpdate.address))
@@ -144,7 +147,8 @@ export class SportObjectState {
             sportObjectToUpdate.geoCoordinates = coords;
             return this.http.put(url, sportObjectToUpdate.dto());
           }),
-          tap(stateUpdater)
+          tap(stateUpdater),
+          catchError((error: ERROR) => handleError(error, this.store))
         );
     }
 
@@ -177,15 +181,12 @@ export class SportObjectState {
         setState(
           [...updatedSportComplexList]
         );
-      },
-      failureDeletionHandler = (error: any) => {
-        return throwError('Sport object still has sport arena');
       };
 
-    return this.http.delete(url)
+    return this.http.delete(url, { withCredentials: true })
       .pipe(
         map(successDeletionHandler),
-        catchError(failureDeletionHandler),
+        catchError((error) => handleError(error, this.store)),
       );
   }
 

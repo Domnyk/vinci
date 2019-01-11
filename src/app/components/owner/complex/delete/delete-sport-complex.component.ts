@@ -8,6 +8,8 @@ import { FormSubmitType } from '../../../common/form-submit-button/form-submit-t
 import { SportComplexState } from '../../../../state/sport-complex.state';
 import { map } from 'rxjs/operators';
 import { Complex } from '../../../../models/complex';
+import { SportObjectState } from '../../../../state/sport-object.state';
+import { SportObject } from '../../../../models/sport-object';
 
 @Component({
   selector: 'app-delete-sport-complex',
@@ -19,6 +21,7 @@ export class DeleteSportComplexComponent implements OnChanges {
   FormSubmitType = FormSubmitType;
   complex: ComplexFormModel = null;
   areNamesEqual: () => boolean;
+  hasAnyObjects: boolean = null;
 
   constructor(private router: Router, private store: Store) { }
 
@@ -26,10 +29,14 @@ export class DeleteSportComplexComponent implements OnChanges {
     this.store.select(SportComplexState.getById)
       .pipe(map(filterFn => filterFn(this.complexId)))
       .subscribe((complex: Complex) => this.initFormData(complex));
+
+    this.store.select(SportObjectState.sportObjectsInSportComplex)
+      .pipe(map(filterFn => filterFn(this.complexId)))
+      .subscribe((objects: SportObject[]) => this.hasAnyObjects = objects.length >= 1);
   }
 
   isValid(): boolean {
-    return this.complex.isValid() && this.areNamesEqual();
+    return this.complex.isValid() && this.areNamesEqual() && !this.hasAnyObjects;
   }
 
   onSubmit() {

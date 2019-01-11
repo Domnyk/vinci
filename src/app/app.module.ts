@@ -3,7 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 import { NGXS_PLUGINS, NgxsModule } from '@ngxs/store';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
@@ -26,7 +26,6 @@ import { NewSportComplexComponent } from './components/owner/complex/new/new-spo
 import { AdminDashboardSidebarComponent } from './components/owner/admin-dashboard-sidebar/admin-dashboard-sidebar.component';
 import { SportComplexState } from './state/sport-complex.state';
 import { NewSportObjectComponent } from './components/owner/object/new/new-sport-object.component';
-import { ModalComponent } from './components/common/modal/modal.component';
 import { SportComplexDashboardComponent } from './components/owner/complex/show/sport-complex-dashboard.component';
 import { SportObjectState } from './state/sport-object.state';
 import { NewSportArenaComponent } from './components/owner/arena/new/new-sport-arena.component';
@@ -55,8 +54,6 @@ import { registerLocaleData } from '@angular/common';
 import localePl from '@angular/common/locales/pl';
 import { EventState } from './state/event.state';
 import { ObjectComponent } from './components/client/object/show/object.component';
-import { NgxsRouterPluginModule, RouterStateSerializer } from '@ngxs/router-plugin';
-import { CustomRouterStateSerializer } from './state/custom-router-state-serializer';
 import { ListArenasComponent } from './components/client/arena/list/list-arenas.component';
 import { CustomDateFormatter } from './custom-date-formatter';
 import { SearchComponent } from './components/client/search/search.component';
@@ -78,6 +75,7 @@ import { FormCheckboxComponent } from './components/common/form-checkbox/form-ch
 import { PaymentComponent } from './components/client/payment/payment.component';
 import { EventActionComponent } from './components/client/event/event-action/event-action.component';
 import { NestedFlashMessageComponent } from './components/common/nested-flash-message/nested-flash-message.component';
+import { CsrfInterceptor } from './services/csrf.interceptor';
 
 registerLocaleData(localePl);
 
@@ -97,7 +95,6 @@ registerLocaleData(localePl);
     NewSportComplexComponent,
     AdminDashboardSidebarComponent,
     NewSportObjectComponent,
-    ModalComponent,
     SportComplexDashboardComponent,
     NewSportArenaComponent,
     StandaloneFlashMessageComponent,
@@ -139,6 +136,9 @@ registerLocaleData(localePl);
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    HttpClientXsrfModule.withOptions({
+      headerName: 'x-csrf-token'
+    }),
     NgxsModule.forRoot([
       CurrentUserState,
       SportComplexState,
@@ -164,7 +164,8 @@ registerLocaleData(localePl);
     })
   ],
   providers: [
-    { provide: NGXS_PLUGINS, useValue: initStateFromStorage, multi: true }
+    { provide: NGXS_PLUGINS, useValue: initStateFromStorage, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: CsrfInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

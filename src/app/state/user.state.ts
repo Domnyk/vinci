@@ -44,8 +44,8 @@ export class CurrentUserState {
   }
 
   @Action(UserHasSignedIn)
-  userHasSignedIn({ patchState }: StateContext<CurrentUser>, { paypalEmail, displayName }: UserHasSignedIn) {
-    patchState({ paypalEmail, displayName, type: CurrentUserType.Client });
+  userHasSignedIn({ patchState }: StateContext<CurrentUser>, { id, paypalEmail, displayName }: UserHasSignedIn) {
+    patchState({ id, paypalEmail, displayName, type: CurrentUserType.Client });
   }
 
   @Action(SignOut)

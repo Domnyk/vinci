@@ -25,7 +25,7 @@ export class NestedFlashMessageComponent implements OnInit {
 
   ngOnInit() {
     this.message$.subscribe((msg: FlashMessage) => {
-      this.isMessageToShow = !!msg;
+      this.isMessageToShow = (!!msg);
       this.message = msg;
     });
   }

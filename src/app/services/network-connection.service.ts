@@ -13,9 +13,17 @@ export class NetworkConnectionService {
   constructor(private http: HttpClient) { }
 
   isApiOnline(): Observable<boolean> {
-    return this.http.get(environment.api.urls.status).pipe(
-      flatMap(resp => of(resp === NetworkConnectionService.ONLINE_FLAG)),
-      catchError(error =>  of(false))
-    );
+    let observable: Observable<boolean> = null;
+
+    if (environment.production) {
+      observable =  this.http.get(environment.api.urls.status).pipe(
+        flatMap(resp => of(resp === NetworkConnectionService.ONLINE_FLAG)),
+        catchError(error =>  of(false))
+      );
+    } else {
+      observable = of(true);
+    }
+
+    return observable;
   }
 }

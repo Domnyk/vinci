@@ -7,6 +7,7 @@ import { Observable, of } from 'rxjs';
 import { ModalActionType } from '../../../../models/modal-action-type';
 import { flatMap } from 'rxjs/operators';
 import { CurrentUserType } from '../../../../models/current-user-type';
+import { FormHelper } from '../../../../helpers/form.helper';
 
 @Component({
   selector: 'app-add-event-form',
@@ -19,6 +20,8 @@ export class AddEventFormComponent implements OnChanges {
   @Input() eventDay: Date;
 
   @Select(state => state.currentUser) user$: Observable<CurrentUser>;
+
+  isInvalid = FormHelper.isFormControlInvalid;
 
   ModalActionType = ModalActionType;
 

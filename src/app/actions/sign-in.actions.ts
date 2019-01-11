@@ -9,5 +9,5 @@ export class SignInWithPassword {
 export class UserHasSignedIn {
   static readonly type = `[] User has signed in`;
 
-  constructor(public paypalEmail: string, public displayName: string) { }
+  constructor(public id: number, public paypalEmail: string, public displayName: string) { }
 }

@@ -1,4 +1,4 @@
-import { FormControl } from '@angular/forms';
+import { AbstractControl } from '@angular/forms';
 
 export class FormHelper {
 
@@ -9,7 +9,7 @@ export class FormHelper {
    *
    * FormControl is invalid only when it was touched or is in 'dirty' state
    */
-  static isFormControlInvalid(control: FormControl): boolean {
+  static isFormControlInvalid(control: AbstractControl): boolean {
     return control.invalid && (control.touched || control.dirty);
   }
 }

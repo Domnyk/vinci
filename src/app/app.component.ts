@@ -45,12 +45,12 @@ export class AppComponent implements OnInit {
                   return Object.assign(prev, { [current.key]: current.value });
                 }, { });
 
-      const { display_name: displayName, paypal_email: paypalEmail } = <UserInfo>userInfo;
-      if (!displayName) {
+      const { id, display_name: displayName, paypal_email: paypalEmail } = <UserInfo>userInfo;
+      if (!id && !displayName) {
         return;
       }
 
-      this.store.dispatch(new UserHasSignedIn(paypalEmail, displayName));
+      this.store.dispatch(new UserHasSignedIn(+id, paypalEmail, displayName));
     });
 
     timer(0, 1000).pipe(
@@ -89,6 +89,7 @@ enum AppStatus {
 }
 
 interface UserInfo {
+  id: string;
   paypal_email: string;
   display_name: string;
 }

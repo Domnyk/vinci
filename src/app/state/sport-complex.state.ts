@@ -11,10 +11,11 @@ import { HttpClient } from '@angular/common/http';
 import { UpdateSportComplex } from '../components/owner/complex/edit/edit-sport-complex.actions';
 import { ShowFlashMessageOnEdited, ShowFlashMessageOnSuccessfulOperation } from '../actions/flash-message.actions';
 import { catchError, map } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { ErrorResponse, Response } from '../models/api-response';
 import { Complex } from '../models/complex';
 import { Router } from '@angular/router';
+import { handleError } from './error-handler';
 
 type Complexes = Complex[];
 
@@ -46,7 +47,7 @@ export class SportComplexState {
     const url = environment.api.resource(SportComplexState.resourceName),
           stateUpdater: StateUpdaterType = (response) => setState([...response]);
 
-    return this.http.get(url)
+    return this.http.get(url, { withCredentials: true })
       .pipe(
         tap(stateUpdater)
       );
@@ -102,20 +103,12 @@ export class SportComplexState {
         setState(
           [...updatedSportComplexList]
         );
-      },
-      failureDeletionHandler = (error: any) => {
-        return throwError('Sport complexFormModel still has sport objects');
       };
 
     return this.http.delete(url, { withCredentials: true })
       .pipe(
         map(successDeletionHandler),
-        catchError(failureDeletionHandler),
+        catchError((error) => handleError(error, this.store))
       );
-  }
-
-  private handleError(errorResponse: ErrorResponse) {
-    console.debug('Error response: ', errorResponse);
-    this.store.dispatch(new ShowFlashMessageOnSuccessfulOperation('Wystąpił błąd'));
   }
 }

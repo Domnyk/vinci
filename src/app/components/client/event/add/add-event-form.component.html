@@ -20,21 +20,24 @@
           <div [formGroup]="event.timeFrame" class="form-row">
             <div class="col form-group">
               <label>Godzina rozpoczęcia</label>
-              <input [class.is-invalid]="event.timeFrame.errors?.startLaterThanEnd || event.startTime.invalid" formControlName="start"
+              <input [class.is-invalid]="isInvalid(event.timeFrame)" formControlName="start"
                      class="form-control" type="time" step="1800" min="00:00" />
-              <div *ngIf="event.timeFrame.errors?.startLaterThanEnd" class="invalid-feedback">
+              <div *ngIf="isInvalid(event.timeFrame)" class="invalid-feedback">
                 Godzina zakończenia musi być później niż godzina rozpoczęcia
               </div>
-              <div *ngIf="event.startTime.invalid" class="invalid-feedback">
+              <div *ngIf="isInvalid(event.startTime)" class="invalid-feedback">
                 Pole wymagane
               </div>
             </div>
             <div class="col form-group">
               <label>Godzina zakończenia</label>
-              <input [class.is-invalid]="event.timeFrame.errors?.startLaterThanEnd" formControlName="end"
+              <input [class.is-invalid]="isInvalid(event.timeFrame)" formControlName="end"
                      class="form-control" type="time" min="00:00" />
-              <div *ngIf="event.timeFrame.errors?.startLaterThanEnd" class="invalid-feedback">
+              <div *ngIf="isInvalid(event.timeFrame)" class="invalid-feedback">
                 Godzina zakończenia musi być później niż godzina rozpoczęcia
+              </div>
+              <div *ngIf="isInvalid(event.endTime)" class="invalid-feedback">
+                Pole wymagane
               </div>
             </div>
           </div>
@@ -78,7 +81,7 @@
           <div class="form-group">
             <label>Całkowita cena</label>
             <div class="input-group">
-              <input class="form-control" type="number" min="0" readonly />
+              <input class="form-control" type="number" min="0" readonly [value]="10" />
               <div class="input-group-append">
                 <span class="input-group-text">PLN</span>
               </div>

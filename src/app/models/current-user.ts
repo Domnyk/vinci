@@ -5,6 +5,7 @@ export interface CurrentUser {
   paypalEmail: string;
   type: CurrentUserType;
   displayName?: string;
+  id?: number;
 }
 
 

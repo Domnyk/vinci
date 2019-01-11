@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-form-row',
@@ -6,10 +7,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./form-row.component.css']
 })
 export class FormRowComponent implements OnInit {
+  @Input() group?: FormGroup = null;
 
-  constructor() { }
+  rootFormGroup = new FormGroup({});
+
+  constructor() {
+  }
 
   ngOnInit() {
+    if (!!this.group) {
+      this.rootFormGroup.addControl('row-control', this.group);
+    }
   }
 
 }
