@@ -20,7 +20,7 @@
   <ul [ngSwitch]="currentUser.type" class="navbar-nav d-flex justify-content-end">
     <ng-container *ngSwitchCase="CurrentUserType.ComplexesOwner">
       <li class="nav-item">
-        <span class="nav-link">{{ currentUser.email }}</span>
+        <a routerLink="/profile" class="nav-link">{{ currentUser.email }}</a>
       </li>
       <li class="nav-item">
         <a routerLink="/owner" class="nav-link">Zarządzaj kompleksami</a>

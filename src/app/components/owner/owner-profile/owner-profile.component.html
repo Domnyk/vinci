@@ -1,0 +1,22 @@
+<div class="row justify-content-center">
+  <div class="col-6">
+    <h3>Twoje dane</h3>
+
+    <app-nested-flash-message></app-nested-flash-message>
+
+    <form (ngSubmit)="update()" novalidate>
+      <app-form-field [label]="'Email'" [control]="ownerProfile.email" [type]="'email'"
+                      [readonly]="true" [invalidFeedback]="'Podaj prawidłowy adres email'" ></app-form-field>
+
+      <app-form-checkbox [control]="ownerProfile.isSameEmailForPaypal"
+                         [label]="'Email w serwisie Paypal taki sam jak w Vinci'"></app-form-checkbox>
+
+      <app-form-field [label]="'Email używany w serwisie PayPal'" [control]="ownerProfile.paypalEmail" [type]="'email'"
+                      [invalidFeedback]="'Podaj prawidłowy adres email'" [readonly]="ownerProfile.isSameEmailForPaypal.value">
+      </app-form-field>
+
+      <app-form-submit-button [text]="'Zaktualizuj'" [submitType]="FormSubmitType.OTHER"
+                              [isValid]="ownerProfile.isValid()"  ></app-form-submit-button>
+    </form>
+  </div>
+</div>

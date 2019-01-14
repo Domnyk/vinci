@@ -1,0 +1,4 @@
+<ng-container [ngSwitch]="(userType$ | async)">
+  <app-client-profile *ngSwitchCase="CurrentUserType.Client"></app-client-profile>
+  <app-owner-profile *ngSwitchCase="CurrentUserType.ComplexesOwner"></app-owner-profile>
+</ng-container>

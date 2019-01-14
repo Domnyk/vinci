@@ -70,12 +70,14 @@ import { FormFieldComponent } from './components/common/form-field/form-field.co
 import { FormRowComponent } from './components/common/form-row/form-row.component';
 import { FormSubmitButtonComponent } from './components/common/form-submit-button/form-submit-button.component';
 import { UnauthorizedComponent } from './components/errors/unauthorized/unauthorized.component';
-import { ProfileComponent } from './components/client/profile/profile.component';
+import { ClientProfileComponent } from './components/client/client-profile/client-profile.component';
 import { FormCheckboxComponent } from './components/common/form-checkbox/form-checkbox.component';
 import { PaymentComponent } from './components/client/payment/payment.component';
 import { EventActionComponent } from './components/client/event/event-action/event-action.component';
 import { NestedFlashMessageComponent } from './components/common/nested-flash-message/nested-flash-message.component';
 import { CsrfInterceptor } from './services/csrf.interceptor';
+import { OwnerProfileComponent } from './components/owner/owner-profile/owner-profile.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 registerLocaleData(localePl);
 
@@ -120,11 +122,13 @@ registerLocaleData(localePl);
     FormRowComponent,
     FormSubmitButtonComponent,
     UnauthorizedComponent,
-    ProfileComponent,
+    ClientProfileComponent,
     FormCheckboxComponent,
     PaymentComponent,
     EventActionComponent,
     NestedFlashMessageComponent,
+    OwnerProfileComponent,
+    ProfileComponent,
   ],
   imports: [
     RouterModule.forRoot(

@@ -1,11 +1,12 @@
 import { CurrentUserType } from './current-user-type';
 
 export interface CurrentUser {
-  email?: string;
-  paypalEmail: string;
+  id: number;
   type: CurrentUserType;
+  paypalEmail: string;
+
+  email?: string;
   displayName?: string;
-  id?: number;
 }
 
 

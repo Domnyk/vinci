@@ -18,8 +18,8 @@ import { SearchComponent } from './components/client/search/search.component';
 import { SearchResultsComponent } from './components/client/search-results/search-results.component';
 import { ArenaComponent } from './components/client/arena/show/arena.component';
 import { UnauthorizedComponent } from './components/errors/unauthorized/unauthorized.component';
-import { ProfileComponent } from './components/client/profile/profile.component';
 import { PaymentComponent } from './components/client/payment/payment.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 export const routes: Routes = [
   { path: 'sign_up', component: SignUpComponent },
