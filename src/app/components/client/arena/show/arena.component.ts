@@ -5,6 +5,7 @@ import { Store } from '@ngxs/store';
 import { flatMap, tap } from 'rxjs/operators';
 import { FetchEvents } from '../../../owner/calendar/calendar.actions';
 import { Event } from '../../../../models/event';
+import { FetchExternalEvents } from '../../../owner/external-event/add-external-event/add-external-event.actions';
 
 @Component({
   selector: 'app-arena',
@@ -20,7 +21,8 @@ export class ArenaComponent implements OnInit {
   ngOnInit() {
     this.arenaId$ = this.activatedRoute.params.pipe(
       flatMap(({ id }: Params) => of(+id)),
-      tap((id: number) => this.store.dispatch(new FetchEvents(id)))
+      tap((id: number) => this.store.dispatch(new FetchEvents(id))),
+      tap((id: number) => this.store.dispatch(new FetchExternalEvents(id))),
     );
   }
 

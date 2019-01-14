@@ -78,6 +78,9 @@ import { NestedFlashMessageComponent } from './components/common/nested-flash-me
 import { CsrfInterceptor } from './services/csrf.interceptor';
 import { OwnerProfileComponent } from './components/owner/owner-profile/owner-profile.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { AddExternalEventComponent } from './components/owner/external-event/add-external-event/add-external-event.component';
+import { ExternalEvent } from './models/external-event';
+import { ExternalEventState } from './state/external-event.state';
 
 registerLocaleData(localePl);
 
@@ -129,6 +132,7 @@ registerLocaleData(localePl);
     NestedFlashMessageComponent,
     OwnerProfileComponent,
     ProfileComponent,
+    AddExternalEventComponent,
   ],
   imports: [
     RouterModule.forRoot(
@@ -152,6 +156,7 @@ registerLocaleData(localePl);
       SportArenaState,
       EventState,
       SearchState,
+      ExternalEventState
     ]),
     NgxsStoragePluginModule.forRoot({ key: 'currentUser' }),
     NgxsLoggerPluginModule.forRoot(),

@@ -1,4 +1,4 @@
-<div *ngIf="event">
+<div *ngIf="event && !isExternalEvent(event); else externalEvent">
   <div class="modal fade" [id]="modalId">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -64,4 +64,39 @@
 
 <ng-template #emptyEvent>
   <span> Jeszcze nikt nie dołączył do tego wydarzenia </span>
+</ng-template>
+
+<ng-template #externalEvent>
+  <div *ngIf="event" class="modal fade" [id]="modalId">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5>Wydarzenie zewnętrzne</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div class="row mt-2 mb-2">
+              <div class="col">
+                Początek wydarzenia: {{ formatTime(event.start) }}
+              </div>
+              <div class="col">
+                Koniec wydarzenia: {{ formatTime(event.end) }}
+              </div>
+            </div>
+          </div>
+
+          <div class="container-fluid">
+            <div class="row mt-2 mb-2">
+              <div class="col">
+                <p>To jest wydarzenie zewnętrze utworzone przez właściciela tego obiektu</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </ng-template>

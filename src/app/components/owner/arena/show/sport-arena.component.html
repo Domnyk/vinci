@@ -40,5 +40,17 @@
         </div>
       </div>
     </div>
+
+    <div class="card">
+      <div class="card-header" id="headingThree">
+        <a href="#" data-toggle="collapse" data-target="#collapseThree">Dodaj wydarzenie zewnętrzne</a>
+      </div>
+
+      <div id="collapseThree" class="collapse" data-parent="#sport-arena-accordion">
+        <div class="card-body">
+          <app-add-external-event [arenaId]="(sportArena$ | async).id"></app-add-external-event>
+        </div>
+      </div>
+    </div>
   </div>
 </section>

@@ -1,0 +1,17 @@
+<section>
+  <app-nested-flash-message></app-nested-flash-message>
+
+  <form (ngSubmit)="onSubmit()">
+    <app-form-field [label]="'Dzień'" [control]="newExternalEvent.eventDay" [type]="'date'"
+                    [invalidFeedback]="'Podaj dzień'"></app-form-field>
+    <app-form-field [label]="'Godzina rozpoczęcia'" [control]="newExternalEvent.startTime" [type]="'time'"
+                    [invalidFeedback]="'Podaj godzinę rozpoczęcia'"></app-form-field>
+    <app-form-field [label]="'Godzina zakończenia'" [control]="newExternalEvent.endTime" [type]="'time'"
+                    [invalidFeedback]="'Podaj godzinę zakończenia'"></app-form-field>
+
+    <p *ngIf="isInvalid(newExternalEvent.timeFrame)" class="text-danger">Godzina zakończenia wcześniej niż godzina rozpoczęcia</p>
+
+    <app-form-submit-button [isValid]="newExternalEvent.isValid" [text]="'Dodaj wydarzenie zewnętrzne'" [submitType]="FormSubmitType.CREATE" >
+    </app-form-submit-button>
+  </form>
+</section>

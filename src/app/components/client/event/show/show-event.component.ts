@@ -10,6 +10,7 @@ import { format } from 'date-fns';
 import * as pl from 'date-fns/locale/pl';
 import { CurrentUserState } from '../../../../state/user.state';
 import { ModalActionType } from '../../../../models/modal-action-type';
+import { ExternalEvent } from '../../../../models/external-event';
 
 @Component({
   selector: 'app-show-event',
@@ -66,6 +67,10 @@ export class ShowEventComponent implements DoCheck {
 
   formatDateTime(date: Date): string {
     return format(date, ShowEventComponent.dateTimeFormat, { locale: pl });
+  }
+
+  isExternalEvent(event): boolean {
+    return event instanceof ExternalEvent;
   }
 
   private defineParticipationStatus(currentUser: CurrentUser, participators: Participator[]): ParticipationStatus {

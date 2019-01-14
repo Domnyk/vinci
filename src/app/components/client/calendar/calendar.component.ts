@@ -1,9 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CalendarView, CalendarEvent, collapseAnimation } from 'angular-calendar';
-import { Store } from '@ngxs/store';
-import { Observable } from 'rxjs';
+import { Select, Store } from '@ngxs/store';
+import { Observable, of, zip } from 'rxjs';
 import { isEqual, startOfDay } from 'date-fns';
 import { Event } from '../../../models/event';
+import { ExternalEvent } from '../../../models/external-event';
+import { flatMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-calendar-client',
@@ -14,6 +16,8 @@ import { Event } from '../../../models/event';
 export class CalendarComponent implements OnInit {
   @Input() arenaId$: Observable<number>;
   public events$: Observable<Array<CalendarEvent>>;
+  public externalEvents$: Observable<Array<ExternalEvent>>;
+  allEvents$: Observable<Array<CalendarEvent | ExternalEvent>>;
 
   createEventModalName = 'createEvent';
   showEventModalName = 'showEvent';
@@ -30,6 +34,11 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit() {
     this.events$ = this.store.select(state => state.Events);
+    this.externalEvents$ = this.store.select(state => state.ExternalEvents);
+
+    this.allEvents$ = zip(this.events$, this.externalEvents$).pipe(
+      flatMap(([events, externalEvents]) => of([...events, ...externalEvents]))
+    );
   }
 
   getTodayButtonClass(): string {

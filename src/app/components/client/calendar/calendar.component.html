@@ -79,7 +79,7 @@
 <div [ngSwitch]="view" id="calendar-view">
   <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month"
                            [viewDate]="viewDate"
-                           [events]="(events$ | async)"
+                           [events]="(allEvents$ | async)"
                            [locale]="'pl'"
                            [weekStartsOn]="1"
                            [activeDayIsOpen]="activeDayIsOpen"
@@ -88,7 +88,7 @@
                            (eventClicked)="eventClicked($event.event)">
   </mwl-calendar-month-view>
   <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week"
-                          [viewDate]="viewDate" [events]="(events$ | async)"
+                          [viewDate]="viewDate" [events]="(allEvents$ | async)"
                           [locale]="'pl'"
                           [weekStartsOn]="1"
                           [hourSegments]="1"
