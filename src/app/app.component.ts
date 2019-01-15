@@ -4,9 +4,9 @@ import { Select, Store } from '@ngxs/store';
 import { UserHasSignedIn } from './actions/sign-in.actions';
 import { HideFlashMessage } from './actions/flash-message.actions';
 import { FlashMessage } from './models/flash-message';
-import { EMPTY, iif, Observable, of, throwError, timer } from 'rxjs';
+import { Observable, of, throwError, timer } from 'rxjs';
 import { NetworkConnectionService } from './services/network-connection.service';
-import { catchError, concatMap, flatMap, map, reduce, scan, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 
 
 @Component({
@@ -15,7 +15,7 @@ import { catchError, concatMap, flatMap, map, reduce, scan, switchMap } from 'rx
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  private static readonly SEPARATOR = '&';
+  private static readonly PAIR_SEPARATOR = '&';
   private static readonly KEY_VALUE_SEPARATOR = '=';
 
   @Select(state => state.flashMessage) flashMessage$: Observable<FlashMessage>;
@@ -58,7 +58,7 @@ export class AppComponent implements OnInit {
 
   private parseURLFragments(): void {
     this.route.fragment.pipe(
-      map(fragment => fragment.split(AppComponent.SEPARATOR)),
+      map(fragment => fragment.split(AppComponent.PAIR_SEPARATOR)),
       map((fragments: string[]) => fragments && fragments.length > 0 ? fragments : throwError('Empty fragment')),
       map((fragments: string[]) => fragments.map(fragment => fragment.split(AppComponent.KEY_VALUE_SEPARATOR))),
       map((keyValuePairs: string[][]) => keyValuePairs.map(([key, value]) => ({ key: key, value: value }))),

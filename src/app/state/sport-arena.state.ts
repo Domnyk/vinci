@@ -6,7 +6,7 @@ import {
   ShowFlashMessageOnEdited,
   ShowFlashMessageOnSuccessfulOperation
 } from '../actions/flash-message.actions';
-import { tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { ErrorResponse, Response } from '../models/api-response';
 import { _ } from 'underscore';
 import { HttpClient } from '@angular/common/http';
@@ -16,6 +16,7 @@ import { DeleteSportArena } from '../components/owner/arena/delete/delete-sport-
 import { UpdateSportArena } from '../components/owner/arena/edit/edit-sport-arena.actions';
 import { InsertArenas } from '../actions/sport-arena.actions';
 import { SportDiscipline } from '../models/sport-discipline';
+import { handleError } from './error-handler';
 
 type SportArenas = Array<SportArena>;
 
@@ -98,9 +99,10 @@ export class SportArenaState {
             this.store.dispatch(new ShowFlashMessageOnCreated('Pomyślnie utworzono arenę sportową'));
           };
 
-    return this.http.post(url, sportArena.dto())
-      .pipe(tap(stateUpdater))
-      .subscribe(() => {}, (error) => this.handleError(error));
+    return this.http.post(url, sportArena.dto()).pipe(
+      tap(stateUpdater),
+      catchError(error => handleError(error, this.store))
+    );
   }
 
   @Action(DeleteSportArena)
@@ -113,9 +115,10 @@ export class SportArenaState {
         );
       };
 
-    return this.http.delete(url)
-      .pipe(tap(successDeletionHandler))
-      .subscribe(() => {}, (error) => this.handleError(error));
+    return this.http.delete(url).pipe(
+      tap(successDeletionHandler),
+      catchError(error => handleError(error, this.store))
+    );
   }
 
   @Action(UpdateSportArena)
@@ -135,9 +138,10 @@ export class SportArenaState {
         this.store.dispatch(new ShowFlashMessageOnEdited('Arena sportowa została pomyślnie zaktualizowana'));
       };
 
-    return this.http.put(url, sportArena.dto())
-      .pipe(tap(stateUpdater))
-      .subscribe(() => {}, (error) => this.handleError(error));
+    return this.http.put(url, sportArena.dto()).pipe(
+      tap(stateUpdater),
+      catchError(error => handleError(error, this.store))
+    );
   }
 
   private handleError(errorResponse: ErrorResponse) {

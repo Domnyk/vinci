@@ -2,7 +2,7 @@ import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { FetchEvents } from '../components/owner/calendar/calendar.actions';
 import { environment } from '../../environments/environment.generated.dev';
 import { HttpClient } from '@angular/common/http';
-import { flatMap, tap } from 'rxjs/operators';
+import { catchError, flatMap, tap } from 'rxjs/operators';
 import { ErrorResponse } from '../models/api-response';
 import { ShowFlashMessageOnDeleted, ShowFlashMessageOnSuccessfulOperation } from '../actions/flash-message.actions';
 import { of } from 'rxjs';
@@ -11,6 +11,7 @@ import { CreateEvent } from '../components/client/event/add/add-event-form.actio
 import { JoinEvent, Pay, ResignFromEvent } from '../components/client/event/show/show-event.actions';
 import { CurrentUser } from '../models/current-user';
 import { JoinEventResponse } from '../models/api-responses/join-event-response';
+import { handleError } from './error-handler';
 
 type Events = Array<Event>;
 
@@ -57,16 +58,15 @@ export class EventState {
 
     return this.http.post(environment.api.resource(EventState.arenas, arenaId, EventState.events), event.dto(), { withCredentials: true })
       .pipe(
-        tap((response) => stateUpdater(response))
-      )
-      .subscribe(() => {}, (error) => this.handleError(error));
+        tap((response) => stateUpdater(response)),
+        catchError(error => handleError(error, this.store))
+      );
   }
 
   @Action(JoinEvent)
   joinEvent({ dispatch, getState, setState }: StateContext<Events>, { eventId }: JoinEvent) {
     const stateUpdater = (response: JoinEventResponse) => {
       this.store.select(state => state.currentUser).subscribe((currentUser: CurrentUser) => {
-        console.warn('Join Event not working!');
         const { user_id: id, has_paid: hasPaid, is_event_owner: isEventOwner } = response,
               oldEvents = getState().filter(event => event.id !== eventId),
               [eventToModification] = getState().filter(event => event.id === eventId),
