@@ -36,10 +36,4 @@ export class SportDisciplineState {
       catchError(error => handleError(error, this.store))
     );
   }
-
-  private handleError(errorResponse: ErrorResponse) {
-    console.debug('Error response: ', errorResponse);
-    this.store.dispatch(new ShowFlashMessageOnSuccessfulOperation('Wystąpił błąd'));
-  }
-
 }

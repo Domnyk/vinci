@@ -134,7 +134,7 @@ export class SportObjectState {
 
     if (BuildingAddressUtils.areEqual(oldSportObject.address, sportObjectToUpdate.address)) {
       console.debug('Not calling geocoder');
-      call = this.http.put(url, sportObjectToUpdate.dto())
+      call = this.http.put(url, sportObjectToUpdate.dto(), { withCredentials: true })
         .pipe(
           tap(stateUpdater),
           catchError((error: ERROR) => handleError(error, this.store))
@@ -145,7 +145,7 @@ export class SportObjectState {
         .pipe(
           flatMap((coords: LatLngLiteral) => {
             sportObjectToUpdate.geoCoordinates = coords;
-            return this.http.put(url, sportObjectToUpdate.dto());
+            return this.http.put(url, sportObjectToUpdate.dto(), { withCredentials: true });
           }),
           tap(stateUpdater),
           catchError((error: ERROR) => handleError(error, this.store))

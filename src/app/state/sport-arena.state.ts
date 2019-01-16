@@ -99,7 +99,7 @@ export class SportArenaState {
             this.store.dispatch(new ShowFlashMessageOnCreated('Pomyślnie utworzono arenę sportową'));
           };
 
-    return this.http.post(url, sportArena.dto()).pipe(
+    return this.http.post(url, sportArena.dto(), { withCredentials: true }).pipe(
       tap(stateUpdater),
       catchError(error => handleError(error, this.store))
     );
@@ -115,7 +115,7 @@ export class SportArenaState {
         );
       };
 
-    return this.http.delete(url).pipe(
+    return this.http.delete(url, { withCredentials: true }).pipe(
       tap(successDeletionHandler),
       catchError(error => handleError(error, this.store))
     );
@@ -138,7 +138,7 @@ export class SportArenaState {
         this.store.dispatch(new ShowFlashMessageOnEdited('Arena sportowa została pomyślnie zaktualizowana'));
       };
 
-    return this.http.put(url, sportArena.dto()).pipe(
+    return this.http.put(url, sportArena.dto(), { withCredentials: true }).pipe(
       tap(stateUpdater),
       catchError(error => handleError(error, this.store))
     );

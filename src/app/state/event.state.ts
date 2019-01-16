@@ -12,6 +12,9 @@ import { JoinEvent, Pay, ResignFromEvent } from '../components/client/event/show
 import { CurrentUser } from '../models/current-user';
 import { JoinEventResponse } from '../models/api-responses/join-event-response';
 import { handleError } from './error-handler';
+import { Router } from '@angular/router';
+import { Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 
 type Events = Array<Event>;
 
@@ -24,7 +27,7 @@ export class EventState {
   private static readonly participators = 'participators';
   private static readonly arenas = 'sport_arenas';
 
-  constructor(private http: HttpClient, private store: Store) { }
+  constructor(private http: HttpClient, private store: Store, @Inject(DOCUMENT) private document: any) { }
 
   @Selector()
   static getById(state: Events) {
@@ -91,7 +94,7 @@ export class EventState {
   @Action(Pay)
   pay({ getState, setState }: StateContext<Events>, { eventId }: Pay) {
     const url = environment.api.resource(EventState.events, eventId, 'payments' + '/approve');
-    window.open(url, '_blank');
+    this.document.location.href = url;
   }
 
   @Action(ResignFromEvent)
@@ -111,10 +114,5 @@ export class EventState {
       .pipe(
         tap(stateUpdater)
       );
-  }
-
-  private handleError(errorResponse: ErrorResponse) {
-    console.debug('Error response: ', errorResponse);
-    this.store.dispatch(new ShowFlashMessageOnSuccessfulOperation('Wystąpił błąd'));
   }
 }
