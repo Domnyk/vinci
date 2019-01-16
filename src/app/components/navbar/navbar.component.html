@@ -11,7 +11,7 @@
           <a routerLink="/search" class="nav-link">Szukaj</a>
         </li>
       </ul>
-      <ng-container *ngIf="isSignedIn; then signedIn; else unsigned"></ng-container>
+      <ng-container *ngIf="!!currentUser; then signedIn; else unsigned"></ng-container>
     </div>
   </nav>
 </div>

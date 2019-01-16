@@ -10,19 +10,17 @@ import { CurrentUserType } from '../../models/current-user-type';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements DoCheck {
+export class NavbarComponent implements OnInit {
   @Input() title: string;
   @Select(state => state.currentUser) private currentUser$: Observable<CurrentUser>;
   CurrentUserType = CurrentUserType;
 
-  isSignedIn = false;
   currentUser: CurrentUser = null;
 
   constructor(private store: Store) { }
 
-  ngDoCheck() {
+  ngOnInit() {
     this.currentUser$.subscribe((user: CurrentUser) => {
-      this.isSignedIn = !!user;
       this.currentUser = user;
     });
   }

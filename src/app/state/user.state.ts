@@ -18,8 +18,8 @@ import { UpdateOwner } from '../components/owner/owner-profile/owner-profile.act
 
 @State<CurrentUser>({
   name: 'currentUser',
+  defaults: null
 })
-
 export class CurrentUserState {
   constructor (private http: HttpClient, private store: Store, private router: Router) { }
 
