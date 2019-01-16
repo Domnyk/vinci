@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, DoCheck, Input, OnInit } from '@angular/core';
 import { CalendarView, CalendarEvent, collapseAnimation } from 'angular-calendar';
 import { Select, Store } from '@ngxs/store';
 import { Observable, of, zip } from 'rxjs';
@@ -6,6 +6,7 @@ import { isEqual, startOfDay } from 'date-fns';
 import { Event } from '../../../models/event';
 import { ExternalEvent } from '../../../models/external-event';
 import { flatMap } from 'rxjs/operators';
+import { MetaSelectorsService } from '../../../services/meta-selectors.service';
 
 @Component({
   selector: 'app-calendar-client',
@@ -15,9 +16,9 @@ import { flatMap } from 'rxjs/operators';
 })
 export class CalendarComponent implements OnInit {
   @Input() arenaId$: Observable<number>;
-  public events$: Observable<Array<CalendarEvent>>;
-  public externalEvents$: Observable<Array<ExternalEvent>>;
-  allEvents$: Observable<Array<CalendarEvent | ExternalEvent>>;
+  @Select(state => state.Events) events$: Observable<Array<CalendarEvent>>;
+  @Select(state => state.ExternalEvents) externalEvents$: Observable<Array<ExternalEvent>>;
+  @Select(MetaSelectorsService.allEvents) allEvents$: Observable<CalendarEvent>;
 
   createEventModalName = 'createEvent';
   showEventModalName = 'showEvent';
@@ -32,14 +33,7 @@ export class CalendarComponent implements OnInit {
 
   constructor(private store: Store) { }
 
-  ngOnInit() {
-    this.events$ = this.store.select(state => state.Events);
-    this.externalEvents$ = this.store.select(state => state.ExternalEvents);
-
-    this.allEvents$ = zip(this.events$, this.externalEvents$).pipe(
-      flatMap(([events, externalEvents]) => of([...events, ...externalEvents]))
-    );
-  }
+  ngOnInit() { }
 
   getTodayButtonClass(): string {
     if (this.isTodayViewActive) {

@@ -1,12 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CalendarNativeDateFormatter, CalendarView } from 'angular-calendar';
+import { CalendarView } from 'angular-calendar';
 import { Select, Store } from '@ngxs/store';
 import { FetchEvents } from './calendar.actions';
-import { concat, merge, Observable, of, zip } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Event } from '../../../models/event';
 import { FetchExternalEvents } from '../external-event/add-external-event/add-external-event.actions';
 import { ExternalEvent } from '../../../models/external-event';
-import { flatMap } from 'rxjs/operators';
+import { MetaSelectorsService } from '../../../services/meta-selectors.service';
+import { CalendarEvent } from 'angular-calendar';
 
 @Component({
   selector: 'app-calendar',
@@ -16,9 +17,9 @@ import { flatMap } from 'rxjs/operators';
 export class CalendarComponent implements OnInit {
   @Input() sportArenaId: number;
 
+  @Select(MetaSelectorsService.allEvents) allEvents$: Observable<CalendarEvent>;
   @Select(state => state.Events) events$: Observable<Array<Event>>;
   @Select(state => state.ExternalEvents) externalEvents$: Observable<Array<ExternalEvent>>;
-  allEvents$: Observable<Array<Event | ExternalEvent>>;
 
   view: CalendarView = CalendarView.Month;
   viewDate: Date = new Date();
@@ -32,10 +33,6 @@ export class CalendarComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(new FetchEvents(this.sportArenaId));
     this.store.dispatch(new FetchExternalEvents(this.sportArenaId));
-
-    this.allEvents$ = zip(this.events$, this.externalEvents$).pipe(
-      flatMap(([events, externalEvents]) => of([...events, ...externalEvents]))
-    );
   }
 
   getTodayButtonClass(): string {

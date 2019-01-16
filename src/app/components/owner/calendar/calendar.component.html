@@ -43,7 +43,7 @@
 </div>
 <div [ngSwitch]="view">
   <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month"
-                           [viewDate]="viewDate" [events]="(allEvents$ | async)"
+                           [viewDate]="viewDate" [events]="(allEventsFromSel$ | async)"
                            [locale]="'pl'"
                            [weekStartsOn]="1">
   </mwl-calendar-month-view>

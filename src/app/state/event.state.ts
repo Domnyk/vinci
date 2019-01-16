@@ -3,7 +3,6 @@ import { FetchEvents } from '../components/owner/calendar/calendar.actions';
 import { environment } from '../../environments/environment.generated.dev';
 import { HttpClient } from '@angular/common/http';
 import { catchError, flatMap, tap } from 'rxjs/operators';
-import { ErrorResponse } from '../models/api-response';
 import { ShowFlashMessageOnDeleted, ShowFlashMessageOnSuccessfulOperation } from '../actions/flash-message.actions';
 import { of } from 'rxjs';
 import { Event, Participator } from '../models/event';
@@ -12,7 +11,6 @@ import { JoinEvent, Pay, ResignFromEvent } from '../components/client/event/show
 import { CurrentUser } from '../models/current-user';
 import { JoinEventResponse } from '../models/api-responses/join-event-response';
 import { handleError } from './error-handler';
-import { Router } from '@angular/router';
 import { Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
