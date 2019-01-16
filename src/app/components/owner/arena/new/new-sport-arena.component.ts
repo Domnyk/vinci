@@ -21,6 +21,7 @@ export class NewSportArenaComponent implements OnInit {
   name: FormControl;
   sportDisciplines: FormControl;
   pricePerHour: FormControl = new FormControl(1, [Validators.required, Validators.min(1)]);
+  selectParams: SelectParams = null;
 
   FormSubmitType = FormSubmitType;
 
@@ -35,7 +36,12 @@ export class NewSportArenaComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    return this.sportDisciplines$.pipe(
+      flatMap((sportDisciplines: SportDiscipline[]) => of(
+        sportDisciplines.map(sd => ({ label: sd.name, value: sd.id }))
+      )),
+      flatMap((selectOptions) => of({ isMultiple: true, id: 'test', options: selectOptions }))
+    ).subscribe((selectParams) => this.selectParams = selectParams);
   }
 
   onSubmit() {
@@ -45,13 +51,5 @@ export class NewSportArenaComponent implements OnInit {
     console.debug('sportArena: ', sportArena);
 
     this.store.dispatch(new CreateSportArena(sportArena));
-  }
-
-  public get selectParams(): Observable<SelectParams> {
-    return this.sportDisciplines$.pipe(
-      flatMap((sportDisciplines: SportDiscipline[]) => of(
-        sportDisciplines.map(sd => ({ label: sd.name, value: sd.id }))
-      )),
-      flatMap((selectOptions) => of({ isMultiple: true, id: 'test', options: selectOptions })));
   }
 }

@@ -5,7 +5,7 @@
     <app-form-field [label]="'Nazwa areny sportowej'" [control]="name" [type]="'text'"
                     [invalidFeedback]="'Podaj nazwę areny sportowej'"></app-form-field>
     <app-form-field [label]="'Dyscypliny sportowe'" [control]="sportDisciplines" [type]="'select'"
-                    [selectParams]="(selectParams | async)" [invalidFeedback]="'Wybierz przynajmniej jedną'">
+                    [selectParams]="selectParams" [invalidFeedback]="'Wybierz przynajmniej jedną'">
     </app-form-field>
     <app-form-field [label]="'Cena za godzinę'" [control]="pricePerHour" [type]="'number'"
                     [invalidFeedback]="'Podaj prawidłową cenę za godzinę'"></app-form-field>
