@@ -9,9 +9,6 @@
       <li>
         Adres: {{ AddressHelper.printAddress(object$ | async) }}
       </li>
-      <li>
-        Margines rezerwacji: {{ (object$ | async)?.bookingMargin.days }} {{ (object$ | async)?.bookingMargin.days }}
-      </li>
     </ul>
     <p> Dostępne areny</p>
     <app-list-arenas [arenas$]="arenas$"></app-list-arenas>
