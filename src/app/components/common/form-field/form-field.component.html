@@ -1,9 +1,9 @@
 <div [ngClass]="_class">
   <label [attr.label]="label">{{ label }}</label>
   <div *ngIf="_isSelect; then select; else input"></div>
-  <small *ngIf="control.pending" class="text-warning">Proszę czekać trwa weryfikacja</small>
+  <small *ngIf="control.pending" class="text-warning">Proszę czekać, trwa weryfikacja...</small>
   <small *ngIf="showFieldReq" class="form-text text-muted">{{ fieldReq }}</small>
-  <div class="invalid-feedback">{{ invalidFeedback }}</div>
+  <div *ngIf="isInvalid(control)" class="invalid-feedback">{{ getErrorMessage() }}</div>
 </div>
 
 <ng-template #input>

@@ -9,14 +9,7 @@
       </div>
       <div class="modal-body">
         <form novalidate>
-          <div class="form-group">
-            <label>Nazwa</label>
-            <input [formControl]="event.name" [class.is-invalid]="event.name.invalid && (event.name.touched || event.name.dirty)"
-                   class="form-control" type="text">
-            <div class="invalid-feedback">
-              Podaj nazwę
-            </div>
-          </div>
+          <app-form-field [control]="event.name" [label]="'Nazwa'" [type]="'text'" ></app-form-field>
           <div [formGroup]="event.timeFrame" class="form-row">
             <div class="col form-group">
               <label>Godzina rozpoczęcia</label>
@@ -41,20 +34,26 @@
               </div>
             </div>
           </div>
-          <div class="form-row">
+          <div [formGroup]="event.minMaxParticipants" class="form-row">
             <div class="col form-group">
               <label>Minimalna liczba osób</label>
-              <input [formControl]="event.minParticipants" [class.is-invalid]="event.minParticipants.invalid"
+              <input [class.is-invalid]="isInvalid(event.minMaxParticipants)" formControlName="minParticipants"
                      class="form-control" type="number" min="1" value="1" />
-              <div class="invalid-feedback">
+              <div *ngIf="isInvalid(event.minMaxParticipants)" class="invalid-feedback">
+                Minimalna liczba osób musi być większa niż maksymalna
+              </div>
+              <div *ngIf="isInvalid(event.minParticipants)" class="invalid-feedback">
                 Podaj poprawną wartość
               </div>
             </div>
             <div class="col form-group">
               <label>Maksymalna liczba osób</label>
-              <input [formControl]="event.maxParticipants" [class.is-invalid]="event.maxParticipants.invalid" class="form-control"
+              <input formControlName="maxParticipants" [class.is-invalid]="isInvalid(event.minMaxParticipants)" class="form-control"
                      type="number" min="1" value="1" />
-              <div class="invalid-feedback">
+              <div *ngIf="isInvalid(event.minMaxParticipants)" class="invalid-feedback">
+                Minimalna liczba osób musi być większa niż maksymalna
+              </div>
+              <div *ngIf="isInvalid(event.maxParticipants)" class="invalid-feedback">
                 Podaj poprawną wartość
               </div>
             </div>

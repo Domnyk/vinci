@@ -1,9 +1,10 @@
 import { DTO } from '../interfaces/dto';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { startLaterThanEndValidator } from '../components/client/event/add/start-later-than-end.directive';
+import { startLaterThanEndValidator } from '../components/client/event/add/start-later-than-end.validator';
 import { addDays } from 'date-fns';
 import { DateHelper } from '../helpers/date.helper';
 import { CustomTime } from './custom-time';
+import { minBiggerThanMaxValidator } from '../components/client/event/add/min-bigger-than-max.validator';
 
 export class NewEvent implements DTO {
   eventDay: Date = null;
@@ -15,10 +16,13 @@ export class NewEvent implements DTO {
   joinPhaseDuration: FormControl = null;
   paymentPhaseDuration: FormControl = null;
   timeFrame: FormGroup = null;
+  minMaxParticipants: FormGroup = null;
 
   private internalData: { startTime: CustomTime, endTime: CustomTime };
 
   constructor() {
+
+
     this.name = new FormControl('', [Validators.required]);
     this.startTime = new FormControl('', [Validators.required]);
     this.endTime = new FormControl('', [Validators.required]);
@@ -26,6 +30,10 @@ export class NewEvent implements DTO {
     // TODO: Add cross validation to check maxPeople > minPeople
     this.minParticipants = new FormControl(1, [Validators.required, Validators.min(1)]);
     this.maxParticipants = new FormControl(1, [Validators.required, Validators.min(1)]);
+    this.minMaxParticipants = new FormGroup({
+      minParticipants: this.minParticipants,
+      maxParticipants: this.maxParticipants,
+    }, { validators: minBiggerThanMaxValidator });
 
     this.joinPhaseDuration = new FormControl(1, [Validators.required, Validators.min(1)]);
     this.paymentPhaseDuration = new FormControl(1, [Validators.required, Validators.min(1)]);

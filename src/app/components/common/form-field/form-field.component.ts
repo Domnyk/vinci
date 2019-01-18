@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { FormHelper } from '../../../helpers/form.helper';
 import { SelectParams } from './select-params';
 import { AutocompleteType } from './autocomplete-type';
+import { ValidationError } from '../../../models/validation-error';
 
 @Component({
   selector: 'app-form-field',
@@ -84,5 +85,22 @@ export class FormFieldComponent implements OnInit, OnChanges {
     if (!!readonly) {
       this._isReadonly = readonly.currentValue;
     }
+  }
+
+  getErrorMessage(): string {
+    const errors = this.control.errors,
+          keys = Object.keys(errors),
+          getDescription = (error: ValidationError) => {
+            switch (error) {
+              case ValidationError.REQUIRED:
+                return 'Pole jest wymagane. ';
+              case ValidationError.IS_NAME_UNIQUE:
+                return 'Ta nazwa jest już zajęta. ';
+              default:
+                return error + '. ';
+            }
+          };
+
+    return keys.reduce((acc, curr) => acc + getDescription(<ValidationError> curr), '');
   }
 }

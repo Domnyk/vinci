@@ -1,5 +1,5 @@
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { startLaterThanEndValidator } from '../components/client/event/add/start-later-than-end.directive';
+import { startLaterThanEndValidator } from '../components/client/event/add/start-later-than-end.validator';
 import { DTO } from '../interfaces/dto';
 
 
