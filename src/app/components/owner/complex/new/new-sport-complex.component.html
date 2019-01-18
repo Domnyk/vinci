@@ -3,10 +3,10 @@
   <h2>Dodaj nowy kompleks</h2>
 
   <form (ngSubmit)="onSubmit()" #newSportComplexForm="ngForm">
-    <app-form-field [label]="'Nazwa kompleksu sportowego'" [control]="complexFormModel.name" [type]="'text'"
+    <app-form-field [label]="'Nazwa kompleksu sportowego'" [control]="complex.name" [type]="'text'"
                     [invalidFeedback]="'Podaj nazwę kompleksu sportowego'" ></app-form-field>
 
-    <app-form-submit-button [isValid]="complexFormModel.isValid()" [text]="'Dodaj kompleks'"
+    <app-form-submit-button [isValid]="complex.isValid()" [text]="'Dodaj kompleks'"
                             [submitType]="FormSubmitType.CREATE" ></app-form-submit-button>
   </form>
 </section>

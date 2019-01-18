@@ -54,7 +54,7 @@ export class SportComplexState {
   }
 
   @Action(CreateNewSportComplex)
-  newSportComplex({ getState, setState }: StateContext<Complexes>, { complex }: CreateNewSportComplex) {
+  newSportComplex({ getState, setState }: StateContext<Complexes>, { dto }: CreateNewSportComplex) {
     type stateUpdaterType = (response: any) => void;
     const url = environment.api.resource(SportComplexState.resourceName),
           stateUpdater: stateUpdaterType = (response) => {
@@ -68,7 +68,7 @@ export class SportComplexState {
             this.router.navigate(['/owner/complex/' + response.id]);
           };
 
-    return this.http.post(url, complex.dto(), { withCredentials: true }).pipe(
+    return this.http.post(url, dto, { withCredentials: true }).pipe(
       tap(stateUpdater)
     );
   }

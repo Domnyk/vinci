@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ComplexFormModel } from '../form-model/complex-form-model';
 import { Store } from '@ngxs/store';
 import { CreateNewSportComplex } from './new-sport-complex.actions';
 import { FormSubmitType } from '../../../common/form-submit-button/form-submit-type';
-import { Complex } from '../../../../models/complex';
+import { ComplexForm } from '../../../../models/complex.form';
+import { ValidationService } from '../../../../services/validation.service';
 
 @Component({
   selector: 'app-new-sport-complex',
@@ -11,20 +11,18 @@ import { Complex } from '../../../../models/complex';
   styleUrls: ['./new-sport-complex.component.css']
 })
 export class NewSportComplexComponent implements OnInit {
-  complexFormModel: ComplexFormModel;
+  complex = new ComplexForm(this.validationService);
   FormSubmitType = FormSubmitType;
 
   constructor(
     private store: Store,
-  ) {
-    this.complexFormModel = new ComplexFormModel();
-  }
+    private validationService: ValidationService
+  ) { }
 
   ngOnInit() { }
 
   onSubmit() {
-    const complex = new Complex(this.complexFormModel.id, this.complexFormModel.name.value);
-    this.store.dispatch(new CreateNewSportComplex(complex));
+    this.store.dispatch(new CreateNewSportComplex(this.complex.dto()));
   }
 
 }
