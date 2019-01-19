@@ -5,15 +5,21 @@ import { CurrentUser } from '../models/current-user';
 import { SignOut, SignUpComplexesOwner } from '../actions/user.actions';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment.generated.dev';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { ShowFlashMessageOnEdited, ShowFlashMessageOnSuccessfulOperation } from '../actions/flash-message.actions';
 import { Router } from '@angular/router';
 import { SignUpComplexesOwnerResponse } from '../models/api-responses/sign-up-complexes-owner-response';
 import { CurrentUserType } from '../models/current-user-type';
-import { SignInWithPasswordResponse } from '../models/api-responses/sign-in-with-password-response';
+import {
+  SignInWithPasswordErrorResponse,
+  SignInWithPasswordResponse
+} from '../models/api-responses/sign-in-with-password-response';
 import { UpdateClient } from '../components/client/client-profile/profile.actions';
 import { handleError } from './error-handler';
 import { UpdateOwner } from '../components/owner/owner-profile/owner-profile.actions';
+import { EMPTY, of, throwError } from 'rxjs';
+import { ERROR } from '../models/error';
+import { flatMap } from 'rxjs/internal/operators';
 
 
 @State<CurrentUser>({
@@ -58,18 +64,21 @@ export class CurrentUserState {
 
   @Action(SignInWithPassword)
   signInWithPassword({ setState }: StateContext<CurrentUser>, { credentials }: SignInWithPassword) {
-    const updateState = (response: SignInWithPasswordResponse) => {
-            const { id, email, paypal_email } = response;
-            setState({ id, email, paypalEmail: paypal_email, type: CurrentUserType.ComplexesOwner });
-    }, updateUI = () => {
-      this.store.dispatch(new ShowFlashMessageOnSuccessfulOperation('Pomyślnie zalogowano'));
-      this.router.navigate(['/owner']);
-    };
+    const signIn = (response: SignInWithPasswordResponse) => {
+        const { id, email, paypal_email: paypalEmail } = response;
+        setState({ id, email, paypalEmail: paypalEmail, type: CurrentUserType.ComplexesOwner });
+        this.store.dispatch(new ShowFlashMessageOnSuccessfulOperation('Pomyślnie zalogowano'));
+        this.router.navigate(['/owner']);
+      },
+      handleResponse = (response: SignInWithPasswordResponse & SignInWithPasswordErrorResponse) => {
+        return response.credentials === 'invalid' ? throwError(ERROR.INVALID_CREDENTIALS) : of(response);
+      };
 
     return this.http.post(environment.api.urls.signIn(CurrentUserType.ComplexesOwner), credentials.dto(), { withCredentials: true })
       .pipe(
-        tap((response: SignInWithPasswordResponse) => updateState(response)),
-        tap(() => updateUI())
+        flatMap(handleResponse),
+        tap(signIn),
+        catchError((error) => handleError(error, this.store))
       );
   }
 

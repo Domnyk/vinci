@@ -5,6 +5,8 @@ import { Store } from '@ngxs/store';
 import { HttpErrorResponse } from '@angular/common/http';
 
 export function handleError(error: ERROR | HttpErrorResponse, store: Store): Observable<never> {
+  console.log('Received error: ', error);
+
   let errors: Array<ERROR> = null;
 
   if (error instanceof HttpErrorResponse) {
@@ -51,6 +53,8 @@ function createErrorMsg(errors: Array<ERROR>): string {
           return 'Ten adres konta Paypal jest już zajęty.';
         case ERROR.COMPLEX_STILL_HAS_OBJECTS:
           return 'Najpierw usuń obiekty z tego kompleksu';
+        case ERROR.INVALID_CREDENTIALS:
+          return 'Zły login lub hasło';
         default:
           return 'Wystąpił błąd. Spróbuj ponownie później';
       }

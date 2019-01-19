@@ -96,6 +96,8 @@ export class FormFieldComponent implements OnInit, OnChanges {
                 return 'Pole jest wymagane. ';
               case ValidationError.IS_NAME_UNIQUE:
                 return 'Ta nazwa jest już zajęta. ';
+              case ValidationError.EMAIL:
+                return 'To nie jest poprawny format adres email. ';
               default:
                 return error + '. ';
             }

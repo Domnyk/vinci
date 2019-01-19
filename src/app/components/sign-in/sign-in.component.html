@@ -4,6 +4,8 @@
 
   <div class="col">
     <form (ngSubmit)="onSubmit()" novalidate>
+      <app-nested-flash-message></app-nested-flash-message>
+
       <app-form-field [label]="'Email'" [control]="email" [type]="'email'"
                       [invalidFeedback]="'Podaj prawidłowy adres email'" ></app-form-field>
 

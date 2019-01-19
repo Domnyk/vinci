@@ -3,3 +3,7 @@ export interface SignInWithPasswordResponse {
   email: string;
   paypal_email: string;
 }
+
+export interface SignInWithPasswordErrorResponse {
+  credentials: string
+}
