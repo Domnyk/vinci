@@ -145,7 +145,7 @@ registerLocaleData(localePl);
     ReactiveFormsModule,
     HttpClientModule,
     HttpClientXsrfModule.withOptions({
-      headerName: 'x-csrf-token'
+      headerName: 'X-CSRF-Token'
     }),
     NgxsModule.forRoot([
       CurrentUserState,
