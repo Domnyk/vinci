@@ -81,7 +81,7 @@ export class SportArenaState {
             setState(newState);
           };
 
-    return this.http.get(url).pipe(tap(stateUpdater));
+    return this.http.get(url, { withCredentials: true }).pipe(tap(stateUpdater));
   }
 
   @Action(CreateSportArena)

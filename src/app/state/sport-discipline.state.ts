@@ -31,7 +31,7 @@ export class SportDisciplineState {
             setState([...response.data.sport_disciplines]);
           };
 
-    return this.http.get(url).pipe(
+    return this.http.get(url, { withCredentials: true }).pipe(
       tap(stateUpdater),
       catchError(error => handleError(error, this.store))
     );

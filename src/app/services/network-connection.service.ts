@@ -16,7 +16,7 @@ export class NetworkConnectionService {
     let observable: Observable<boolean> = null;
 
     if (environment.production) {
-      observable =  this.http.get(environment.api.urls.status).pipe(
+      observable =  this.http.get(environment.api.urls.status, { withCredentials: true }).pipe(
         flatMap(resp => of(resp === NetworkConnectionService.ONLINE_FLAG)),
         catchError(error =>  of(false))
       );

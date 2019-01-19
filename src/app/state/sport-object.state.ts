@@ -80,7 +80,7 @@ export class SportObjectState {
             setState(newState);
           };
 
-    return this.http.get(url)
+    return this.http.get(url, { withCredentials: true })
       .pipe(
         tap(console.log),
         tap((response: Response) => this.maybeLogError(response, 'Wystąpił błąd w czasie pobierania listy obiektów sportowych ')),
@@ -170,7 +170,7 @@ export class SportObjectState {
         setState(newState);
       };
 
-    return this.http.get(url).pipe(tap(stateUpdater));
+    return this.http.get(url, { withCredentials: true }).pipe(tap(stateUpdater));
   }
 
   @Action(DeleteSportObject)
