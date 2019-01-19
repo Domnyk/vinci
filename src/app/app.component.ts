@@ -7,7 +7,6 @@ import { FlashMessage } from './models/flash-message';
 import { Observable, of, throwError, timer } from 'rxjs';
 import { NetworkConnectionService } from './services/network-connection.service';
 import { catchError, map, switchMap } from 'rxjs/operators';
-import { GetCsrfToken } from './actions/user.actions';
 
 
 @Component({
@@ -32,8 +31,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.flashMessage$.subscribe((flash: FlashMessage) => this.flashMsg = flash);
-
-    this.store.dispatch(new GetCsrfToken());
 
     this.parseURLFragments();
 

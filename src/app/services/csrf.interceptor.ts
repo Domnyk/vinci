@@ -13,6 +13,7 @@ export class CsrfInterceptor implements HttpInterceptor {
     const headerName = 'X-CSRF-Token',
       token = this.tokenExtractor.getToken() as string;
 
+    console.log(token);
     console.log('token !== null: ', token !== null);
     console.log('!req.headers.has(headerName): ', !req.headers.has(headerName));
 

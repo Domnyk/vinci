@@ -65,8 +65,11 @@ export class CurrentUserState {
   @Action(SignInWithPassword)
   signInWithPassword({ setState }: StateContext<CurrentUser>, { credentials }: SignInWithPassword) {
     const signIn = (response: SignInWithPasswordResponse) => {
-        const { id, email, paypal_email: paypalEmail } = response;
+        const { id, email, paypal_email: paypalEmail, csrf_token: csrfToken } = response;
+
+        document.cookie += 'XSRF-TOKEN=' + csrfToken + '; Secure; Path=/';
         setState({ id, email, paypalEmail: paypalEmail, type: CurrentUserType.ComplexesOwner });
+
         this.store.dispatch(new ShowFlashMessageOnSuccessfulOperation('Pomyślnie zalogowano'));
         this.router.navigate(['/owner']);
       },
@@ -108,11 +111,6 @@ export class CurrentUserState {
       tap(() => this.store.dispatch(new ShowFlashMessageOnEdited('Pomyślnie zakutualizowano profil'))),
       catchError(error => handleError(error, this.store))
     );
-  }
-
-  @Action(GetCsrfToken)
-  getCsrfToken({}: StateContext<CurrentUser>, {}: GetCsrfToken) {
-    return this.http.get(environment.api.urls.csrf, { withCredentials: true });
   }
 }
 
