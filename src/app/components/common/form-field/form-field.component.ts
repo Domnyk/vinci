@@ -92,6 +92,12 @@ export class FormFieldComponent implements OnInit, OnChanges {
           keys = Object.keys(errors),
           getDescription = (error: ValidationError) => {
             switch (error) {
+              case ValidationError.INVALID_POSTAL_CODE:
+                return 'Podaj poprawny kod pocztowy';
+              case ValidationError.INVALID_BUILDING_NUMBER:
+                return 'Podaj poprawny numer budynku. Przykładowo: 7 lub 12/23';
+              case ValidationError.MIN:
+                return 'Wartość jest zbyt mała. ';
               case ValidationError.REQUIRED:
                 return 'Pole jest wymagane. ';
               case ValidationError.IS_NAME_UNIQUE:
