@@ -15,7 +15,8 @@ export class API {
       status: this.domain + '/status',
       validate: {
         complex: this.domain + '/validate/complex'
-      }
+      },
+      csrf: this.domain + '/csrf'
     };
   }
 

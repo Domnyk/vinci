@@ -11,3 +11,9 @@ export class SignOut {
 
   constructor() { }
 }
+
+export class GetCsrfToken {
+  static readonly type = 'Get CSRF token';
+
+  constructor() { }
+}

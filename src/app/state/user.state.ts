@@ -2,7 +2,7 @@ import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 
 import { SignInWithPassword, UserHasSignedIn } from '../actions/sign-in.actions';
 import { CurrentUser } from '../models/current-user';
-import { SignOut, SignUpComplexesOwner } from '../actions/user.actions';
+import { GetCsrfToken, SignOut, SignUpComplexesOwner } from '../actions/user.actions';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment.generated.dev';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -108,6 +108,11 @@ export class CurrentUserState {
       tap(() => this.store.dispatch(new ShowFlashMessageOnEdited('Pomyślnie zakutualizowano profil'))),
       catchError(error => handleError(error, this.store))
     );
+  }
+
+  @Action(GetCsrfToken)
+  getCsrfToken({}: StateContext<CurrentUser>, {}: GetCsrfToken) {
+    return this.http.get(environment.api.urls.csrf, { withCredentials: true });
   }
 }
 
