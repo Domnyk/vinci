@@ -1,5 +1,5 @@
 export interface SearchResult {
   objectId: number;
-  averagePrice: number;
+  lowestPrice: number;
   distance: number;
 }

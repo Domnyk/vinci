@@ -29,7 +29,7 @@ export class SearchState {
           updateState = (resp: SearchResponse) => {
             const newState: SearchInfo = { params: null, results: null },
                   results = resp.results.map(result => {
-                    return { objectId: result.object_id, averagePrice: result.average_price, distance: result.distance };
+                    return { objectId: result.object_id, lowestPrice: result.lowest_price, distance: result.distance };
                   });
 
             newState.params = new SearchParams(resp.params.disciplines, resp.params.day, resp.params.geo_location);

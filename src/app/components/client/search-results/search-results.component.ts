@@ -53,7 +53,7 @@ export class SearchResultsComponent implements OnInit {
     this.map = new google.maps.Map(document.getElementById('map'), { center: currentLocation, zoom: 15 });
     this.markerService.addMarkerRaw(currentLocation, this.map);
     const ids = searchResults.map(result => result.objectId),
-          prices = searchResults.map(result => result.averagePrice),
+          prices = searchResults.map(result => result.lowestPrice),
           maxPrice = Math.max(...prices),
           minPrice = Math.min(...prices);
 
@@ -62,7 +62,7 @@ export class SearchResultsComponent implements OnInit {
       .pipe(map(filterFn => filterFn(ids)))
       .subscribe((objects: SportObject[]) => {
         objects.forEach(object => {
-          const price = searchResults.filter(result => result.objectId === object.id)[0].averagePrice;
+          const price = searchResults.filter(result => result.objectId === object.id)[0].lowestPrice;
           this.markerService.addSearchResultsMarker(object, { min: minPrice, max: maxPrice, value: price } , this.map);
         });
       });
