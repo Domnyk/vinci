@@ -2,7 +2,7 @@ import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 
 import { SignInWithPassword, UserHasSignedIn } from '../actions/sign-in.actions';
 import { CurrentUser } from '../models/current-user';
-import { GetCsrfToken, SignOut, SignUpComplexesOwner } from '../actions/user.actions';
+import { SignOut, SignUpComplexesOwner } from '../actions/user.actions';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment.generated.dev';
 import { catchError, map, tap } from 'rxjs/operators';
