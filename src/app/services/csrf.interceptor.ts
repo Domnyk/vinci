@@ -14,10 +14,18 @@ export class CsrfInterceptor implements HttpInterceptor {
     const headerName = 'X-CSRF-Token',
       token = this.tokenExtractor.getToken() as string;
 
-    if (token !== null && !req.headers.has(headerName) && req.url.includes(environment.api.domain)) {
+    if (token !== null && !req.headers.has(headerName) && this.isProperUrl(req)) {
       console.log('Adding csrf header');
       req = req.clone({ headers: req.headers.set(headerName, token) });
     }
     return next.handle(req);
+  }
+
+  isProperUrl(req: HttpRequest<any>): boolean {
+    if (environment.production) {
+      return req.url.includes('herokuapp');
+    } else {
+      return req.url.includes('localhost');
+    }
   }
 }
