@@ -114,7 +114,7 @@ export class CurrentUserState {
   }
 
   private createCSRFCookie(csrfToken: string) {
-    const domain = environment.production ? 'thawing-crag-67620.herokuapp.com' : 'localhost';
+    const domain = environment.production ? 'vinci-11235813.herokuapp.com' : 'localhost';
 
     return 'XSRF-TOKEN=' + csrfToken + '; Secure; Path=/; Domain=' + domain;
   }
