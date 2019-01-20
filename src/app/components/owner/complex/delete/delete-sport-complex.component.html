@@ -1,6 +1,6 @@
 <section>
   <form (ngSubmit)="onSubmit()" >
-    <p class="font-weight-bold">Możesz usunąć wyłącznie kompleks bez obiektów</p>
+    <p *ngIf="hasAnyObjects" class="font-weight-bold text-danger">Najpierw usuń obiekty z tego kompleksu!</p>
 
     <app-form-field [label]="'Nazwa kompleksu sportowego'" [control]="complex.name" [type]="'text'"
                     [invalidFeedback]="'Podaj nazwę kompleksu sportowego'" ></app-form-field>

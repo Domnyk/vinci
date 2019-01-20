@@ -67,7 +67,7 @@ export class CurrentUserState {
     const signIn = (response: SignInWithPasswordResponse) => {
         const { id, email, paypal_email: paypalEmail, csrf_token: csrfToken } = response;
 
-        document.cookie += 'XSRF-TOKEN=' + csrfToken + '; Secure; Path=/';
+        document.cookie += this.createCSRFCookie(csrfToken);
         setState({ id, email, paypalEmail: paypalEmail, type: CurrentUserType.ComplexesOwner });
 
         this.store.dispatch(new ShowFlashMessageOnSuccessfulOperation('Pomyślnie zalogowano'));
@@ -111,6 +111,12 @@ export class CurrentUserState {
       tap(() => this.store.dispatch(new ShowFlashMessageOnEdited('Pomyślnie zakutualizowano profil'))),
       catchError(error => handleError(error, this.store))
     );
+  }
+
+  private createCSRFCookie(csrfToken: string) {
+    const domain = environment.production ? 'thawing-crag-67620.herokuapp.com' : 'localhost';
+
+    return 'XSRF-TOKEN=' + csrfToken + '; Secure; Path=/; Domain=' + domain;
   }
 }
 

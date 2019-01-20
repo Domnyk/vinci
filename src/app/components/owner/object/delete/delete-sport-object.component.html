@@ -1,5 +1,7 @@
 <section>
   <form (ngSubmit)="onSubmit()" >
+    <p *ngIf="hasAnyArenas" class="font-weight-bold text-danger">Najpierw usuń areny z tego obiektu!</p>
+
     <app-nested-flash-message></app-nested-flash-message>
 
     <app-form-field [label]="'Nazwa obiektu sportowego'" [control]="name" [type]="'text'"

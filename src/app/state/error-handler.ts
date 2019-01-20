@@ -24,7 +24,9 @@ function parseIntoEnum(error: HttpErrorResponse): Array<ERROR> {
   const VALUE_TAKEN = 'has already been taken',
         STILL_HAS_CHILDREN = 'are still associated with this entry';
 
-  console.log('Error: ', error);
+  if (error.status === 500) {
+    return [ERROR.DEFAULT];
+  }
 
   return <Array<ERROR>>Object.keys(error.error).map((key) => {
     const value: string = error.error[key][0];

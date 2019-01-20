@@ -2,7 +2,7 @@ import LatLngLiteral = google.maps.LatLngLiteral;
 import { CurrentUserType } from '../app/models/current-user-type';
 
 export class API {
-  constructor(private domain: string, private googleMapsApiKey: string) { }
+  constructor(public domain: string, private googleMapsApiKey: string) { }
 
   get urls() {
     return {

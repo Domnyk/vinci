@@ -105,7 +105,7 @@ export class FormFieldComponent implements OnInit, OnChanges {
               case ValidationError.EMAIL:
                 return 'To nie jest poprawny format adres email. ';
               default:
-                return error + '. ';
+                return 'Wprowadzono niepoprawne dane. ';
             }
           };
 

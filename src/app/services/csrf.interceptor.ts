@@ -1,6 +1,7 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpXsrfTokenExtractor } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment.generated.dev';
 
 
 @Injectable()
@@ -13,11 +14,7 @@ export class CsrfInterceptor implements HttpInterceptor {
     const headerName = 'X-CSRF-Token',
       token = this.tokenExtractor.getToken() as string;
 
-    console.log(token);
-    console.log('token !== null: ', token !== null);
-    console.log('!req.headers.has(headerName): ', !req.headers.has(headerName));
-
-    if (token !== null && !req.headers.has(headerName)) {
+    if (token !== null && !req.headers.has(headerName) && req.url.includes(environment.api.domain)) {
       console.log('Adding csrf header');
       req = req.clone({ headers: req.headers.set(headerName, token) });
     }

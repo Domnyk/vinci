@@ -58,5 +58,4 @@ export class DeleteSportComplexComponent implements OnChanges {
       return this.complex.name.value === complex.name;
     };
   }
-
 }

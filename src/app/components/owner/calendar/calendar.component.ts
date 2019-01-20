@@ -17,9 +17,7 @@ import { CalendarEvent } from 'angular-calendar';
 export class CalendarComponent implements OnInit {
   @Input() sportArenaId: number;
 
-  @Select(MetaSelectorsService.allEvents) allEvents$: Observable<CalendarEvent>;
-  @Select(state => state.Events) events$: Observable<Array<Event>>;
-  @Select(state => state.ExternalEvents) externalEvents$: Observable<Array<ExternalEvent>>;
+  @Select(MetaSelectorsService.allEvents) allEvents$: Observable<Array<CalendarEvent>>;
 
   view: CalendarView = CalendarView.Month;
   viewDate: Date = new Date();

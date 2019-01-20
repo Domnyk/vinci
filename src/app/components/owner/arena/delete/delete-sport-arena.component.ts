@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { SportArena } from '../../../../models/sport-arena';
 import { FormControl, Validators } from '@angular/forms';
 import { ShowFlashMessageOnSuccessfulOperation } from '../../../../actions/flash-message.actions';
@@ -6,14 +6,16 @@ import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { DeleteSportArena } from './delete-sport-arena.actions';
 import { FormSubmitType } from '../../../common/form-submit-button/form-submit-type';
+import { MetaSelectorsService } from '../../../../services/meta-selectors.service';
 
 @Component({
   selector: 'app-delete-sport-arena',
   templateUrl: './delete-sport-arena.component.html',
   styleUrls: ['./delete-sport-arena.component.css']
 })
-export class DeleteSportArenaComponent implements OnInit {
+export class DeleteSportArenaComponent implements OnChanges {
   @Input() sportArena: SportArena;
+  hasAnyEvents = true;
 
   name: FormControl;
 
@@ -25,13 +27,15 @@ export class DeleteSportArenaComponent implements OnInit {
     ]);
   }
 
-  ngOnInit() {
+  ngOnChanges() {
+    this.store.select(MetaSelectorsService.allEvents).subscribe(allEvents => {
+      this.hasAnyEvents = allEvents.length > 0;
+    });
   }
 
   isFormValid(): boolean {
-    return this.doesInputMatch();
+    return this.doesInputMatch() && !this.hasAnyEvents;
   }
-
 
   onSubmit() {
     const successfulDeletion = () => {

@@ -41,14 +41,14 @@
     </div>
   </div>
 </div>
-<div [ngSwitch]="view">
+<div [ngSwitch]="view" *ngIf="(allEvents$ | async) as allEvents">
   <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month"
-                           [viewDate]="viewDate" [events]="(allEventsFromSel$ | async)"
+                           [viewDate]="viewDate" [events]="allEvents"
                            [locale]="'pl'"
                            [weekStartsOn]="1">
   </mwl-calendar-month-view>
   <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week"
-                          [viewDate]="viewDate" [events]="(allEvents$ | async)"
+                          [viewDate]="viewDate" [events]="allEvents"
                           [locale]="'pl'"
                           [weekStartsOn]="1"
                           [hourSegments]="1"
