@@ -27,7 +27,6 @@ export class NewEvent implements DTO {
     this.startTime = new FormControl('', [Validators.required]);
     this.endTime = new FormControl('', [Validators.required]);
 
-    // TODO: Add cross validation to check maxPeople > minPeople
     this.minParticipants = new FormControl(1, [Validators.required, Validators.min(1)]);
     this.maxParticipants = new FormControl(1, [Validators.required, Validators.min(1)]);
     this.minMaxParticipants = new FormGroup({

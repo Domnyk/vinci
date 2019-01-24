@@ -1,4 +1,3 @@
-// TODO: This interface should stick to convention { status: string, data: ObjectFormModel }
 export interface SignUpResponse {
  status: string;
  id: number;

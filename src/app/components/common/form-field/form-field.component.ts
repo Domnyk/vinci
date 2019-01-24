@@ -38,8 +38,6 @@ export class FormFieldComponent implements OnInit, OnChanges {
   _autocomplete: string = null;
   showFieldReq = false;
 
-  // TODO: 'new-password' should return AutocompleteType.NEW_PASSWORD but this would require this.type to be 'new-password'
-  // TODO: this.type is also used in input as attr.type
   private static getAutocompleteType(inputType: string): AutocompleteType {
     switch (inputType) {
       case 'email':

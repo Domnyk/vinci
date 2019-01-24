@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ColorService } from '../../app/services/color.service';
-import { Rgb } from '../../app/models/colors';
+import { ColorService } from '../app/services/color.service';
+import { Rgb } from '../app/models/colors';
 
 describe('ColorService', () => {
   let service: ColorService = null;

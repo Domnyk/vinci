@@ -12,7 +12,6 @@
       <app-form-field [label]="'Hasło'" [control]="complexesOwner.password" [type]="'password'"
                       [fieldReq]="complexesOwner.passwordReq" [invalidFeedback]="'Podaj poprawne hasło'"></app-form-field>
 
-      <!-- TODO: Refactor into app-form-field -->
       <div class="form-group">
         <label for="password">Powtórz hasło</label>
         <input [formControl]="complexesOwner.passwordConfirmation"

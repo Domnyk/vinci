@@ -31,7 +31,6 @@ export class GeocoderService {
       type of `results` should be GeocoderResult[] but file with typings contains error. It describies location as
       LatLng when in fact it is of type LatLngLiteral
      */
-    // TODO: Add proper type to `results`
     return this.http.get(geocoderURL).pipe(
       flatMap(parseResponse)
     );
