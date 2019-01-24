@@ -14,6 +14,7 @@ import { warsaw } from '../../../locations';
 import { flatMap, tap } from 'rxjs/operators';
 import { GeocoderService } from '../../../services/geocoder.service';
 import LatLngLiteral = google.maps.LatLngLiteral;
+import { FormSubmitType } from '../../common/form-submit-button/form-submit-type';
 
 @Component({
   selector: 'app-search',
@@ -25,6 +26,8 @@ export class SearchComponent implements OnInit {
   readonly currentDate: CurrentDate;
   readonly lastDayOfMonth: number;
   readonly currentLocationIcon: IconDefinition = faMapMarkerAlt;
+
+  FormSubmitType = FormSubmitType;
 
   fullLocation: FullLocation = { readableAddress: '', coords: null, wasEditedByUser: true };
 
@@ -73,6 +76,10 @@ export class SearchComponent implements OnInit {
         flatMap( (coords: LatLngLiteral) => this.geocoderService.reverseGeocode(coords)),
       )
       .subscribe(this.onSuccessfulLocationFetchHandleControls.bind(this));
+  }
+
+  isValid() {
+    return this.location.valid && this.disciplines.valid;
   }
 
   manualEdition() {

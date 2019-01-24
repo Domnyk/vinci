@@ -11,7 +11,7 @@ export class CsrfInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const headerName = 'X-CSRF-Token',
+    const headerName = 'x-csrf-token',
       token = this.tokenExtractor.getToken() as string;
 
     console.log('token !== null: ', token !== null);
