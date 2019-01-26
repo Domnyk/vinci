@@ -5,9 +5,12 @@ import { CreateEvent } from './add-event-form.actions';
 import { CurrentUser } from '../../../../models/current-user';
 import { Observable, of } from 'rxjs';
 import { ModalActionType } from '../../../../models/modal-action-type';
-import { flatMap } from 'rxjs/operators';
+import { filter, flatMap, map } from 'rxjs/operators';
 import { CurrentUserType } from '../../../../models/current-user-type';
 import { FormHelper } from '../../../../helpers/form.helper';
+import { MetaSelectorsService } from '../../../../services/meta-selectors.service';
+import { CalendarEvent } from 'angular-calendar';
+import { isEqual } from 'date-fns';
 
 @Component({
   selector: 'app-add-event-form',
@@ -28,7 +31,21 @@ export class AddEventFormComponent implements OnChanges {
   event: NewEvent;
 
   constructor(private store: Store) {
-    this.event = new NewEvent();
+    const todayEvents$: Observable<Array<CalendarEvent>> = this.store.select(MetaSelectorsService.allEvents).pipe(
+      map((events: CalendarEvent[]) => {
+        return events.filter((event: CalendarEvent) => {
+          const eventDay: Date = new Date(event.start.valueOf());
+          eventDay.setHours(0);
+          eventDay.setMinutes(0);
+          eventDay.setSeconds(0);
+          eventDay.setMilliseconds(0);
+
+          return isEqual(eventDay, this.eventDay);
+        });
+      })
+    );
+
+    this.event = new NewEvent(todayEvents$);
   }
 
   ngOnChanges(changes: SimpleChanges) {

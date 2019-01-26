@@ -5,6 +5,9 @@ import { addDays } from 'date-fns';
 import { DateHelper } from '../helpers/date.helper';
 import { CustomTime } from './custom-time';
 import { minBiggerThanMaxValidator } from '../components/client/event/add/min-bigger-than-max.validator';
+import { CalendarEvent } from 'angular-calendar';
+import { Observable } from 'rxjs';
+import { eventsOverlapValidator } from '../components/client/event/add/events-overlap.validator';
 
 export class NewEvent implements DTO {
   eventDay: Date = null;
@@ -20,7 +23,7 @@ export class NewEvent implements DTO {
 
   private internalData: { startTime: CustomTime, endTime: CustomTime };
 
-  constructor() {
+  constructor(allEvents$: Observable<Array<CalendarEvent>>) {
 
 
     this.name = new FormControl('', [Validators.required]);
@@ -40,7 +43,7 @@ export class NewEvent implements DTO {
     this.timeFrame = new FormGroup({
       start: this.startTime,
       end: this.endTime
-    }, { validators: startLaterThanEndValidator });
+    }, { validators: startLaterThanEndValidator, asyncValidators: eventsOverlapValidator(allEvents$) });
 
     this.internalData = {
       startTime: null,
@@ -51,6 +54,7 @@ export class NewEvent implements DTO {
   }
 
   get isValid(): boolean {
+
     const controls: AbstractControl[] = [
       this.name, this.startTime, this.endTime, this.minParticipants, this.maxParticipants, this.joinPhaseDuration,
       this.paymentPhaseDuration, this.timeFrame

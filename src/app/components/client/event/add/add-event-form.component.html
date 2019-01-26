@@ -15,8 +15,11 @@
               <label>Godzina rozpoczęcia</label>
               <input [class.is-invalid]="isInvalid(event.timeFrame)" formControlName="start"
                      class="form-control" type="time" step="1800" min="00:00" />
+              <small *ngIf="event.timeFrame.pending" class="text-warning">
+                Trwa weryfikacja
+              </small>
               <div *ngIf="isInvalid(event.timeFrame)" class="invalid-feedback">
-                Godzina zakończenia musi być później niż godzina rozpoczęcia
+                Godzina zakończenia musi być później niż godzina rozpoczęcia. Okno czasowe musi być wolne
               </div>
               <div *ngIf="isInvalid(event.startTime)" class="invalid-feedback">
                 Pole wymagane
@@ -26,8 +29,11 @@
               <label>Godzina zakończenia</label>
               <input [class.is-invalid]="isInvalid(event.timeFrame)" formControlName="end"
                      class="form-control" type="time" min="00:00" />
+              <small *ngIf="event.timeFrame.pending" class="text-warning">
+                Trwa weryfikacja
+              </small>
               <div *ngIf="isInvalid(event.timeFrame)" class="invalid-feedback">
-                Godzina zakończenia musi być później niż godzina rozpoczęcia
+                Godzina zakończenia musi być później niż godzina rozpoczęcia. Okno czasowe musi być wolne
               </div>
               <div *ngIf="isInvalid(event.endTime)" class="invalid-feedback">
                 Pole wymagane
