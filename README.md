@@ -1,5 +1,7 @@
 # Vinci
 
+[![Build Status](https://travis-ci.org/Domnyk/vinci.svg?branch=master)](https://travis-ci.org/Domnyk/vinci)
+
 This application is part of my engineering thesis. It allows for creating, joining and paying for sport events.
 
 ##### Features
