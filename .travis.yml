@@ -19,6 +19,13 @@ jobs:
       script: yarn run build
     - stage: "Test"
       script: yarn run test:ci
+    - stage: "Release"
+      script: skip
+      deploy:
+        provider: heroku
+        api_key: $HEROKU_API_KEY
+        app: vinci-11235813
+
 
 
 
