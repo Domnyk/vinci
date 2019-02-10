@@ -1,6 +1,12 @@
 # Vinci
 
-This application is part of my  
+This application is part of my engineering thesis. It allows for creating, joining and paying for sport events.
+
+##### Features
+
+- view all sport objects using Google Maps
+- pay for participation using Paypal
+- login using Facebook
 
 ## Development server
 
