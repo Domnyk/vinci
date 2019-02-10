@@ -24,8 +24,6 @@ export class AddExternalEventComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('DTO: ', this.newExternalEvent.dto());
-
     this.store.dispatch(new CreateExternalEvent(this.arenaId, this.newExternalEvent));
   }
 

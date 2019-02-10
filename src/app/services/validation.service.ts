@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment.generated.dev';
+import { environment } from '../../environments/environment.dev';
 import { map } from 'rxjs/operators';
 
 type asyncValidator = (control: AbstractControl) => Observable<ValidationErrors | null>;

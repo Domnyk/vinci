@@ -29,7 +29,6 @@ export class MapComponent implements OnInit {
   }
 
   handleClick(event) {
-    console.debug('Source elem id: ', event.srcElement.id);
     event.preventDefault();
 
     const sourceElem: string = event.srcElement.id;

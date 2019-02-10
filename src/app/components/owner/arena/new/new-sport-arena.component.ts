@@ -48,8 +48,6 @@ export class NewSportArenaComponent implements OnInit {
     const sportDisciplines: Array<number> = this.sportDisciplines.value.map((sportDiscipline: string) => +sportDiscipline),
           sportArena = new SportArena(null, this.name.value, sportDisciplines, this.sportObjectId, +this.pricePerHour.value);
 
-    console.debug('sportArena: ', sportArena);
-
     this.store.dispatch(new CreateSportArena(sportArena));
   }
 }

@@ -1,6 +1,6 @@
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { FetchEvents } from '../components/owner/calendar/calendar.actions';
-import { environment } from '../../environments/environment.generated.dev';
+import { environment } from '../../environments/environment.dev';
 import { HttpClient } from '@angular/common/http';
 import { catchError, flatMap, tap } from 'rxjs/operators';
 import { ShowFlashMessageOnDeleted, ShowFlashMessageOnSuccessfulOperation } from '../actions/flash-message.actions';
@@ -84,8 +84,7 @@ export class EventState {
 
     return this.http.post(environment.api.resource(EventState.events, eventId, EventState.participators), {} , { withCredentials: true })
       .pipe(
-        tap((response: JoinEventResponse) => stateUpdater(response)),
-        tap(() => console.log('Joined to event'))
+        tap((response: JoinEventResponse) => stateUpdater(response))
       );
   }
 

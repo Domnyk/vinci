@@ -10,7 +10,7 @@ export function initStateFromStorage(state, action, next) {
 
     if (isStatePresent) {
       const stateFromStorage = JSON.parse(localStorage.getItem('@@STATE'));
-      return next(stateFromStorage, action).pipe(tap(() => console.log('stateFromStorage: ', stateFromStorage)));
+      return next(stateFromStorage, action);
     }
   }
 

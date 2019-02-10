@@ -4,8 +4,6 @@ import { SportDiscipline } from './sport-discipline';
 
 export class SportArena implements DTO {
   static fromDTO(dto: any): SportArena {
-    console.debug(dto);
-
     return new SportArena(dto.id, dto.name, dto.sport_disciplines.slice(0), dto.sport_object_id, dto.price_per_hour);
   }
 

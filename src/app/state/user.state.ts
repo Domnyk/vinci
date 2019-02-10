@@ -4,7 +4,7 @@ import { SignInWithPassword, UserHasSignedIn } from '../actions/sign-in.actions'
 import { CurrentUser } from '../models/current-user';
 import { SignOut, SignUpComplexesOwner } from '../actions/user.actions';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment.generated.dev';
+import { environment } from '../../environments/environment.dev';
 import { catchError, map, tap } from 'rxjs/operators';
 import { ShowFlashMessageOnEdited, ShowFlashMessageOnSuccessfulOperation } from '../actions/flash-message.actions';
 import { Router } from '@angular/router';

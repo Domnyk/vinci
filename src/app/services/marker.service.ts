@@ -54,10 +54,8 @@ export class MarkerService {
   private calculateMarkerColor(min: number, max: number, value: number): Rgb {
     const green: Rgb = { r: 0, g: 255, b: 0 },
           red: Rgb = { r: 255, g: 0, b: 0 },
-          val = (max - value) / (max - min),
           color = this.colorService.interpolate(red, green, (max - value) / (max - min));
 
-    console.log(color);
     return color;
   }
 

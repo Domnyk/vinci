@@ -1,6 +1,6 @@
 import { SportArena } from '../models/sport-arena';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
-import { environment } from '../../environments/environment.generated.dev';
+import { environment } from '../../environments/environment.dev';
 import {
   ShowFlashMessageOnCreated,
   ShowFlashMessageOnEdited,
@@ -142,11 +142,6 @@ export class SportArenaState {
       tap(stateUpdater),
       catchError(error => handleError(error, this.store))
     );
-  }
-
-  private handleError(errorResponse: ErrorResponse) {
-    console.debug('Error response: ', errorResponse);
-    this.store.dispatch(new ShowFlashMessageOnSuccessfulOperation('Wystąpił błąd'));
   }
 }
 

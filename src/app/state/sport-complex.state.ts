@@ -6,7 +6,7 @@ import { CreateNewSportComplex } from '../components/owner/complex/new/new-sport
 import { DeleteSportComplex } from '../components/owner/complex/delete/delete-sport-complex.actions';
 import { _ } from 'underscore';
 
-import { environment } from '../../environments/environment.generated.dev';
+import { environment } from '../../environments/environment.dev';
 import { HttpClient } from '@angular/common/http';
 import { UpdateSportComplex } from '../components/owner/complex/edit/edit-sport-complex.actions';
 import { ShowFlashMessageOnEdited, ShowFlashMessageOnSuccessfulOperation } from '../actions/flash-message.actions';

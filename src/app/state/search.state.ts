@@ -1,7 +1,7 @@
 import { Action, State, StateContext } from '@ngxs/store';
 import { Search } from '../components/client/search/search.actions';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment.generated.dev';
+import { environment } from '../../environments/environment.dev';
 import { tap } from 'rxjs/operators';
 import { SearchParams } from '../models/search-params';
 import { SearchResult } from '../models/search-result';

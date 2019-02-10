@@ -10,11 +10,9 @@ export const eventsOverlapValidator: (events$: Observable<Array<CalendarEvent>>)
           endTime: string = control.get('end').value;
 
     return events$.pipe(
-      tap(console.log),
       map((events: CalendarEvent[]) => {
         return events.map((event: CalendarEvent) => areOverlaping(startTime, endTime, event.start, event.end));
       }),
-      tap(console.log),
       map((values: boolean[]) => {
         return values.reduce((acc, val) => acc || val, false) ? { 'overlaps': true } : null;
       }),

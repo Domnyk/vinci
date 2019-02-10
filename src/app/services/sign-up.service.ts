@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { Credentials } from '../models/credentials';
 
-import { environment } from '../../environments/environment.generated.dev';
+import { environment } from '../../environments/environment.dev';
 
 @Injectable({
   providedIn: 'root'

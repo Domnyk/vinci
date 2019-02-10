@@ -65,7 +65,6 @@ export class AddEventFormComponent implements OnChanges {
   }
 
   createEvent() {
-    console.debug('NewEvent: ', this.event.dto());
     this.store.dispatch(new CreateEvent(this.arenaId, this.event));
   }
 

@@ -3,7 +3,7 @@ import { Action, State, StateContext, Store } from '@ngxs/store';
 import { FetchSportDisciplines } from '../components/owner/complex-owner-dashboard/complex-owner-dasboard.actions';
 import { catchError, tap } from 'rxjs/operators';
 import { SportDiscipline } from '../models/sport-discipline';
-import { environment } from '../../environments/environment.generated.dev';
+import { environment } from '../../environments/environment.dev';
 import { HttpClient } from '@angular/common/http';
 import { ErrorResponse, Response } from '../models/api-response';
 import { ShowFlashMessageOnSuccessfulOperation } from '../actions/flash-message.actions';

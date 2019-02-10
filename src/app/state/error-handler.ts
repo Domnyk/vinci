@@ -5,8 +5,6 @@ import { Store } from '@ngxs/store';
 import { HttpErrorResponse } from '@angular/common/http';
 
 export function handleError(error: ERROR | HttpErrorResponse, store: Store): Observable<never> {
-  console.log('Received error: ', error);
-
   let errors: Array<ERROR> = null;
 
   if (error instanceof HttpErrorResponse) {

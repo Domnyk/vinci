@@ -1,5 +1,5 @@
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
-import { environment } from '../../environments/environment.generated.dev';
+import { environment } from '../../environments/environment.dev';
 import { HttpClient } from '@angular/common/http';
 import { catchError, flatMap, tap } from 'rxjs/operators';
 import { ShowFlashMessageOnSuccessfulOperation } from '../actions/flash-message.actions';

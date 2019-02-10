@@ -52,11 +52,6 @@ export class CalendarComponent implements OnInit {
   }
 
   dayClicked({ date }: { date: Date }): void {
-    const dayWasOpenNowOtherClicked = !isEqual(this.viewDate, date) && this.activeDayIsOpen;
-    if (dayWasOpenNowOtherClicked) {
-      console.log('Day was open and other day was clicked');
-    }
-
     this.viewDate = date;
     this.activeDayIsOpen = !this.activeDayIsOpen;
   }

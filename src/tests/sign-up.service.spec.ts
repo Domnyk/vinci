@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { SignUpService } from '../app/services/sign-up.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { environment } from '../environments/environment.generated.dev';
+import { environment } from '../environments/environment.dev';
 import { Credentials } from '../app/models/credentials';
 import { SignUpResponse } from '../app/models/api-response';
 

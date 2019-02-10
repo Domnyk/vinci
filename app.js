@@ -14,7 +14,7 @@ app.use(express.static(path.join(__dirname, 'dist/vinci')));
 app.use(forceSsl);
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist/vinci/index.generated.html'));
+  res.sendFile(path.join(__dirname, 'dist/vinci/index.html'));
 });
 
 http

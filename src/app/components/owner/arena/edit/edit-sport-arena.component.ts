@@ -39,7 +39,6 @@ export class EditSportArenaComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     const sportArena: SportArena = changes.sportArena.currentValue;
-    console.debug('ngOnChanges fired in edit sport arena component. sportArena is: ', sportArena);
 
     this.name.setValue(sportArena.name);
     this.sportDisciplines.setValue(sportArena.sportDisciplines);

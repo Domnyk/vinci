@@ -4,7 +4,7 @@ import { Store } from '@ngxs/store';
 import { SignInWithPassword } from '../../actions/sign-in.actions';
 
 import { Credentials } from '../../models/credentials';
-import { environment } from '../../../environments/environment.generated.dev';
+import { environment } from '../../../environments/environment.dev';
 import { FormControl, Validators } from '@angular/forms';
 import { FormSubmitType } from '../common/form-submit-button/form-submit-type';
 import { CurrentUserType } from '../../models/current-user-type';

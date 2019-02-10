@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from '../../../environments/environment.generated.dev';
+import { environment } from '../../../environments/environment.dev';
 
 @Component({
   selector: 'app-welcome',

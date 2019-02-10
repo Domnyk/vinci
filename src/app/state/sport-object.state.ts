@@ -6,7 +6,7 @@ import { GeocoderService } from '../services/geocoder.service';
 import { flatMap } from 'rxjs/operators';
 import { catchError, map, tap } from 'rxjs/internal/operators';
 import { FetchSportObjectsInSportComplex } from '../components/owner/complex/show/sport-complex-dashboard.actions';
-import { environment } from '../../environments/environment.generated.dev';
+import { environment } from '../../environments/environment.dev';
 import { HttpClient } from '@angular/common/http';
 import {
   ShowFlashMessageOnEdited,
@@ -55,7 +55,6 @@ export class SportObjectState {
     return (ids: number[]) => {
 
       const objects = state.filter(sportObject => ids.some(id => +id === sportObject.id));
-      console.log('Objects from state selector: ', objects);
       return objects;
     };
   }
@@ -82,7 +81,6 @@ export class SportObjectState {
 
     return this.http.get(url, { withCredentials: true })
       .pipe(
-        tap(console.log),
         tap((response: Response) => this.maybeLogError(response, 'Wystąpił błąd w czasie pobierania listy obiektów sportowych ')),
         tap(stateUpdater)
       );
@@ -133,14 +131,12 @@ export class SportObjectState {
     let call: Observable<any> = null;
 
     if (BuildingAddressUtils.areEqual(oldSportObject.address, sportObjectToUpdate.address)) {
-      console.debug('Not calling geocoder');
       call = this.http.put(url, sportObjectToUpdate.dto(), { withCredentials: true })
         .pipe(
           tap(stateUpdater),
           catchError((error: ERROR) => handleError(error, this.store))
         );
     } else {
-      console.debug('Calling geocoder');
       call = this.geoCoder.geocode(BuildingAddressUtils.asString(sportObjectToUpdate.address))
         .pipe(
           flatMap((coords: LatLngLiteral) => {
@@ -192,7 +188,6 @@ export class SportObjectState {
 
   private maybeLogError(response: Response | ErrorResponse, msg: string) {
     if (response.status === 'error') {
-      console.debug('Error response: ', response);
       this.store.dispatch(new ShowFlashMessageOnSuccessfulOperation(msg));
     }
   }
