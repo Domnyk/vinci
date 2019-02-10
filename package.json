@@ -7,7 +7,7 @@
     "start:dev": "ng serve --port 8080 --ssl",
     "build": "ng build",
     "test:dev": "ng test",
-    "test:ci": "ng test --watch=false",
+    "test:ci": "ng test --watch=false --browsers=ChromeHeadless",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "heroku-postbuild": "ng build --prod"
