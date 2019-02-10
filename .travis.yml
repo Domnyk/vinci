@@ -14,8 +14,7 @@ jobs:
     - stage: "Build"
       before_install:
         - docker pull domnyk/heroku-chrome-ng-cli:6.2.3
-        - docker run -d -p 127.0.0.1:80:4567 domnyk/heroku-chrome-ng-cli:6.2.3 /bin/sh -c "yarn install"
-        - docker run domnyk/heroku-chrome-ng-cli:6.2.3 /bin/sh -c "yarn run build"
+        - docker run -d -p 127.0.0.1:80:4567 domnyk/heroku-chrome-ng-cli:6.2.3 /bin/sh -c "yarn install && yarn build"
       script: yarn run build
 
 
